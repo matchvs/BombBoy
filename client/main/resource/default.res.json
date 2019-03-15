@@ -1,0 +1,1294 @@
+{
+	"groups": [
+		{
+			"keys": "map_flopy2_json,map_flopy5_json,map_flopy6_json,map_flopy_json,map_flopy1_json,unit_monster02_png,unit_monster06_png,unit_monster07_png,unit_monster08_png,bazzi_png,cappi_png,face01_png,face03_png,face51_png,bombwater_png,item_json,bazzi_json,joystick1_png,joystick2_png,joystick3_png,joystick4_png,ballParticle_json,ballParticle_png,firePot_png,mapbg_jpg,map_chinese_texture_json,map_chinese_texture1_json,map_chinese_texture1_png,snow_json,snow_png,chinese_json,bombfire_png,bomb_tex_png,bomb_mc_json,bombfire_mc_json,bombfire_tex_png,bomb_mc2_json,bomb_tex2_png,bombfire_mc2_json,bombfire_tex2_png,bombwater_json,be_trapped_json,be_trapped_png,be_trapped2_json,be_trapped2_png,arrow_png,die_png,die_json,revive_png,revive_json,die2_json,die2_png,revive2_json,revive2_png,bom_down_edge_json,bom_down_edge_png,bom_left_edge_json,bom_left_edge_png,bom_right_edge_json,bom_right_edge_png,bom_up_edge_json,bom_up_edge_png,bombWay_json,bombWay_png,bombWayVertical_json,bombWayVertical_png,appear_mp3,bg_mp3,click_mp3,die_mp3,draw_mp3,explode_mp3,get_mp3,lay_mp3,save_mp3,start_mp3,win_mp3,appear2_mp3,bg2_mp3,click2_mp3,die2_mp3,draw2_mp3,explode2_mp3,get2_mp3,lay2_mp3,save2_mp3,start2_mp3,win2_mp3,btn_load_game_png,logo_png,btn_chaos_faction_png,btn_chaos_faction_unavailable_png,btn_player_team_png,bg_mask_png,bg_match_bust_background_png,bg_match_tip_png,btn_abort_png,btn_cancel_png,btn_confirm_png,btn_in_the_match_png,btn_start_match_png,btn_to_match_png,create_team_label_png,edit_team_id_tipe_png,icon_leader_png,icon_match_bust_title_png,icon_match_success_title_png,icon_vs_png,match_success_png,teamid_lable_png,team_default_avatar_jpg,tips_png,wait_start_game_png,btn_create_team_png,btn_join_png,btn_join_disable_png,btn_join_team_png,input_focus_png,input_none_focus_png,join_team_label_png,team_inexistence_png,team_label_4v4_png,bg_main_jpg,bg_other_jpg,btn_back_png,icon_loading_png,icon_loading_bg_png,btn_load_game2_png,logo2_png,btn_chaos_faction2_png,btn_chaos_faction_unavailable2_png,btn_player_team2_png,bg_mask2_png,bg_match_bust_background2_png,bg_match_tip2_png,btn_abort2_png,btn_cancel2_png,btn_confirm2_png,btn_in_the_match2_png,btn_start_match2_png,btn_to_match2_png,create_team_label2_png,edit_team_id_tipe2_png,icon_leader2_png,icon_match_bust_title2_png,icon_match_success_title2_png,icon_vs2_png,match_success2_png,teamid_lable2_png,team_default_avatar2_jpg,tips2_png,wait_start_game2_png,btn_create_team2_png,btn_join2_png,btn_join_disable2_png,btn_join_team2_png,input_focus2_png,input_none_focus2_png,join_team_label2_png,team_inexistence2_png,team_label_4v42_png,bg_main2_jpg,bg_other2_jpg,btn_back2_png,icon_loading2_png,icon_loading_bg2_png,btn_load_game3_png,logo3_png,btn_chaos_faction3_png,btn_chaos_faction_unavailable3_png,btn_player_team3_png,bg_mask3_png,bg_match_bust_background3_png,bg_match_tip3_png,btn_abort3_png,btn_cancel3_png,btn_confirm3_png,btn_in_the_match3_png,btn_start_match3_png,btn_to_match3_png,create_team_label3_png,edit_team_id_tipe3_png,icon_leader3_png,icon_match_bust_title3_png,icon_match_success_title3_png,icon_vs3_png,match_success3_png,teamid_lable3_png,team_default_avatar3_jpg,tips3_png,wait_start_game3_png,btn_create_team3_png,btn_join3_png,btn_join_disable3_png,btn_join_team3_png,input_focus3_png,input_none_focus3_png,join_team_label3_png,team_inexistence3_png,team_label_4v43_png,bg_main3_jpg,bg_other3_jpg,btn_back3_png,icon_loading3_png,icon_loading_bg3_png,network_node_select_png,network_node_png,select_node_backage_png,dash_png,btn_load_game4_png,dash2_png,logo4_png,network_node2_png,network_node_select2_png,select_node_backage2_png,btn_chaos_faction4_png,btn_chaos_faction_unavailable4_png,btn_player_team4_png,bg_mask4_png,bg_match_bust_background4_png,bg_match_tip4_png,btn_abort4_png,btn_cancel4_png,btn_confirm4_png,btn_in_the_match4_png,btn_start_match4_png,btn_to_match4_png,create_team_label4_png,edit_team_id_tipe4_png,icon_leader4_png,icon_match_bust_title4_png,icon_match_success_title4_png,icon_vs4_png,match_success4_png,teamid_lable4_png,team_default_avatar4_jpg,tips4_png,wait_start_game4_png,btn_create_team4_png,btn_join4_png,btn_join_disable4_png,btn_join_team4_png,input_focus4_png,input_none_focus4_png,join_team_label4_png,team_inexistence4_png,team_label_4v44_png,bg_main4_jpg,bg_other4_jpg,btn_back4_png,icon_loading4_png,icon_loading_bg4_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "bombboy/map/flopy/map.tmx",
+			"type": "bin",
+			"name": "map_tmx"
+		},
+		{
+			"url": "bombboy/map/flopy/map_flopy2.json",
+			"type": "sheet",
+			"name": "map_flopy2_json",
+			"subkeys": "map_flopy2.png#0,map_flopy2.png#1,map_flopy2.png#2,map_flopy2.png#3,map_flopy2.png#4,map_flopy2.png#5"
+		},
+		{
+			"url": "bombboy/map/flopy/map_flopy5.json",
+			"type": "sheet",
+			"name": "map_flopy5_json",
+			"subkeys": "map_flopy5.png#0,map_flopy5.png#1,map_flopy5.png#2"
+		},
+		{
+			"url": "bombboy/map/flopy/map_flopy6.json",
+			"type": "sheet",
+			"name": "map_flopy6_json",
+			"subkeys": "map_flopy6.png#0,map_flopy6.png#1,map_flopy6.png#10,map_flopy6.png#11,map_flopy6.png#12,map_flopy6.png#13,map_flopy6.png#14,map_flopy6.png#15,map_flopy6.png#16,map_flopy6.png#17,map_flopy6.png#18,map_flopy6.png#19,map_flopy6.png#2,map_flopy6.png#20,map_flopy6.png#21,map_flopy6.png#22,map_flopy6.png#23,map_flopy6.png#24,map_flopy6.png#25,map_flopy6.png#26,map_flopy6.png#27,map_flopy6.png#28,map_flopy6.png#29,map_flopy6.png#3,map_flopy6.png#30,map_flopy6.png#31,map_flopy6.png#32,map_flopy6.png#33,map_flopy6.png#34,map_flopy6.png#35,map_flopy6.png#36,map_flopy6.png#37,map_flopy6.png#38,map_flopy6.png#39,map_flopy6.png#4,map_flopy6.png#40,map_flopy6.png#41,map_flopy6.png#42,map_flopy6.png#43,map_flopy6.png#44,map_flopy6.png#45,map_flopy6.png#46,map_flopy6.png#47,map_flopy6.png#48,map_flopy6.png#49,map_flopy6.png#5,map_flopy6.png#50,map_flopy6.png#51,map_flopy6.png#52,map_flopy6.png#53,map_flopy6.png#54,map_flopy6.png#55,map_flopy6.png#56,map_flopy6.png#57,map_flopy6.png#58,map_flopy6.png#59,map_flopy6.png#6,map_flopy6.png#60,map_flopy6.png#61,map_flopy6.png#62,map_flopy6.png#63,map_flopy6.png#7,map_flopy6.png#8,map_flopy6.png#9"
+		},
+		{
+			"url": "bombboy/map/flopy/map_flopy.json",
+			"type": "sheet",
+			"name": "map_flopy_json",
+			"subkeys": "map_flopy.png#0,map_flopy.png#1,map_flopy.png#2"
+		},
+		{
+			"url": "bombboy/map/flopy/map_flopy1.json",
+			"type": "sheet",
+			"name": "map_flopy1_json",
+			"subkeys": "map_flopy1.png#0,map_flopy1.png#1,map_flopy1.png#10,map_flopy1.png#11,map_flopy1.png#12,map_flopy1.png#13,map_flopy1.png#14,map_flopy1.png#2,map_flopy1.png#3,map_flopy1.png#4,map_flopy1.png#5,map_flopy1.png#6,map_flopy1.png#7,map_flopy1.png#8,map_flopy1.png#9"
+		},
+		{
+			"url": "bombboy/mon/unit_monster02.png",
+			"type": "image",
+			"name": "unit_monster02_png"
+		},
+		{
+			"url": "bombboy/mon/unit_monster06.png",
+			"type": "image",
+			"name": "unit_monster06_png"
+		},
+		{
+			"url": "bombboy/mon/unit_monster07.png",
+			"type": "image",
+			"name": "unit_monster07_png"
+		},
+		{
+			"url": "bombboy/mon/unit_monster08.png",
+			"type": "image",
+			"name": "unit_monster08_png"
+		},
+		{
+			"url": "bombboy/boy/bazzi.png",
+			"type": "image",
+			"name": "bazzi_png"
+		},
+		{
+			"url": "bombboy/boy/cappi.png",
+			"type": "image",
+			"name": "cappi_png"
+		},
+		{
+			"url": "bombboy/boy/face01.png",
+			"type": "image",
+			"name": "face01_png"
+		},
+		{
+			"url": "bombboy/boy/face03.png",
+			"type": "image",
+			"name": "face03_png"
+		},
+		{
+			"url": "bombboy/boy/face51.png",
+			"type": "image",
+			"name": "face51_png"
+		},
+		{
+			"url": "bombboy/bomb/bombwater.png",
+			"type": "image",
+			"name": "bombwater_png"
+		},
+		{
+			"url": "bombboy/item/item.json",
+			"type": "sheet",
+			"name": "item_json",
+			"subkeys": "item_58,item_59,item_6,item_60,item_61,item_62,item_63,item_64,item_65,item_66,item_67,item_68,item_69,item_7,item_70,item_71,item_72,item_73,item_74,item_75,item_76,item_77,item_78,item_79"
+		},
+		{
+			"url": "bombboy/boy/bazzi.json",
+			"type": "json",
+			"name": "bazzi_json"
+		},
+		{
+			"url": "JoyStick/joystick1.png",
+			"type": "image",
+			"name": "joystick1_png"
+		},
+		{
+			"url": "JoyStick/joystick2.png",
+			"type": "image",
+			"name": "joystick2_png"
+		},
+		{
+			"url": "JoyStick/joystick3.png",
+			"type": "image",
+			"name": "joystick3_png"
+		},
+		{
+			"url": "JoyStick/joystick4.png",
+			"type": "image",
+			"name": "joystick4_png"
+		},
+		{
+			"url": "particle3/ballParticle.json",
+			"type": "json",
+			"name": "ballParticle_json"
+		},
+		{
+			"url": "particle3/ballParticle.png",
+			"type": "image",
+			"name": "ballParticle_png"
+		},
+		{
+			"url": "particle3/firePot.png",
+			"type": "image",
+			"name": "firePot_png"
+		},
+		{
+			"url": "bombboy/map/chinese/chinese.tmx",
+			"type": "bin",
+			"name": "chinese_tmx"
+		},
+		{
+			"url": "bombboy/map/chinese/mapbg.jpg",
+			"type": "image",
+			"name": "mapbg_jpg"
+		},
+		{
+			"url": "bombboy/map/chinese/map_chinese_texture.json",
+			"type": "sheet",
+			"name": "map_chinese_texture_json",
+			"subkeys": "map_chinese_texture.png#0,map_chinese_texture.png#1,map_chinese_texture.png#2,map_chinese_texture.png#3,map_chinese_texture.png#4,map_chinese_texture.png#5"
+		},
+		{
+			"url": "bombboy/map/chinese/map_chinese_texture1.json",
+			"type": "sheet",
+			"name": "map_chinese_texture1_json",
+			"subkeys": "map_chinese_texture1.png#0,map_chinese_texture1.png#1,map_chinese_texture1.png#10,map_chinese_texture1.png#11,map_chinese_texture1.png#12,map_chinese_texture1.png#13,map_chinese_texture1.png#2,map_chinese_texture1.png#3,map_chinese_texture1.png#4,map_chinese_texture1.png#5,map_chinese_texture1.png#6,map_chinese_texture1.png#7,map_chinese_texture1.png#8,map_chinese_texture1.png#9"
+		},
+		{
+			"url": "bombboy/map/chinese/map_chinese_texture1.png",
+			"type": "image",
+			"name": "map_chinese_texture1_png"
+		},
+		{
+			"url": "bombboy/map/chinese/map_chinese_texture.png",
+			"type": "image",
+			"name": "map_chinese_texture_png"
+		},
+		{
+			"url": "bombboy/bomb/snow.json",
+			"type": "json",
+			"name": "snow_json"
+		},
+		{
+			"url": "bombboy/bomb/snow.png",
+			"type": "image",
+			"name": "snow_png"
+		},
+		{
+			"url": "bombboy/map/chinese/chinese.json",
+			"type": "json",
+			"name": "chinese_json"
+		},
+		{
+			"url": "bombboy/bomb/bombfire.png",
+			"type": "image",
+			"name": "bombfire_png"
+		},
+		{
+			"name": "bomb_tex_png",
+			"type": "image",
+			"url": "bombboy/bomb/bomb_tex.png"
+		},
+		{
+			"name": "bomb_mc_json",
+			"type": "json",
+			"url": "bombboy/bomb/bomb_mc.json"
+		},
+		{
+			"name": "bombfire_mc_json",
+			"type": "json",
+			"url": "bombboy/bomb/bombfire_mc.json"
+		},
+		{
+			"name": "bombfire_tex_png",
+			"type": "image",
+			"url": "bombboy/bomb/bombfire_tex.png"
+		},
+		{
+			"name": "bomb_mc2_json",
+			"type": "json",
+			"url": "bombboy/bomb/bomb_mc.json"
+		},
+		{
+			"name": "bomb_tex2_png",
+			"type": "image",
+			"url": "bombboy/bomb/bomb_tex.png"
+		},
+		{
+			"name": "bombfire_mc2_json",
+			"type": "json",
+			"url": "bombboy/bomb/bombfire_mc.json"
+		},
+		{
+			"name": "bombfire_tex2_png",
+			"type": "image",
+			"url": "bombboy/bomb/bombfire_tex.png"
+		},
+		{
+			"name": "bombwater_json",
+			"type": "sheet",
+			"url": "bombboy/bomb/bombwater.json",
+			"subkeys": "bombwater_1,bombwater_2,bombwater_3,bombwater_4"
+		},
+		{
+			"name": "be_trapped_json",
+			"type": "json",
+			"url": "bombboy/boy/be_trapped.json"
+		},
+		{
+			"name": "be_trapped_png",
+			"type": "image",
+			"url": "bombboy/boy/be_trapped.png"
+		},
+		{
+			"name": "be_trapped2_json",
+			"type": "json",
+			"url": "bombboy/boy/be_trapped.json"
+		},
+		{
+			"name": "be_trapped2_png",
+			"type": "image",
+			"url": "bombboy/boy/be_trapped.png"
+		},
+		{
+			"name": "arrow_png",
+			"type": "image",
+			"url": "bombboy/boy/arrow.png"
+		},
+		{
+			"name": "die_png",
+			"type": "image",
+			"url": "bombboy/boy/die.png"
+		},
+		{
+			"name": "die_json",
+			"type": "json",
+			"url": "bombboy/boy/die.json"
+		},
+		{
+			"name": "revive_png",
+			"type": "image",
+			"url": "bombboy/boy/revive.png"
+		},
+		{
+			"name": "revive_json",
+			"type": "json",
+			"url": "bombboy/boy/revive.json"
+		},
+		{
+			"name": "die2_json",
+			"type": "json",
+			"url": "bombboy/boy/die.json"
+		},
+		{
+			"name": "die2_png",
+			"type": "image",
+			"url": "bombboy/boy/die.png"
+		},
+		{
+			"name": "revive2_json",
+			"type": "json",
+			"url": "bombboy/boy/revive.json"
+		},
+		{
+			"name": "revive2_png",
+			"type": "image",
+			"url": "bombboy/boy/revive.png"
+		},
+		{
+			"name": "bom_down_edge_json",
+			"type": "json",
+			"url": "bombboy/bomb/bom_down_edge.json"
+		},
+		{
+			"name": "bom_down_edge_png",
+			"type": "image",
+			"url": "bombboy/bomb/bom_down_edge.png"
+		},
+		{
+			"name": "bom_left_edge_json",
+			"type": "json",
+			"url": "bombboy/bomb/bom_left_edge.json"
+		},
+		{
+			"name": "bom_left_edge_png",
+			"type": "image",
+			"url": "bombboy/bomb/bom_left_edge.png"
+		},
+		{
+			"name": "bom_right_edge_json",
+			"type": "json",
+			"url": "bombboy/bomb/bom_right_edge.json"
+		},
+		{
+			"name": "bom_right_edge_png",
+			"type": "image",
+			"url": "bombboy/bomb/bom_right_edge.png"
+		},
+		{
+			"name": "bom_up_edge_json",
+			"type": "json",
+			"url": "bombboy/bomb/bom_up_edge.json"
+		},
+		{
+			"name": "bom_up_edge_png",
+			"type": "image",
+			"url": "bombboy/bomb/bom_up_edge.png"
+		},
+		{
+			"name": "bombWay_json",
+			"type": "json",
+			"url": "bombboy/bomb/bombWay.json"
+		},
+		{
+			"name": "bombWay_png",
+			"type": "image",
+			"url": "bombboy/bomb/bombWay.png"
+		},
+		{
+			"name": "bombWayVertical_json",
+			"type": "json",
+			"url": "bombboy/bomb/bombWayVertical.json"
+		},
+		{
+			"name": "bombWayVertical_png",
+			"type": "image",
+			"url": "bombboy/bomb/bombWayVertical.png"
+		},
+		{
+			"name": "appear_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/appear.mp3"
+		},
+		{
+			"name": "bg_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/bg.mp3"
+		},
+		{
+			"name": "click_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/click.mp3"
+		},
+		{
+			"name": "die_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/die.mp3"
+		},
+		{
+			"name": "draw_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/draw.mp3"
+		},
+		{
+			"name": "explode_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/explode.mp3"
+		},
+		{
+			"name": "get_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/get.mp3"
+		},
+		{
+			"name": "lay_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/lay.mp3"
+		},
+		{
+			"name": "save_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/save.mp3"
+		},
+		{
+			"name": "start_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/start.mp3"
+		},
+		{
+			"name": "win_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/win.mp3"
+		},
+		{
+			"name": "appear2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/appear.mp3"
+		},
+		{
+			"name": "bg2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/bg.mp3"
+		},
+		{
+			"name": "click2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/click.mp3"
+		},
+		{
+			"name": "die2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/die.mp3"
+		},
+		{
+			"name": "draw2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/draw.mp3"
+		},
+		{
+			"name": "explode2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/explode.mp3"
+		},
+		{
+			"name": "get2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/get.mp3"
+		},
+		{
+			"name": "lay2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/lay.mp3"
+		},
+		{
+			"name": "save2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/save.mp3"
+		},
+		{
+			"name": "start2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/start.mp3"
+		},
+		{
+			"name": "win2_mp3",
+			"type": "sound",
+			"url": "bombboy/audio/win.mp3"
+		},
+		{
+			"name": "btn_load_game_png",
+			"type": "image",
+			"url": "assets/HomePage/btn_load_game.png"
+		},
+		{
+			"name": "logo_png",
+			"type": "image",
+			"url": "assets/HomePage/logo.png"
+		},
+		{
+			"name": "btn_chaos_faction_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_chaos_faction.png"
+		},
+		{
+			"name": "btn_chaos_faction_unavailable_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_chaos_faction_unavailable.png"
+		},
+		{
+			"name": "btn_player_team_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_player_team.png"
+		},
+		{
+			"name": "bg_mask_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_mask.png"
+		},
+		{
+			"name": "bg_match_bust_background_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_match_bust_background.png"
+		},
+		{
+			"name": "bg_match_tip_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_match_tip.png"
+		},
+		{
+			"name": "btn_abort_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_abort.png"
+		},
+		{
+			"name": "btn_cancel_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_cancel.png"
+		},
+		{
+			"name": "btn_confirm_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_confirm.png"
+		},
+		{
+			"name": "btn_in_the_match_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_in_the_match.png"
+		},
+		{
+			"name": "btn_start_match_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_start_match.png"
+		},
+		{
+			"name": "btn_to_match_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_to_match.png"
+		},
+		{
+			"name": "create_team_label_png",
+			"type": "image",
+			"url": "assets/TeamHome/create_team_label.png"
+		},
+		{
+			"name": "edit_team_id_tipe_png",
+			"type": "image",
+			"url": "assets/TeamHome/edit_team_id_tipe.png"
+		},
+		{
+			"name": "icon_leader_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_leader.png"
+		},
+		{
+			"name": "icon_match_bust_title_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_match_bust_title.png"
+		},
+		{
+			"name": "icon_match_success_title_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_match_success_title.png"
+		},
+		{
+			"name": "icon_vs_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_vs.png"
+		},
+		{
+			"name": "match_success_png",
+			"type": "image",
+			"url": "assets/TeamHome/match_success.png"
+		},
+		{
+			"name": "teamid_lable_png",
+			"type": "image",
+			"url": "assets/TeamHome/teamid_lable.png"
+		},
+		{
+			"name": "team_default_avatar_jpg",
+			"type": "image",
+			"url": "assets/TeamHome/team_default_avatar.jpg"
+		},
+		{
+			"name": "tips_png",
+			"type": "image",
+			"url": "assets/TeamHome/tips.png"
+		},
+		{
+			"name": "wait_start_game_png",
+			"type": "image",
+			"url": "assets/TeamHome/wait_start_game.png"
+		},
+		{
+			"name": "btn_create_team_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_create_team.png"
+		},
+		{
+			"name": "btn_join_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join.png"
+		},
+		{
+			"name": "btn_join_disable_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join_disable.png"
+		},
+		{
+			"name": "btn_join_team_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join_team.png"
+		},
+		{
+			"name": "input_focus_png",
+			"type": "image",
+			"url": "assets/TeamReady/input_focus.png"
+		},
+		{
+			"name": "input_none_focus_png",
+			"type": "image",
+			"url": "assets/TeamReady/input_none_focus.png"
+		},
+		{
+			"name": "join_team_label_png",
+			"type": "image",
+			"url": "assets/TeamReady/join_team_label.png"
+		},
+		{
+			"name": "team_inexistence_png",
+			"type": "image",
+			"url": "assets/TeamReady/team_inexistence.png"
+		},
+		{
+			"name": "team_label_4v4_png",
+			"type": "image",
+			"url": "assets/TeamReady/team_label_4v4.png"
+		},
+		{
+			"name": "bg_main_jpg",
+			"type": "image",
+			"url": "assets/bg_main.jpg"
+		},
+		{
+			"name": "bg_other_jpg",
+			"type": "image",
+			"url": "assets/bg_other.jpg"
+		},
+		{
+			"name": "btn_back_png",
+			"type": "image",
+			"url": "assets/btn_back.png"
+		},
+		{
+			"name": "icon_loading_png",
+			"type": "image",
+			"url": "assets/icon_loading.png"
+		},
+		{
+			"name": "icon_loading_bg_png",
+			"type": "image",
+			"url": "assets/icon_loading_bg.png"
+		},
+		{
+			"name": "btn_load_game2_png",
+			"type": "image",
+			"url": "assets/HomePage/btn_load_game.png"
+		},
+		{
+			"name": "logo2_png",
+			"type": "image",
+			"url": "assets/HomePage/logo.png"
+		},
+		{
+			"name": "btn_chaos_faction2_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_chaos_faction.png"
+		},
+		{
+			"name": "btn_chaos_faction_unavailable2_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_chaos_faction_unavailable.png"
+		},
+		{
+			"name": "btn_player_team2_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_player_team.png"
+		},
+		{
+			"name": "bg_mask2_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_mask.png"
+		},
+		{
+			"name": "bg_match_bust_background2_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_match_bust_background.png"
+		},
+		{
+			"name": "bg_match_tip2_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_match_tip.png"
+		},
+		{
+			"name": "btn_abort2_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_abort.png"
+		},
+		{
+			"name": "btn_cancel2_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_cancel.png"
+		},
+		{
+			"name": "btn_confirm2_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_confirm.png"
+		},
+		{
+			"name": "btn_in_the_match2_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_in_the_match.png"
+		},
+		{
+			"name": "btn_start_match2_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_start_match.png"
+		},
+		{
+			"name": "btn_to_match2_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_to_match.png"
+		},
+		{
+			"name": "create_team_label2_png",
+			"type": "image",
+			"url": "assets/TeamHome/create_team_label.png"
+		},
+		{
+			"name": "edit_team_id_tipe2_png",
+			"type": "image",
+			"url": "assets/TeamHome/edit_team_id_tipe.png"
+		},
+		{
+			"name": "icon_leader2_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_leader.png"
+		},
+		{
+			"name": "icon_match_bust_title2_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_match_bust_title.png"
+		},
+		{
+			"name": "icon_match_success_title2_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_match_success_title.png"
+		},
+		{
+			"name": "icon_vs2_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_vs.png"
+		},
+		{
+			"name": "match_success2_png",
+			"type": "image",
+			"url": "assets/TeamHome/match_success.png"
+		},
+		{
+			"name": "teamid_lable2_png",
+			"type": "image",
+			"url": "assets/TeamHome/teamid_lable.png"
+		},
+		{
+			"name": "team_default_avatar2_jpg",
+			"type": "image",
+			"url": "assets/TeamHome/team_default_avatar.jpg"
+		},
+		{
+			"name": "tips2_png",
+			"type": "image",
+			"url": "assets/TeamHome/tips.png"
+		},
+		{
+			"name": "wait_start_game2_png",
+			"type": "image",
+			"url": "assets/TeamHome/wait_start_game.png"
+		},
+		{
+			"name": "btn_create_team2_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_create_team.png"
+		},
+		{
+			"name": "btn_join2_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join.png"
+		},
+		{
+			"name": "btn_join_disable2_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join_disable.png"
+		},
+		{
+			"name": "btn_join_team2_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join_team.png"
+		},
+		{
+			"name": "input_focus2_png",
+			"type": "image",
+			"url": "assets/TeamReady/input_focus.png"
+		},
+		{
+			"name": "input_none_focus2_png",
+			"type": "image",
+			"url": "assets/TeamReady/input_none_focus.png"
+		},
+		{
+			"name": "join_team_label2_png",
+			"type": "image",
+			"url": "assets/TeamReady/join_team_label.png"
+		},
+		{
+			"name": "team_inexistence2_png",
+			"type": "image",
+			"url": "assets/TeamReady/team_inexistence.png"
+		},
+		{
+			"name": "team_label_4v42_png",
+			"type": "image",
+			"url": "assets/TeamReady/team_label_4v4.png"
+		},
+		{
+			"name": "bg_main2_jpg",
+			"type": "image",
+			"url": "assets/bg_main.jpg"
+		},
+		{
+			"name": "bg_other2_jpg",
+			"type": "image",
+			"url": "assets/bg_other.jpg"
+		},
+		{
+			"name": "btn_back2_png",
+			"type": "image",
+			"url": "assets/btn_back.png"
+		},
+		{
+			"name": "icon_loading2_png",
+			"type": "image",
+			"url": "assets/icon_loading.png"
+		},
+		{
+			"name": "icon_loading_bg2_png",
+			"type": "image",
+			"url": "assets/icon_loading_bg.png"
+		},
+		{
+			"name": "btn_load_game3_png",
+			"type": "image",
+			"url": "assets/HomePage/btn_load_game.png"
+		},
+		{
+			"name": "logo3_png",
+			"type": "image",
+			"url": "assets/HomePage/logo.png"
+		},
+		{
+			"name": "btn_chaos_faction3_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_chaos_faction.png"
+		},
+		{
+			"name": "btn_chaos_faction_unavailable3_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_chaos_faction_unavailable.png"
+		},
+		{
+			"name": "btn_player_team3_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_player_team.png"
+		},
+		{
+			"name": "bg_mask3_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_mask.png"
+		},
+		{
+			"name": "bg_match_bust_background3_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_match_bust_background.png"
+		},
+		{
+			"name": "bg_match_tip3_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_match_tip.png"
+		},
+		{
+			"name": "btn_abort3_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_abort.png"
+		},
+		{
+			"name": "btn_cancel3_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_cancel.png"
+		},
+		{
+			"name": "btn_confirm3_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_confirm.png"
+		},
+		{
+			"name": "btn_in_the_match3_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_in_the_match.png"
+		},
+		{
+			"name": "btn_start_match3_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_start_match.png"
+		},
+		{
+			"name": "btn_to_match3_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_to_match.png"
+		},
+		{
+			"name": "create_team_label3_png",
+			"type": "image",
+			"url": "assets/TeamHome/create_team_label.png"
+		},
+		{
+			"name": "edit_team_id_tipe3_png",
+			"type": "image",
+			"url": "assets/TeamHome/edit_team_id_tipe.png"
+		},
+		{
+			"name": "icon_leader3_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_leader.png"
+		},
+		{
+			"name": "icon_match_bust_title3_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_match_bust_title.png"
+		},
+		{
+			"name": "icon_match_success_title3_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_match_success_title.png"
+		},
+		{
+			"name": "icon_vs3_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_vs.png"
+		},
+		{
+			"name": "match_success3_png",
+			"type": "image",
+			"url": "assets/TeamHome/match_success.png"
+		},
+		{
+			"name": "teamid_lable3_png",
+			"type": "image",
+			"url": "assets/TeamHome/teamid_lable.png"
+		},
+		{
+			"name": "team_default_avatar3_jpg",
+			"type": "image",
+			"url": "assets/TeamHome/team_default_avatar.jpg"
+		},
+		{
+			"name": "tips3_png",
+			"type": "image",
+			"url": "assets/TeamHome/tips.png"
+		},
+		{
+			"name": "wait_start_game3_png",
+			"type": "image",
+			"url": "assets/TeamHome/wait_start_game.png"
+		},
+		{
+			"name": "btn_create_team3_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_create_team.png"
+		},
+		{
+			"name": "btn_join3_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join.png"
+		},
+		{
+			"name": "btn_join_disable3_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join_disable.png"
+		},
+		{
+			"name": "btn_join_team3_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join_team.png"
+		},
+		{
+			"name": "input_focus3_png",
+			"type": "image",
+			"url": "assets/TeamReady/input_focus.png"
+		},
+		{
+			"name": "input_none_focus3_png",
+			"type": "image",
+			"url": "assets/TeamReady/input_none_focus.png"
+		},
+		{
+			"name": "join_team_label3_png",
+			"type": "image",
+			"url": "assets/TeamReady/join_team_label.png"
+		},
+		{
+			"name": "team_inexistence3_png",
+			"type": "image",
+			"url": "assets/TeamReady/team_inexistence.png"
+		},
+		{
+			"name": "team_label_4v43_png",
+			"type": "image",
+			"url": "assets/TeamReady/team_label_4v4.png"
+		},
+		{
+			"name": "bg_main3_jpg",
+			"type": "image",
+			"url": "assets/bg_main.jpg"
+		},
+		{
+			"name": "bg_other3_jpg",
+			"type": "image",
+			"url": "assets/bg_other.jpg"
+		},
+		{
+			"name": "btn_back3_png",
+			"type": "image",
+			"url": "assets/btn_back.png"
+		},
+		{
+			"name": "icon_loading3_png",
+			"type": "image",
+			"url": "assets/icon_loading.png"
+		},
+		{
+			"name": "icon_loading_bg3_png",
+			"type": "image",
+			"url": "assets/icon_loading_bg.png"
+		},
+		{
+			"name": "network_node_select_png",
+			"type": "image",
+			"url": "assets/HomePage/network_node_select.png"
+		},
+		{
+			"name": "network_node_png",
+			"type": "image",
+			"url": "assets/HomePage/network_node.png"
+		},
+		{
+			"name": "select_node_backage_png",
+			"type": "image",
+			"url": "assets/HomePage/select_node_backage.png"
+		},
+		{
+			"name": "dash_png",
+			"type": "image",
+			"url": "assets/HomePage/dash.png"
+		},
+		{
+			"name": "btn_load_game4_png",
+			"type": "image",
+			"url": "assets/HomePage/btn_load_game.png"
+		},
+		{
+			"name": "dash2_png",
+			"type": "image",
+			"url": "assets/HomePage/dash.png"
+		},
+		{
+			"name": "logo4_png",
+			"type": "image",
+			"url": "assets/HomePage/logo.png"
+		},
+		{
+			"name": "network_node2_png",
+			"type": "image",
+			"url": "assets/HomePage/network_node.png"
+		},
+		{
+			"name": "network_node_select2_png",
+			"type": "image",
+			"url": "assets/HomePage/network_node_select.png"
+		},
+		{
+			"name": "select_node_backage2_png",
+			"type": "image",
+			"url": "assets/HomePage/select_node_backage.png"
+		},
+		{
+			"name": "btn_chaos_faction4_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_chaos_faction.png"
+		},
+		{
+			"name": "btn_chaos_faction_unavailable4_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_chaos_faction_unavailable.png"
+		},
+		{
+			"name": "btn_player_team4_png",
+			"type": "image",
+			"url": "assets/Lobby/btn_player_team.png"
+		},
+		{
+			"name": "bg_mask4_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_mask.png"
+		},
+		{
+			"name": "bg_match_bust_background4_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_match_bust_background.png"
+		},
+		{
+			"name": "bg_match_tip4_png",
+			"type": "image",
+			"url": "assets/TeamHome/bg_match_tip.png"
+		},
+		{
+			"name": "btn_abort4_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_abort.png"
+		},
+		{
+			"name": "btn_cancel4_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_cancel.png"
+		},
+		{
+			"name": "btn_confirm4_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_confirm.png"
+		},
+		{
+			"name": "btn_in_the_match4_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_in_the_match.png"
+		},
+		{
+			"name": "btn_start_match4_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_start_match.png"
+		},
+		{
+			"name": "btn_to_match4_png",
+			"type": "image",
+			"url": "assets/TeamHome/btn_to_match.png"
+		},
+		{
+			"name": "create_team_label4_png",
+			"type": "image",
+			"url": "assets/TeamHome/create_team_label.png"
+		},
+		{
+			"name": "edit_team_id_tipe4_png",
+			"type": "image",
+			"url": "assets/TeamHome/edit_team_id_tipe.png"
+		},
+		{
+			"name": "icon_leader4_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_leader.png"
+		},
+		{
+			"name": "icon_match_bust_title4_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_match_bust_title.png"
+		},
+		{
+			"name": "icon_match_success_title4_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_match_success_title.png"
+		},
+		{
+			"name": "icon_vs4_png",
+			"type": "image",
+			"url": "assets/TeamHome/icon_vs.png"
+		},
+		{
+			"name": "match_success4_png",
+			"type": "image",
+			"url": "assets/TeamHome/match_success.png"
+		},
+		{
+			"name": "teamid_lable4_png",
+			"type": "image",
+			"url": "assets/TeamHome/teamid_lable.png"
+		},
+		{
+			"name": "team_default_avatar4_jpg",
+			"type": "image",
+			"url": "assets/TeamHome/team_default_avatar.jpg"
+		},
+		{
+			"name": "tips4_png",
+			"type": "image",
+			"url": "assets/TeamHome/tips.png"
+		},
+		{
+			"name": "wait_start_game4_png",
+			"type": "image",
+			"url": "assets/TeamHome/wait_start_game.png"
+		},
+		{
+			"name": "btn_create_team4_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_create_team.png"
+		},
+		{
+			"name": "btn_join4_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join.png"
+		},
+		{
+			"name": "btn_join_disable4_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join_disable.png"
+		},
+		{
+			"name": "btn_join_team4_png",
+			"type": "image",
+			"url": "assets/TeamReady/btn_join_team.png"
+		},
+		{
+			"name": "input_focus4_png",
+			"type": "image",
+			"url": "assets/TeamReady/input_focus.png"
+		},
+		{
+			"name": "input_none_focus4_png",
+			"type": "image",
+			"url": "assets/TeamReady/input_none_focus.png"
+		},
+		{
+			"name": "join_team_label4_png",
+			"type": "image",
+			"url": "assets/TeamReady/join_team_label.png"
+		},
+		{
+			"name": "team_inexistence4_png",
+			"type": "image",
+			"url": "assets/TeamReady/team_inexistence.png"
+		},
+		{
+			"name": "team_label_4v44_png",
+			"type": "image",
+			"url": "assets/TeamReady/team_label_4v4.png"
+		},
+		{
+			"name": "bg_main4_jpg",
+			"type": "image",
+			"url": "assets/bg_main.jpg"
+		},
+		{
+			"name": "bg_other4_jpg",
+			"type": "image",
+			"url": "assets/bg_other.jpg"
+		},
+		{
+			"name": "btn_back4_png",
+			"type": "image",
+			"url": "assets/btn_back.png"
+		},
+		{
+			"name": "icon_loading4_png",
+			"type": "image",
+			"url": "assets/icon_loading.png"
+		},
+		{
+			"name": "icon_loading_bg4_png",
+			"type": "image",
+			"url": "assets/icon_loading_bg.png"
+		}
+	]
+}

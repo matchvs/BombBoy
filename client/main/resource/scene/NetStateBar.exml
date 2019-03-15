@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="NetStateBarSkin" minHeight="48" minWidth="48" xmlns:e="http://ns.egret.com/eui" states="connect,slow,disconnect"
+        xmlns:w="http://ns.egret.com/wing">
+	<w:Config id="166e8614078"></w:Config>
+	<e:Image width="48" height="48" right="0" top="0" source="signal_connect_png" fillMode="scale"
+	         source.slow="signal_slow_png" fillMode.slow="scale" source.disconnect="signal_disconnect_png" />
+</e:Skin>

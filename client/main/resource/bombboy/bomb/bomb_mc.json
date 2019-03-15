@@ -1,0 +1,68 @@
+{
+    "res": {
+        "Sprite_2": {
+            "x": 63,
+            "y": 1,
+            "w": 60,
+            "h": 53
+        },
+        "Sprite_3": {
+            "x": 1,
+            "y": 61,
+            "w": 60,
+            "h": 48
+        },
+        "Sprite_0": {
+            "x": 1,
+            "y": 1,
+            "w": 60,
+            "h": 58
+        },
+        "Sprite_1": {
+            "x": 63,
+            "y": 56,
+            "w": 54,
+            "h": 58
+        }
+    },
+    "file": "Bomb_tex.png",
+    "mc": {
+        "bomb": {
+            "labels": [
+                {
+                    "end": 4,
+                    "frame": 1,
+                    "name": "Sprite"
+                }
+            ],
+            "frameRate": 3,
+            "frames": [
+                {
+                    "res": "Sprite_0",
+                    "y": -28,
+                    "duration": 1,
+                    "x": -30
+                },
+                {
+                    "res": "Sprite_1",
+                    "y": -28,
+                    "duration": 1,
+                    "x": -27
+                },
+                {
+                    "res": "Sprite_2",
+                    "y": -23,
+                    "duration": 1,
+                    "x": -30
+                },
+                {
+                    "res": "Sprite_3",
+                    "y": -18,
+                    "duration": 1,
+                    "x": -30
+                }
+            ],
+            "events": []
+        }
+    }
+}

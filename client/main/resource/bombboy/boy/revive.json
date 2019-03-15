@@ -1,0 +1,68 @@
+{
+    "mc": {
+        "revive": {
+            "frames": [
+                {
+                    "duration": 1,
+                    "y": -48,
+                    "res": "Sprite_0",
+                    "x": -50
+                },
+                {
+                    "duration": 1,
+                    "y": -55,
+                    "res": "Sprite_1",
+                    "x": -56
+                },
+                {
+                    "duration": 1,
+                    "y": -45,
+                    "res": "Sprite_2",
+                    "x": -35
+                },
+                {
+                    "duration": 1,
+                    "y": -45,
+                    "res": "Sprite_3",
+                    "x": -35
+                }
+            ],
+            "labels": [
+                {
+                    "end": 4,
+                    "frame": 1,
+                    "name": "Sprite"
+                }
+            ],
+            "frameRate": 5,
+            "events": []
+        }
+    },
+    "file": "revive_tex.png",
+    "res": {
+        "Sprite_0": {
+            "x": 115,
+            "y": 1,
+            "w": 100,
+            "h": 96
+        },
+        "Sprite_1": {
+            "x": 1,
+            "y": 1,
+            "w": 112,
+            "h": 110
+        },
+        "Sprite_2": {
+            "x": 115,
+            "y": 99,
+            "w": 71,
+            "h": 90
+        },
+        "Sprite_3": {
+            "x": 1,
+            "y": 113,
+            "w": 70,
+            "h": 90
+        }
+    }
+}

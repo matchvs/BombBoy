@@ -1,0 +1,68 @@
+{
+    "mc": {
+        "die": {
+            "frames": [
+                {
+                    "duration": 1,
+                    "y": -54,
+                    "res": "Sprite_0",
+                    "x": -52
+                },
+                {
+                    "duration": 1,
+                    "y": -29,
+                    "res": "Sprite_1",
+                    "x": -33
+                },
+                {
+                    "duration": 1,
+                    "y": -31,
+                    "res": "Sprite_2",
+                    "x": -33
+                },
+                {
+                    "duration": 1,
+                    "y": -11,
+                    "res": "Sprite_3",
+                    "x": -24
+                }
+            ],
+            "labels": [
+                {
+                    "end": 4,
+                    "frame": 1,
+                    "name": "Sprite"
+                }
+            ],
+            "frameRate": 5,
+            "events": []
+        }
+    },
+    "file": "die_tex.png",
+    "res": {
+        "Sprite_0": {
+            "x": 1,
+            "y": 1,
+            "w": 104,
+            "h": 108
+        },
+        "Sprite_1": {
+            "x": 107,
+            "y": 65,
+            "w": 66,
+            "h": 58
+        },
+        "Sprite_2": {
+            "x": 107,
+            "y": 1,
+            "w": 66,
+            "h": 62
+        },
+        "Sprite_3": {
+            "x": 175,
+            "y": 1,
+            "w": 48,
+            "h": 22
+        }
+    }
+}

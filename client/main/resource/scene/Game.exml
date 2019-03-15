@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="GameSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*" >
+	<w:Declarations>
+		<tween:TweenGroup/>
+	</w:Declarations>
+	<w:Config id="1675ec5ce93" ></w:Config>
+	<e:Image id="mapbg" width="1280" height="720" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false" y="0" source="mapbg_jpg"/>
+	<e:Group id="mapLayer" width="900" height="660" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false" horizontalCenter="0" y="42">
+
+	</e:Group>
+	<e:Group width="120" height="120" x="0" y="0" visible="false">
+		<e:Image id="avator" width="100%" height="100%" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" source="face51_png" blendMode="normal"/>
+		<e:Rect id="bg" width="120" height="120" x="0" y="0" fillColor="0xf9f9f9" strokeWeight="5" ellipseWidth="360" fillAlpha="0" strokeColor="0xffffff" touchEnabled="false"/>
+		<e:Label id="p1" text="P1" horizontalCenter="0" bottom="0" touchEnabled="false"/>
+	</e:Group>
+    <e:Group id="joystickContainer" width="200" height="200" anchorOffsetX="0" touchEnabled="false" touchChildren="true" touchThrough="true" anchorOffsetY="0" x="50" y="470"/>
+	<e:Group id="skillContainer" width="278" height="376.48" anchorOffsetX="0" bottom="0" touchEnabled="false" touchChildren="true" touchThrough="true" anchorOffsetY="0" right="0">
+		<e:Image id="bomb" width="180" height="180" x="83.16" y="167.51" anchorOffsetX="0" anchorOffsetY="0" source="joystick1_png"/>
+		<e:Image width="120" height="120" x="134.64" y="1.02" anchorOffsetX="0" anchorOffsetY="0" source="joystick3_png"/>
+		<e:Image id="skill_magic" width="80" height="80" right="43" bottom="275.48" source="item_json.item_78"/>
+	</e:Group>
+	<e:Group id="loadingContainer" x="0" y="0" width="100%" height="100%">
+		<e:Rect id="loadingBg" width="100%" height="100%" x="0" y="0" fillColor="0x595959" strokeAlpha="0.4" fillAlpha="0.8" scaleX="1" scaleY="1"/>
+		<e:Image id="loadingTipsImage" source="unit_monster02_png" horizontalCenter="0.5" verticalCenter="224.5" x="261" y="535" scaleX="1" scaleY="1"/>
+		<e:Label id="loadingTips" text="Tips : &quot;WASD&quot; or  &quot;←↑→↓&quot; + &quot;Space&quot;" verticalCenter="293" horizontalCenter="1.5" fontFamily="Microsoft YaHei" size="24" textColor="0x3f3636" x="431" y="641" scaleX="1" scaleY="1"/>
+		<e:Label id="loadingText" text="正在等待其他玩家加入..." fontFamily="Microsoft YaHei" horizontalCenter="1" verticalCenter="81" textColor="0xcec6c6" x="480" y="426" scaleX="1" scaleY="1"/>
+		<e:Image id="loadingImage" anchorOffsetX="54" anchorOffsetY="46" horizontalCenter="0" verticalCenter="0" x="640" y="360" scaleX="1" scaleY="1" source="face51_png"/>
+	</e:Group>
+	<e:Button id="pingtogle" label="ping" x="20" y="28"/>
+
+</e:Skin>

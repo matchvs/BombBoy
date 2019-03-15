@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="Home" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image width="100%" height="100%" x="0" y="0" source="resource/assets/bg_main.jpg"/>
+	<e:Button id="btn_load_game" label="" y="510" horizontalCenter="0">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/assets/HomePage/btn_load_game.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Image y="0" source="resource/assets/HomePage/logo.png" fillMode="scale" horizontalCenter="0"/>
+	<e:Image id="btn_selet_node" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" source="resource/assets/HomePage/network_node.png" y="410"/>
+	<e:Label id="nodeName" text="" x="560" y="430" size="20" bold="true"/>
+	<e:Label id="nodeDelay" text="" x="690" y="430" size="20"/>
+	<e:Group id="node_group" width="320" height="200" x="480" y="210" visible="false">
+		<e:Image x="0" y="0" source="resource/assets/HomePage/select_node_backage.png" scaleX="1" scaleY="1"/>
+		<e:List id="nodeList" width="320" height="200" x="0" y="0" scaleX="1" scaleY="1"/>
+	</e:Group>
+</e:Skin>

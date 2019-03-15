@@ -1,0 +1,68 @@
+{
+    "mc": {
+        "dead": {
+            "frames": [
+                {
+                    "y": -58,
+                    "duration": 1,
+                    "res": "Sprite_0",
+                    "x": -60
+                },
+                {
+                    "y": -60,
+                    "duration": 1,
+                    "res": "Sprite_1",
+                    "x": -59
+                },
+                {
+                    "y": -56,
+                    "duration": 1,
+                    "res": "Sprite_2",
+                    "x": -58
+                },
+                {
+                    "y": -58,
+                    "duration": 1,
+                    "res": "Sprite_3",
+                    "x": -60
+                }
+            ],
+            "labels": [
+                {
+                    "end": 4,
+                    "frame": 1,
+                    "name": "Sprite"
+                }
+            ],
+            "frameRate": 4,
+            "events": []
+        }
+    },
+    "file": "be_trapped_tex.png",
+    "res": {
+        "Sprite_0": {
+            "x": 1,
+            "y": 123,
+            "w": 119,
+            "h": 116
+        },
+        "Sprite_1": {
+            "x": 1,
+            "y": 1,
+            "w": 116,
+            "h": 120
+        },
+        "Sprite_3": {
+            "x": 119,
+            "y": 1,
+            "w": 120,
+            "h": 115
+        },
+        "Sprite_2": {
+            "x": 122,
+            "y": 118,
+            "w": 115,
+            "h": 111
+        }
+    }
+}

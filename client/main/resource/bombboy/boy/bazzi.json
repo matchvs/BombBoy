@@ -1,0 +1,227 @@
+{
+    "mc": {
+        "boy": {
+            "frames": [
+                {
+                    "duration": 1,
+                    "y": -46,
+                    "res": "Sprite_0",
+                    "x": -36
+                },
+                {
+                    "duration": 1,
+                    "y": -44,
+                    "res": "Sprite_1",
+                    "x": -35
+                },
+                {
+                    "duration": 1,
+                    "y": -44,
+                    "res": "Sprite_2",
+                    "x": -36
+                },
+                {
+                    "duration": 1,
+                    "y": -44,
+                    "res": "Sprite_3",
+                    "x": -35
+                },
+                {
+                    "duration": 1,
+                    "y": -46,
+                    "res": "Sprite_4",
+                    "x": -36
+                },
+                {
+                    "duration": 1,
+                    "y": -45,
+                    "res": "Sprite_5",
+                    "x": -35
+                },
+                {
+                    "duration": 1,
+                    "y": -44,
+                    "res": "Sprite_6",
+                    "x": -35
+                },
+                {
+                    "duration": 1,
+                    "y": -44,
+                    "res": "Sprite_7",
+                    "x": -35
+                },
+                {
+                    "duration": 1,
+                    "y": -45,
+                    "res": "Sprite_8",
+                    "x": -35
+                },
+                {
+                    "duration": 1,
+                    "y": -45,
+                    "res": "Sprite_9",
+                    "x": -35
+                },
+                {
+                    "duration": 1,
+                    "y": -46,
+                    "res": "Sprite_10",
+                    "x": -34
+                },
+                {
+                    "duration": 1,
+                    "y": -46,
+                    "res": "Sprite_11",
+                    "x": -34
+                },
+                {
+                    "duration": 1,
+                    "y": -46,
+                    "res": "Sprite_12",
+                    "x": -34
+                },
+                {
+                    "duration": 1,
+                    "y": -45,
+                    "res": "Sprite_13",
+                    "x": -35
+                },
+                {
+                    "duration": 1,
+                    "y": -45,
+                    "res": "Sprite_14",
+                    "x": -35
+                },
+                {
+                    "duration": 1,
+                    "y": -46,
+                    "res": "Sprite_15",
+                    "x": -34
+                }
+            ],
+            "labels": [
+                {
+                    "name": "walk_UP",
+                    "frame": 1,
+                    "end": 4
+                },
+                {
+                    "name": "walk_DOWN",
+                    "frame": 5,
+                    "end": 8
+                },
+                {
+                    "name": "walk_LEFT",
+                    "frame": 9,
+                    "end": 12
+                },
+                {
+                    "name": "walk_RIGHT",
+                    "frame": 13,
+                    "end": 16
+                }
+            ],
+            "frameRate": 10,
+            "events": []
+        }
+    },
+    "file": "boy_tex.png",
+    "res": {
+        "Sprite_3": {
+            "x": 147,
+            "y": 189,
+            "w": 70,
+            "h": 88
+        },
+        "Sprite_6": {
+            "x": 219,
+            "y": 189,
+            "w": 70,
+            "h": 88
+        },
+        "Sprite_7": {
+            "x": 145,
+            "y": 279,
+            "w": 70,
+            "h": 88
+        },
+        "Sprite_8": {
+            "x": 1,
+            "y": 371,
+            "w": 70,
+            "h": 90
+        },
+        "Sprite_2": {
+            "x": 1,
+            "y": 189,
+            "w": 72,
+            "h": 88
+        },
+        "Sprite_9": {
+            "x": 145,
+            "y": 371,
+            "w": 70,
+            "h": 90
+        },
+        "Sprite_5": {
+            "x": 1,
+            "y": 279,
+            "w": 70,
+            "h": 90
+        },
+        "Sprite_0": {
+            "x": 1,
+            "y": 1,
+            "w": 72,
+            "h": 92
+        },
+        "Sprite_1": {
+            "x": 75,
+            "y": 189,
+            "w": 70,
+            "h": 88
+        },
+        "Sprite_10": {
+            "x": 145,
+            "y": 1,
+            "w": 68,
+            "h": 92
+        },
+        "Sprite_11": {
+            "x": 75,
+            "y": 95,
+            "w": 68,
+            "h": 92
+        },
+        "Sprite_14": {
+            "x": 73,
+            "y": 279,
+            "w": 70,
+            "h": 90
+        },
+        "Sprite_12": {
+            "x": 75,
+            "y": 1,
+            "w": 68,
+            "h": 92
+        },
+        "Sprite_13": {
+            "x": 73,
+            "y": 371,
+            "w": 70,
+            "h": 90
+        },
+        "Sprite_4": {
+            "x": 1,
+            "y": 95,
+            "w": 72,
+            "h": 92
+        },
+        "Sprite_15": {
+            "x": 145,
+            "y": 95,
+            "w": 68,
+            "h": 92
+        }
+    }
+}

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TeamHomeSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image width="100%" height="100%" x="0" y="0" source="resource/assets/bg_other.jpg" alpha="1"/>
+	<e:Button id="back" label="" x="35" y="36">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/assets/btn_back.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Image id="create_team_tip" x="148" y="59" source="resource/assets/TeamHome/create_team_label.png"/>
+	<e:Image y="215" source="resource/assets/TeamHome/edit_team_id_tipe.png" horizontalCenter="0"/>
+	<e:List id="user_list" height="250" itemRendererSkinName="User" horizontalCenter="0" y="278">
+		<e:layout>
+		<e:HorizontalLayout gap="50"/>
+		</e:layout>
+	</e:List>
+	<e:Image id="start_match" y="572" source="resource/assets/TeamHome/btn_start_match.png" horizontalCenter="0"/>
+	<e:Group id="team_id_group" height="40" y="151" horizontalCenter="0">
+		<e:Image y="0" source="resource/assets/TeamHome/teamid_lable.png" scaleX="1" scaleY="1" x="0"/>
+		<e:Label id="team_id" text="" y="4" size="44" verticalAlign="justify" bold="true" textColor="0x0e618c" strokeColor="0xffffff" stroke="2" scaleX="1" scaleY="1" x="150" fontFamily="Microsoft YaHei"/>
+	</e:Group>
+	<e:Group id="match_group" y="48" horizontalCenter="0" visible="false">
+		<e:Image source="resource/assets/TeamHome/bg_match_tip.png"/>
+		<e:Label id="start_match_tip" text="" fontFamily="Microsoft YaHei" bold="true" size="28" verticalAlign="justify" horizontalCenter="0" verticalCenter="0" stroke="2" strokeColor="0x0e618c"/>
+	</e:Group>
+	<e:Group id="leave_team_group" x="322" y="163" width="650" height="395" visible="false">
+		<e:Image width="1280" height="720" y="-163" anchorOffsetX="0" anchorOffsetY="0" x="-322" source="resource/assets/TeamHome/bg_mask.png"/>
+		<e:Image source="resource/assets/TeamHome/bg_match_bust_background.png"/>
+		<e:Label text="确定离开队伍么 ？" y="113" textColor="0x333333" fontFamily="Microsoft YaHei" bold="true" size="36" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0"/>
+		<e:Button id="cancel_leave_team" label="" x="64" y="233">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/assets/TeamHome/btn_cancel.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Button id="btn_leave_team" label="" x="352" y="233">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/assets/TeamHome/btn_confirm.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="match_tiem_out" x="315" y="163" width="650" height="395" visible="false">
+		<e:Image width="1280" height="720" y="-163" anchorOffsetX="0" anchorOffsetY="0" x="-315" source="resource/assets/TeamHome/bg_mask.png"/>
+		<e:Image source="resource/assets/TeamHome/bg_match_bust_background.png"/>
+		<e:Label text="是否重新开始匹配 ？" y="113" horizontalCenter="0" textColor="0x333333" fontFamily="Microsoft YaHei" bold="true" size="36"/>
+		<e:Button id="btn_abort_match" label="" x="64" y="233">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/assets/TeamHome/btn_abort.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Button id="btn_to_match" label="" x="352" y="233">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/assets/TeamHome/btn_to_match.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Image y="-21" horizontalCenter="0" source="resource/assets/TeamHome/icon_match_bust_title.png"/>
+	</e:Group>
+	<e:Group id="match_success" x="315" y="120" width="650" height="480" visible="false">
+		<e:Image width="1280" height="720" y="-120" anchorOffsetX="0" anchorOffsetY="0" x="-315" source="resource/assets/TeamHome/bg_mask.png"/>
+		<e:Image source="resource/assets/TeamHome/match_success.png"/>
+		<e:Group id="user_1" x="61" y="62" height="110" width="110">
+			<e:Image width="110" height="110" y="0" x="0"/>
+			<e:Label text="" size="18" fontFamily="Microsoft YaHei" stroke="0" strokeColor="0x0E618C" bold="true" scaleX="1" scaleY="1" y="126" horizontalCenter="0" textColor="0x333333"/>
+		</e:Group>
+		<e:Group id="user_2" x="196" y="62" height="110" width="110">
+			<e:Image width="110" height="110" y="0" x="0"/>
+			<e:Label text="" size="18" fontFamily="Microsoft YaHei" stroke="0" strokeColor="0x0E618C" bold="true" scaleX="1" scaleY="1" y="126" horizontalCenter="0" textColor="0x333333"/>
+		</e:Group>
+		<e:Group id="user_3" x="330" y="62" height="110" width="110">
+			<e:Image width="110" height="110" y="0" x="0"/>
+			<e:Label text="" size="18" fontFamily="Microsoft YaHei" stroke="0" strokeColor="0x0E618C" bold="true" scaleX="1" scaleY="1" y="126" horizontalCenter="0" textColor="0x333333"/>
+		</e:Group>
+		<e:Group id="user_4" x="465" y="62" height="110" width="110">
+			<e:Image width="110" height="110" y="0" x="0"/>
+			<e:Label text="" size="18" fontFamily="Microsoft YaHei" stroke="0" strokeColor="0x0E618C" bold="true" scaleX="1" scaleY="1" y="126" horizontalCenter="0" textColor="0x333333"/>
+		</e:Group>
+		<e:Group id="user_5" x="61" y="283" height="110" width="110">
+			<e:Image width="110" height="110" y="0" x="0"/>
+			<e:Label text="" size="18" fontFamily="Microsoft YaHei" stroke="0" strokeColor="0x0E618C" bold="true" scaleX="1" scaleY="1" y="126" horizontalCenter="0" textColor="0x333333"/>
+		</e:Group>
+		<e:Group id="user_6" x="196" y="283" height="110" width="110">
+			<e:Image width="110" height="110" y="0" x="0"/>
+			<e:Label text="" size="18" fontFamily="Microsoft YaHei" stroke="0" strokeColor="0x0E618C" bold="true" scaleX="1" scaleY="1" y="126" horizontalCenter="0" textColor="0x333333"/>
+		</e:Group>
+		<e:Group id="user_7" x="330" y="283" height="110" width="110">
+			<e:Image width="110" height="110" y="0" x="0"/>
+			<e:Label text="" size="18" fontFamily="Microsoft YaHei" stroke="0" strokeColor="0x0E618C" bold="true" scaleX="1" scaleY="1" y="126" horizontalCenter="0" textColor="0x333333"/>
+		</e:Group>
+		<e:Group id="user_8" x="465" y="283" height="110" width="110">
+			<e:Image width="110" height="110" y="0" x="0"/>
+			<e:Label text="" size="18" fontFamily="Microsoft YaHei" stroke="0" strokeColor="0x0E618C" bold="true" scaleX="1" scaleY="1" y="126" horizontalCenter="0" textColor="0x333333"/>
+		</e:Group>
+		<e:Image source="resource/assets/TeamHome/icon_vs.png" horizontalCenter="0" verticalCenter="0"/>
+		<e:Image y="-21" horizontalCenter="0" source="resource/assets/TeamHome/icon_match_success_title.png"/>
+	</e:Group>
+</e:Skin>

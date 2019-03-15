@@ -1,0 +1,68 @@
+{
+    "res": {
+        "Sprite_0": {
+            "x": 1,
+            "y": 187,
+            "w": 74,
+            "h": 60
+        },
+        "Sprite_1": {
+            "x": 1,
+            "y": 1,
+            "w": 76,
+            "h": 60
+        },
+        "Sprite_3": {
+            "x": 1,
+            "y": 63,
+            "w": 76,
+            "h": 60
+        },
+        "Sprite_2": {
+            "x": 1,
+            "y": 125,
+            "w": 76,
+            "h": 60
+        }
+    },
+    "file": "bom_up_edge.png",
+    "mc": {
+        "bom_up_edge": {
+            "frames": [
+                {
+                    "res": "Sprite_0",
+                    "duration": 1,
+                    "y": -30,
+                    "x": -37
+                },
+                {
+                    "res": "Sprite_1",
+                    "duration": 1,
+                    "y": -30,
+                    "x": -38
+                },
+                {
+                    "res": "Sprite_2",
+                    "duration": 1,
+                    "y": -30,
+                    "x": -38
+                },
+                {
+                    "res": "Sprite_3",
+                    "duration": 1,
+                    "y": -30,
+                    "x": -38
+                }
+            ],
+            "labels": [
+                {
+                    "end": 4,
+                    "frame": 1,
+                    "name": "Sprite"
+                }
+            ],
+            "frameRate": 5,
+            "events": []
+        }
+    }
+}

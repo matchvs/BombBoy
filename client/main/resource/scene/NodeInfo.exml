@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="NodeInfo" width="320" height="66" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="nodeItem" width="320" height="66" x="0" y="0">
+		<e:Image x="0" y="65" source="resource/assets/HomePage/dash.png" scaleX="1" scaleY="1"/>
+		<e:Label id="nodeInfoName" text="" horizontalCenter="0" bold="true" verticalCenter="0"/>
+	</e:Group>
+</e:Skin>

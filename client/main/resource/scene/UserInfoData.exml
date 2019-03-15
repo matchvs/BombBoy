@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="User" width="200" height="250" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+	<e:Image width="178" height="178" y="11.5" x="11.5" texture="{data.avatarTex}" visible="false"/>
+	<e:Group id="leader_avatar" width="178" height="178" x="11.5" y="11.5"/>
+	<e:Rect id="rect" width="180" height="180" x="10" y="10" strokeWeight="3" fillAlpha="0" strokeColor="0xffffff" ellipseWidth="48" ellipseHeight="48"/>
+	<e:Label id="leader_name" text="{data.userID}" size="24" fontFamily="Microsoft YaHei" stroke="2" strokeColor="0x0E618C" bold="true" scaleX="1" scaleY="1" horizontalCenter="0" y="225"/>
+	<e:Image id="icon_leader" x="0" y="0" source="resource/assets/TeamHome/icon_leader.png" scaleX="1" scaleY="1"  visible="{data.isLeader}"/>
+
+
+</e:Skin>
