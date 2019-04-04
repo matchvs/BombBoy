@@ -21,7 +21,9 @@ class TileMap {
 		this.baseURL = baseURL;
 
 	}
-
+	
+		
+	// window.DOMParser = require("./xmldom/xmldom.js").DOMParser;
 	/**
 	 * TM中所有的texture数据都在一个一维数组中,
 	 */

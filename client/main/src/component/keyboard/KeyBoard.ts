@@ -43,8 +43,12 @@ class KeyBoard extends egret.EventDispatcher {
 				KeyBoard.TouchListenerMap[e.keyCode](e.keyCode, "down");
 			}
 		};
-		document.onkeyup = handU;
-		document.onkeydown = handD;
+		try {
+			document.onkeyup = handU;
+			document.onkeydown = handD;
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	public static addTapListener(keyCode, listener: Function) {

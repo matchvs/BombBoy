@@ -50,7 +50,7 @@ class Game extends BaseScene implements eui.UIComponent {
 				var baseIndex = 2;
 				this.mapLayer.addChildAt(this.propLayer, baseIndex);
 				this.bombEffectLayer = new BombEffectLayer();
-				this.bombEffectLayer.init(map.width, map.height, map.tilewidth, map.tileheight);
+				// this.bombEffectLayer.init(map.width, map.height, map.tilewidth, map.tileheight);
 				this.mapLayer.addChildAt(this.bombLayer, ++baseIndex);
 				this.mapLayer.addChildAt(this.bombEffectLayer, ++baseIndex);
 				this.mapLayer.addChildAt(this.playerLayer, ++baseIndex);
@@ -240,7 +240,6 @@ class Game extends BaseScene implements eui.UIComponent {
 				this.me.buringBomb();
 				break;
 			case "avator":
-				this.bombEffectLayer.bomb(this.me.x, this.me.y, this.me.power);
 				Toast.show("bomb");
 				break;
 			case "pingtogle":
