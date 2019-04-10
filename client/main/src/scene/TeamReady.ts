@@ -17,6 +17,8 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 
 	protected onShow(par) {
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
 		console.log("[TeamReady] onShow:" + par);
 	}
 
@@ -96,21 +98,22 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 		var data = e.data;
 		switch (e.type) {
 			case MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY:
-				switch(data.status) {
+				console.log("MATCHVS_TEAM_USER_INFO_NOTIFY:"+data);
+				switch (data.status) {
 					case TeamReady.TEAM_MATCH_STATE.succeed:
 						if (data.action === "joinTeam" || data.action === "createTeam") {
 							SceneManager.showScene(TeamHome, data);
 						}
-					break;
+						break;
 					case TeamReady.TEAM_MATCH_STATE.RoomIsNull:
 						this.teamInexistenceTip.visible = true;
-					break;
+						break;
 					case TeamReady.TEAM_MATCH_STATE.AreMatching:
 						Toast.show("您加入的队伍正在匹配");
-					break;
+						break;
 				}
 				break;
-				default:
+			default:
 				break;
 		}
 	}
@@ -133,6 +136,8 @@ class TeamReady extends BaseScene implements eui.UIComponent {
      */
 	public removeEvent() {
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
 	}
 
 

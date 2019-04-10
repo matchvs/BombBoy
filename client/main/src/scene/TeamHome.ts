@@ -22,8 +22,8 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 	private isLeader: boolean = false;
 	private userListView: eui.List;
 	private time = undefined;
-	public static myTeamUserList;
-	public static otherTeamUserList;
+	private par = undefined;
+
 
 
 	public constructor() {
@@ -33,12 +33,13 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 
 	protected onShow(par) {
 		console.log("[TeamHome] onShow:" + par);
+		this.par = par;
 		if (par != undefined) {
 			this.playerList = par.data;
-			this.ownerID = par.ownerID;
 			if (par.teamID != "") {
 				this.teamID = par.teamID;
 			}
+			this.ownerID = par.ownerID;
 		}
 		this.initEvent();
 	}
@@ -131,7 +132,10 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_STAR, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_RESULT_NOTIFY, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_LEVAE_ROOM, this.onEvent, this);
+
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
 	}
 
 	protected childrenCreated(): void {
@@ -171,6 +175,7 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 		var data = e.data;
 		switch (e.type) {
 			case MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY:
+				console.log("team user changed : "+data);
 				if (data.action === "leaveTeam" && data.player.userID === GameData.userID) {
 					SceneManager.back();
 				} else {
@@ -198,15 +203,48 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 				this.matchSuccessGroup.visible = false;
 				SceneManager.back();
 				break;
-
+			case MatchvsMessage.MATCHVS_ERROR:
+				Delay.run(this.tryReconnect.bind(this),10000);
+				Toast.show("连接已断开" + data.errCode + "10S后尝试重连...");
+				break;
+			case MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE:
+				switch (data.state) {
+					case 1:
+						Toast.show(data.userID + "掉线了，请等待他");
+						break;
+					case 2:
+						Toast.show(data.userID + "小队重连成功");
+						break;
+					case 3:
+						Toast.show(data.userID + "重连失败");
+						this.removeTeamUser(data );
+						break;
+				}
+				break;
 		}
 
 	}
-
+	private tryReconnect(){
+		RombBoyMatchvsEngine.getInstance.reconnect();
+	};
+	private removeTeamUser(data) {
+		this.ownerID == data.owner;
+		for (var i = 0; i < this.playerList.length; i++) {
+			if (this.playerList[i].userID == data.userID) {
+				this.playerList.splice(i, 1);
+				break;
+			}
+		}
+		this.initView();
+	}
 	/**
 	 * 开始匹配
 	 */
 	private starMatch() {
+		if(this.par!=null&&this.par.roomID!=null&&this.par.roomID!="0"){
+			Toast.show("已经在房间中");
+			return;
+		}
 		const canWatch = 1;  //	是否可以观战 1-可以观战 2不可以观战。
 		const mode = 0;      // 根据mode 进行队伍匹配
 		const visibility = 1;  //匹配的房间是否可见（是否可以被getRoomListEx查看到）。0-不可见 1- 可见
@@ -266,8 +304,8 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 	 */
 	private matchSuccess(data, self) {
 		// this.maskBg.visible = true;
-		TeamHome.myTeamUserList = data.brigades[0].playerList;
-		TeamHome.otherTeamUserList = data.brigades[1].playerList;
+		NetWork.myTeamUserList = data.brigades[0].playerList;
+		NetWork.otherTeamUserList = data.brigades[1].playerList;
 		let myTeamViewList = [];
 		let otherTeamViewList = [];
 		this.matchSuccessGroup.visible = true;
@@ -278,27 +316,27 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 				myTeamViewList.push(this.matchSuccessGroup.getElementAt(i));
 			}
 		}
-		let ImageX = 0,ImageY =0,ImageWidth = 61,ImageHeight = 61;
-		for (var a = 0; a < TeamHome.myTeamUserList.length; a++) {
-			ImageLoader.showAsyncByCrossUrl(myTeamViewList[a],TeamHome.myTeamUserList[a].userProfile,ImageX,ImageY,ImageWidth,ImageHeight);
-			myTeamViewList[a].getElementAt(1).text = TeamHome.myTeamUserList[a].userID;
-			TeamHome.myTeamUserList[a].teamID = 0;
-			if (GameData.userID == TeamHome.myTeamUserList[a].userID) {
+		let ImageX = 0, ImageY = 0, ImageWidth = 61, ImageHeight = 61;
+		for (var a = 0; a < NetWork.myTeamUserList.length; a++) {
+			ImageLoader.showAsyncByCrossUrl(myTeamViewList[a], NetWork.myTeamUserList[a].userProfile, ImageX, ImageY, ImageWidth, ImageHeight);
+			myTeamViewList[a].getElementAt(1).text = NetWork.myTeamUserList[a].userID;
+			NetWork.myTeamUserList[a].teamID = 0;
+			if (GameData.userID == NetWork.myTeamUserList[a].userID) {
 				GameData.teamID = 0;
 			}
 		}
-		for (var b = 0; b < TeamHome.otherTeamUserList.length; b++) {
-			ImageLoader.showAsyncByCrossUrl(otherTeamViewList[b],TeamHome.otherTeamUserList[b].userProfile,ImageX,ImageY,ImageWidth,ImageHeight);
-			otherTeamViewList[b].getElementAt(1).text = TeamHome.otherTeamUserList[b].userID;
-			TeamHome.otherTeamUserList[b].teamID = 1;
-			if (GameData.userID == TeamHome.otherTeamUserList[b].userID) {
-				GameData.teamID = 1;	
+		for (var b = 0; b < NetWork.otherTeamUserList.length; b++) {
+			ImageLoader.showAsyncByCrossUrl(otherTeamViewList[b], NetWork.otherTeamUserList[b].userProfile, ImageX, ImageY, ImageWidth, ImageHeight);
+			otherTeamViewList[b].getElementAt(1).text = NetWork.otherTeamUserList[b].userID;
+			NetWork.otherTeamUserList[b].teamID = 1;
+			if (GameData.userID == NetWork.otherTeamUserList[b].userID) {
+				GameData.teamID = 1;
 			}
 		}
 		// setTimeout(function() {
 		RombBoyMatchvsEngine.getInstance.sendEventEx("team", GameData.teamID);
 		SceneManager.showScene(Game);
-        // },1000);
+		// },1000);
 
 	}
 
@@ -328,6 +366,10 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_STAR, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_RESULT_NOTIFY, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_LEVAE_ROOM, this.onEvent, this);
+
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
+
 	}
 
 

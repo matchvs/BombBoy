@@ -8,7 +8,7 @@ class HomePage extends BaseScene implements eui.UIComponent {
 	private nodeSelectImage: eui.Image;
 	private nodeGroup: eui.Group;
 	private nodeList: eui.List;
-	private nodeID:number;
+	private nodeID: number;
 
 
 	public constructor() {
@@ -16,7 +16,7 @@ class HomePage extends BaseScene implements eui.UIComponent {
 	}
 
 	protected onShow(par) {
-		LocalStore_Clear();
+		// LocalStore_Clear();
 		this.initEvent();
 		this.matchvsInit();
 	}
@@ -116,14 +116,23 @@ class HomePage extends BaseScene implements eui.UIComponent {
 				break;
 			case MatchvsMessage.MATCHVS_REGISTERUSER:
 				GameData.userID = e.data.id;
-				RombBoyMatchvsEngine.getInstance.login(e.data.id, e.data.token,this.nodeID);
+				RombBoyMatchvsEngine.getInstance.login(e.data.id, e.data.token, this.nodeID);
 				break;
 			case MatchvsMessage.MATCHVS_LOGIN:
 				if (e.data.status == 200) {
 					if (e.data.roomID != "0") {
-						RombBoyMatchvsEngine.getInstance.leaveRoom("");
+						// SceneManager.showScene(Game, e.data);//重连去游戏
+						SceneManager.showScene(Lobby, e.data);//重连取组队
+						console.error("当前不支持游戏断线重连,调整为重连至小队,等待游戏结束");
+						Toast.show("重连至队伍，等待游戏结束");
+						//
+					} if (e.data.teamID != "0") {
+						SceneManager.showScene(Lobby, e.data);//重连取组队
+						Toast.show("reconnect team");
+						// RombBoyMatchvsEngine.getInstance.leaveRoom("");
+					}else{
+						SceneManager.showScene(Lobby);
 					}
-					SceneManager.showScene(Lobby);
 				} else {
 					console.log("登录失败");
 				}

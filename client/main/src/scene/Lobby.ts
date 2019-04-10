@@ -4,6 +4,7 @@ class Lobby extends BaseScene implements eui.UIComponent {
 	private avatarView:eui.Group;
 	private nameView: eui.Label;
 	private btnChaosFaction:eui.Button; //  乱斗模式
+	private loginPar = null;
 
 	public constructor() {
 		super();
@@ -12,6 +13,7 @@ class Lobby extends BaseScene implements eui.UIComponent {
 	}
 	protected onShow(par) {
 		console.log("[Lobby] onShow:" + par);
+		this.loginPar = par;
 	}
 
 	protected partAdded(partName: string, instance: any): void {
@@ -35,6 +37,12 @@ class Lobby extends BaseScene implements eui.UIComponent {
 		ImageLoader.showAsyncByCrossUrl(this.avatarView,GameData.avatar,ImageX,ImageY,ImageWidth,ImageHeight);
 		this.nameView.text = GameData.userID+"";
 		this.btnChaosFaction.enabled = false;
+		RombBoyMatchvsEngine.getInstance.setReconnectTimeOut();
+		if(this.loginPar!=null){
+			Toast.show("正在重连，请稍等");
+			RombBoyMatchvsEngine.getInstance.reconnect();
+			SceneManager.showScene(TeamReady,this.loginPar);
+		}
 	}
 
 
@@ -45,10 +53,10 @@ class Lobby extends BaseScene implements eui.UIComponent {
 				SceneManager.back();
 				break;
 			case "chaos_faction":
-				egret.log("大乱斗模式还不能玩");
+				Toast.show("暂未开放，敬请期待");
 				break;
 			case "player_team":
-				egret.log("组队开始喽");
+				egret.log("组队开始");
 				SceneManager.showScene(TeamReady);
 				break;
 		}

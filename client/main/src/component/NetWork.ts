@@ -17,13 +17,15 @@ class NetWork {
 		NetWork.receiveMap[json["type"]] && NetWork.receiveMap[json["type"]](json["data"]);
 	}
 
+	public static myTeamUserList = [];
+	public static otherTeamUserList = [];
 
 	public static teamArray2PlayerArray() {
-		for (var i = 0; i < TeamHome.otherTeamUserList.length; i++) {
-			TeamHome.myTeamUserList.push(TeamHome.otherTeamUserList[i]);
+		for (var i = 0; i < NetWork.otherTeamUserList.length; i++) {
+			NetWork.myTeamUserList.push(NetWork.otherTeamUserList[i]);
 		}
-		GameData.MAX_ROOM_USER_COUNT = TeamHome.myTeamUserList.length;
-		let data = { userAction: "enter", currentUserList: TeamHome.myTeamUserList };
+		GameData.MAX_ROOM_USER_COUNT = NetWork.myTeamUserList.length;
+		let data = { userAction: "enter", currentUserList: NetWork.myTeamUserList };
 		return data;
 	}
 

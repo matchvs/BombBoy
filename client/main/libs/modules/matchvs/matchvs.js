@@ -1,8 +1,8 @@
 
 /**************************************************************************************************
  * 								Matchvs SDK														  *
- *                              SDK_RELMatchvs_V3.7.9.4.1                                                       *
- * 								2019-04-03											        	  *
+ *                              SDK_RELMatchvs_V3.7.9.4.3                                                       *
+ * 								2019-04-04											        	  *
  * 								https://www.matchvs.com/home									  *
  **************************************************************************************************/
  
@@ -11,7 +11,7 @@ var MVS = (function (_obj) {
 
     var _this ;
     var MVS = {
-        version:"SDK_RELMatchvs_V3.7.9.4.1",
+        version:"SDK_RELMatchvs_V3.7.9.4.3",
         Game:{
             id:0,
             appkey:""
@@ -14220,7 +14220,7 @@ var MVS = (function (_super) {
              */
             proto.stream.RoomNetworkStateNotify.toObject = function (includeInstance, msg) {
                 var f, obj = {
-                    roomid: jspb.Message.getFieldWithDefault(msg, 1, 0),
+                    roomid: jspb.Message.getFieldWithDefault(msg, 1, "0"),
                     userid: jspb.Message.getFieldWithDefault(msg, 2, 0),
                     state: jspb.Message.getFieldWithDefault(msg, 3, 0),
                     owner: jspb.Message.getFieldWithDefault(msg, 4, 0)
@@ -15145,7 +15145,7 @@ var MVS = (function (_super) {
                     roomproperty: msg.getRoomproperty_asB64(),
                     full: jspb.Message.getFieldWithDefault(msg, 5, 0),
                     state: jspb.Message.getFieldWithDefault(msg, 6, 0),
-                    getsystemroom: jspb.Message.getFieldWithDefault(msg, 7, false)
+                    getsystemroom: jspb.Message.getFieldWithDefault(msg, 7, 0)
                 };
 
                 if (includeInstance) {
@@ -15207,7 +15207,7 @@ var MVS = (function (_super) {
                         msg.setState(value);
                         break;
                     case 7:
-                        var value = /** @type {boolean} */ (reader.readBool());
+                        var value = /** @type {number} */ (reader.readInt32());
                         msg.setGetsystemroom(value);
                         break;
                     default:
@@ -15282,8 +15282,8 @@ var MVS = (function (_super) {
                 );
             }
             f = message.getGetsystemroom();
-            if (f) {
-                writer.writeBool(
+            if (f !== 0) {
+                writer.writeInt32(
                     7,
                     f
                 );
@@ -15406,19 +15406,17 @@ var MVS = (function (_super) {
 
 
         /**
-         * optional bool getSystemRoom = 7;
-         * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
-         * You should avoid comparisons like {@code val === true/false} in those cases.
-         * @return {boolean}
+         * optional int32 getSystemRoom = 7;
+         * @return {number}
          */
         proto.stream.RoomFilter.prototype.getGetsystemroom = function () {
-            return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 7, false));
+            return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
         };
 
 
-        /** @param {boolean} value */
+        /** @param {number} value */
         proto.stream.RoomFilter.prototype.setGetsystemroom = function (value) {
-            jspb.Message.setProto3BooleanField(this, 7, value);
+            jspb.Message.setProto3IntField(this, 7, value);
         };
 
 
@@ -40409,7 +40407,7 @@ function MsRoomFilter(maxPlayer,mode,canWatch,roomProperty) {
  * @param order {number} 0-SortAsc 1-SortDesc
  * @param pageNo {number}
  * @param pageSize {number}
- * @param getSystemRoom {boolean}
+ * @param getSystemRoom {number}
  * @constructor
  */
 function MsRoomFilterEx(maxPlayer, mode, canWatch, roomProperty, full, state, sort, order, pageNo, pageSize,getSystemRoom) {
@@ -41337,7 +41335,7 @@ function copyInObject(clone, beclone) {
             packet.header = header;
             packet.buf = dataView;
             if (protoMap) {
-                MatchvsLog.logI("[INFO]  "+header.cmd);
+                // MatchvsLog.logI("[INFO]  "+header.cmd);
                 packet.payload = protoMap.deserializeBinary && protoMap.deserializeBinary(msg.buffer.slice(FIXED_HEAD_SIZE, msg.buffer.byteLength));
             } else {
                 MatchvsLog.logI("[WARN]unknown msg,Head:" + header);
@@ -41444,7 +41442,7 @@ function copyInObject(clone, beclone) {
             roomInfo.setMaxplayer(roomJoin.maxPlayer);
             roomInfo.setCanwatch(roomJoin.canWatch);
             roomInfo.setMode(roomJoin.mode);
-            roomInfo.setVisibility(0);
+            roomInfo.setVisibility(roomJoin.visibility?roomJoin.visibility:1);
             message.setRoominfo(roomInfo);
 
             var bytes = message.serializeBinary();
@@ -41570,7 +41568,7 @@ function copyInObject(clone, beclone) {
             roomFilter.setCanwatch(filter.canWatch);
             roomFilter.setRoomproperty(stringToUtf8ByteArray(filter.roomProperty));
             roomFilter.setState(filter.state);
-            roomFilter.setGetsystemroom(filter.getSystemRoom||false);
+            roomFilter.setGetsystemroom(filter.getSystemRoom||0);
 
             pkg.setGameid(gameID);
             pkg.setRoomfilter(roomFilter);
