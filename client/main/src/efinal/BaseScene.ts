@@ -82,6 +82,7 @@ class BaseScene extends eui.Component implements eui.UIComponent {
 
     protected onHide() {
         console.log("[BaseScene] onHide");
+
     }
 
     public finish() {

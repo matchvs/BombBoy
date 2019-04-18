@@ -31,19 +31,20 @@ public class GameConfig {
 
     public static final String ACTION_MOVE = "move";
     public static final String ACTION_BURING = "buring";
+    public static final String ACTION_PING = "ping";
     public static final String ACTION_BORN = "born";
     public static final String ACTION_PICK = "pick";
     public static final String ACTION_INPUT = "input";
     public static final String ACTION_BOMB = "bomb";
-    public static final String ACTION_STATE_PLAYER = "state";
     public static final String ACTION_TEAM = "team";
     public static final String ACTION_OVER = "over";
     public static final String ACTION_DROP = "drop";
-    public static final String ACTION_PING = "ping";
+    public static final String ACTION_STATE_MAP = "map";
+    public static final String ACTION_STATE_PLAYER = "player";
 
-    public static final String RoomServerIP = "192.168.8.114";
+
 //        public static final String RoomServerIP = "118.24.53.22";
-    public static String EventServerIP = "118.24.53.22";
+
     private static double MoveSpeedConfig[] = new double[]{
             150 / FPS,
             175 / FPS,

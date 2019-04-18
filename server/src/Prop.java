@@ -11,11 +11,12 @@ public class Prop extends Position {
 
     /**
      * 根据道具爆率配置计算是否爆出物品
+     *
      * @return
      */
     public static int genType() {
         if (r.nextInt(GameConfig.PROP_PROBABILITY) == 0) {
-            return r.nextInt(Map.ITEM_NUM)+Map.ITEM_INDEX+1;
+            return r.nextInt(Map.ITEM_NUM) + Map.ITEM_INDEX + 1;
         }
         return Map.NULL;
     }

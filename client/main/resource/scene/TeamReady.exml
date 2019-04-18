@@ -23,7 +23,7 @@
 	<e:Group id="croup_join_team" width="1280" height="720" x="0" y="0" visible="false">
 		<e:Group id="none_focus" width="640" height="80" x="320" y="258">
 			<e:Image x="0" y="0" source="resource/assets/TeamReady/input_none_focus.png" scaleX="1" scaleY="1"/>
-			<e:Label text="请输入5位数小队ID" horizontalCenter="0" verticalCenter="0" size="36" fontFamily="Microsoft YaHei" textColor="0xc1d7d9" bold="true"/>
+			<e:Label text="请输入小队ID" horizontalCenter="0" verticalCenter="0" size="36" fontFamily="Microsoft YaHei" textColor="0xc1d7d9" bold="true"/>
 		</e:Group>
 		<e:Image id="team_inexistence" y="199" horizontalCenter="0" source="resource/assets/TeamReady/team_inexistence.png" visible="false"/>
 		<e:Group id="focus" width="640" height="80" x="320" y="258" visible="false">

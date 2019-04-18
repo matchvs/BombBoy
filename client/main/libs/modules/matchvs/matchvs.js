@@ -1,8 +1,8 @@
 
 /**************************************************************************************************
  * 								Matchvs SDK														  *
- *                              SDK_RELMatchvs_V3.7.9.4.3                                                       *
- * 								2019-04-04											        	  *
+ *                              SDK_RELMatchvs_V3.7.9.5.1                                                       *
+ * 								2019-04-18											        	  *
  * 								https://www.matchvs.com/home									  *
  **************************************************************************************************/
  
@@ -11,7 +11,7 @@ var MVS = (function (_obj) {
 
     var _this ;
     var MVS = {
-        version:"SDK_RELMatchvs_V3.7.9.4.3",
+        version:"SDK_RELMatchvs_V3.7.9.5.1",
         Game:{
             id:0,
             appkey:""
@@ -65,7 +65,7 @@ var MVS = (function (_obj) {
         Config :{
             HEART_BEAT_INTERVAL : 3000,
             MAXPLAYER_LIMIT : 100,
-            MINPLAYER_LIMIT : 2
+            MINPLAYER_LIMIT : 1
         },
 
         Host:{
@@ -44422,19 +44422,19 @@ function MatchvsResponse() {
          * @param {string} channel
          * @param {string} platform
          * @param {number} gameID
-         * @param {string} appkey
+         * @param {string} appKey
          * @param {number} gameVersion
          * @param {number} threshold
          * @returns {number}
          */
-        this.init = function (response, channel, platform, gameID, appkey, gameVersion, threshold) {
+        this.init = function (response, channel, platform, gameID, appKey, gameVersion, threshold) {
             MVS.Game.id = gameID;
             MVS.mtaReport && MVS.mtaReport.Report("init");
             this.mRsp = response;
             M_EVN.channel = channel;
             M_EVN.platform = platform;
             M_EVN.gVersion = gameVersion;
-            M_EVN.appkey = appkey;
+            M_EVN.appkey = appKey;
             M_EVN.gameID = gameID;
             this.mState.SetIniting();
             this.mProtocol.init();
@@ -44452,17 +44452,17 @@ function MatchvsResponse() {
          * @param {MatchvsResponse} response
          * @param {string} endPoint
          * @param {number} gameID
-         * @param {string} appkey
+         * @param {string} appKey
          * @returns {number}
          */
-        this.premiseInit = function (response, endPoint, gameID, appkey) {
+        this.premiseInit = function (response, endPoint, gameID, appKey) {
             if( undefined === endPoint || endPoint === ""){
                 return -1;
             }
             this.mRsp = response;
             MVS.Game.id = gameID;
             M_EVN.gameID = gameID;
-            M_EVN.appkey = appkey;
+            M_EVN.appkey = appKey;
             if(endPoint.indexOf("wss://") >= 0 || endPoint.indexOf("ws://") >= 0){
                 MVS.Host.HOST_GATWAY_ADDR = endPoint;
             }else{
@@ -44532,20 +44532,17 @@ function MatchvsResponse() {
 
         /**
          * 登录
-         * @pUserID {uint32} value 用户ID
-         * @pToken {uint64} value 用户的token值
-         * @pGameID {uint32} pGameID 游戏ID
-         * @pGameVersion {uint16} value  游戏版本
-         * @pAppKey { !Array.<string> } app_key 游戏key,通过官网注册获得
-         * @pDeviceID { !Array.<string> } deviceID 设备ID
-         * @pGatewayID pGatewayID
+         * @userID {uint32} value 用户ID
+         * @token {uint64} value 用户的token值
+         * @deviceID { !Array.<string> } deviceID 设备ID,0
+         * @nodeID {uint32}
          */
         this.login = function (userID, token, deviceID, nodeID) {
 
             M_User.ID = userID;
             this.mUserID = userID;
             M_User.token = token;
-            M_EVN.deviceID = deviceID;
+            M_EVN.deviceID = deviceID||"0";
 
             var resNo = this.mState.LoginCheck();
             if (resNo !== 0){return resNo;}
@@ -44684,19 +44681,13 @@ function MatchvsResponse() {
             return 0;
         };
 
-        /**
-         *
-         * @param roomID {string}
-         * @param userProfile {string}
-         * @returns {number}
-         */
-        this.joinRoom = function (roomID, userProfile) {
+        this.joinRoom = function (roomID, userProfile,isReconnection) {
             var resNo = this.mState.InRoomCheck();
             if (resNo < 0)return resNo;
             if (!(/^[0-9]+$/.test(roomID))) return -1;//判断必须是全为数字
             var roomId = String(roomID).trim();
             if (0 === roomId || roomId === "") return -1;
-            var roomJoin = new MsRoomJoin(MsEnum.JoinRoomType.joinSpecialRoom, M_User.ID,
+            var roomJoin = new MsRoomJoin(isReconnection?MsEnum.JoinRoomType.reconnect:MsEnum.JoinRoomType.joinSpecialRoom, M_User.ID,
                 roomID, M_EVN.gameID, 0, 0, 0, userProfile, [{name: "MatchVS"}]);
             var buf = this.mProtocol.joinRoomSpecial(roomJoin);
             this.mState.SetJoinRooming();
@@ -44997,12 +44988,12 @@ function MatchvsResponse() {
      * @returns {number}
      */
     MatchvsEngine.prototype.getHostList = function () {
-        var gameId = M_EVN.gameID;
+        var gameID = M_EVN.gameID;
         var channel = M_EVN.channel;
         var platform = M_EVN.platform;
         var uri = _obj.APIPATH.HOSTLIST;
         var isUseWSS  = MVS.MsUtil.isNeedWSS();
-        var url = MVS.Host.MAIN_URL + uri + "?mac=0" + "&gameid=" + gameId + "&channel=" + channel + "&platform=" + platform + (isUseWSS?"&useWSSProxy=1":"");
+        var url = MVS.Host.MAIN_URL + uri + "?mac=0" + "&gameid=" + gameID + "&channel=" + channel + "&platform=" + platform + (isUseWSS?"&useWSSProxy=1":"");
         var engine = this;
         var rep = {
             onMsg:function (buf) {

@@ -1407,7 +1407,7 @@ declare class MatchvsEngine {
      * @param {string} userProfile 开发者自定义数据，可以比如：用户头像，分数等
      * @returns {number}
      */
-    joinRoom(roomID:string,userProfile:string):number
+    joinRoom(roomID:string,userProfile:string,isReconnect?:boolean):number
 
     /**
      * 断线重连，断线后在20秒内可以直接调用这个接口再次加入房间，如果需要判断是否

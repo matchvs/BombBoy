@@ -14,6 +14,7 @@ public class Player extends Position {
     public final static int STATE_LIVE = 0;
     public final static int STATE_WEAK = 1;
     public final static int STATE_DEAD = 2;
+    public final static int STATE_BABY = -1;
 
     public transient boolean isHasSyncStop;
     private List<Bomb> currentBombList;
@@ -28,7 +29,7 @@ public class Player extends Position {
     //    public int speed = GameConfig.MIN_MOVE_SPEED;
 //    public int power = GameConfig.MIN_BOMB_POWER;
 //    public int bombCount = GameConfig.MIN_BOMB_COUNT;
-    public int state = STATE_LIVE;
+    public int state = STATE_BABY;
     public transient Runnable deadTimer;
     public transient boolean isStopMove = false;
 
@@ -38,7 +39,10 @@ public class Player extends Position {
         this.teamID = teamID;
         currentBombList = new ArrayList<>();
     }
-
+    public Player bron(){
+        this.state = STATE_LIVE;
+        return this;
+    }
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
@@ -87,28 +91,31 @@ public class Player extends Position {
     public boolean move(int xArrow, int yArrow, MovePathLimit limit, MoveListener listener) {
         if (xArrow == 0 && yArrow == 0) return false;
         if (state == Player.STATE_DEAD) return false;
-        double dstX = xArrow * GameConfig.caluSpeed(this.speed);
-        this.xInMap += dstX;
-//        log.info("x changed In map:" + this.xInMap);
+
+        //x
+        int dstX = (int) (this.xInMap + xArrow * GameConfig.caluSpeed(this.speed));
         double ignore = GameConfig.CHECK_IGNORE;
         if (limit.hasLimitX(this.x, this.y, xArrow)) {
             if (xArrow > 0) {
-                this.xInMap = (int) Math.min(this.xInMap, (this.x + ignore) * GameConfig.BASE_NODE_WIDTH);
+                this.xInMap = (int) Math.min(dstX, (this.x + ignore) * GameConfig.BASE_NODE_WIDTH);
             } else {
-                this.xInMap = (int) Math.max(this.xInMap, (this.x - ignore) * GameConfig.BASE_NODE_WIDTH);
+                this.xInMap = (int) Math.max(dstX, (this.x - ignore) * GameConfig.BASE_NODE_WIDTH);
             }
+        }else{
+            this.xInMap = dstX;
         }
         this.x = (int) Math.floor((xInMap + GameConfig.BASE_NODE_WIDTH / 2) / GameConfig.BASE_NODE_WIDTH);
 
-
-        double dstY = yArrow * GameConfig.caluSpeed(this.speed);
-        this.yInMap += dstY;
+        //y
+        int dstY = (int) (this.yInMap +  yArrow * GameConfig.caluSpeed(this.speed));
         if (limit.hasLimitY(this.x, this.y, yArrow)) {
             if (yArrow > 0) {
-                this.yInMap = (int) Math.min(this.yInMap, (this.y + ignore) * GameConfig.BASE_NODE_HEIGHT);
+                this.yInMap = (int) Math.min(dstY, (this.y + ignore) * GameConfig.BASE_NODE_HEIGHT);
             } else {
-                this.yInMap = (int) Math.max(this.yInMap, (this.y - ignore) * GameConfig.BASE_NODE_HEIGHT);
+                this.yInMap = (int) Math.max(dstY, (this.y - ignore) * GameConfig.BASE_NODE_HEIGHT);
             }
+        }else{
+            this.yInMap = dstY;
         }
         this.y = (int) Math.floor((yInMap + GameConfig.BASE_NODE_HEIGHT / 2) / GameConfig.BASE_NODE_HEIGHT);
 

@@ -121,16 +121,18 @@ class HomePage extends BaseScene implements eui.UIComponent {
 			case MatchvsMessage.MATCHVS_LOGIN:
 				if (e.data.status == 200) {
 					if (e.data.roomID != "0") {
-						// SceneManager.showScene(Game, e.data);//重连去游戏
-						SceneManager.showScene(Lobby, e.data);//重连取组队
-						console.error("当前不支持游戏断线重连,调整为重连至小队,等待游戏结束");
-						Toast.show("重连至队伍，等待游戏结束");
+						SceneManager.showScene(Game, e.data);//重连去游戏
+						RombBoyMatchvsEngine.getInstance.joinRoom(e.data.roomID,"reconnect",true);
+						// SceneManager.showScene(Lobby, e.data);//重连取组队
+						// console.error("当前不支持游戏断线重连,调整为重连至小队,等待游戏结束");
+						console.log("reconnect to game ");
+						Toast.show("continued game");
 						//
-					} if (e.data.teamID != "0") {
+					} else if (e.data.teamID != "0") {
 						SceneManager.showScene(Lobby, e.data);//重连取组队
 						Toast.show("reconnect team");
 						// RombBoyMatchvsEngine.getInstance.leaveRoom("");
-					}else{
+					} else {
 						SceneManager.showScene(Lobby);
 					}
 				} else {

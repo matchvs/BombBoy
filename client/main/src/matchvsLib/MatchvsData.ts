@@ -5,6 +5,7 @@
 class MatchvsData {
 
 	public static gameID:number = 214480;
+
 	public static PremiseGameID:number = 2144800;
 	public static PremiseAppkey:string = "b4c152d2dcd4023be653a6e3d45b738";
 	public static appKey:string = "0b4c152d2dcd4023be653a6e3d45b738#M";
@@ -12,7 +13,8 @@ class MatchvsData {
 	public static DeviceID:string = "0";
 	public static gatewayID: number = 1;
 	public static pChannel:string = "Matchvs"
-	public static pPlatform:string = "release";
+	public static pPlatform:string = "alpha";
+	// public static pPlatform:string = "release";
 	public static HtttpUrl:any =  (MatchvsData.pPlatform == "release" ? "https://vsopen.matchvs.com/wc5/getGameData.do?": "https://alphavsopen.matchvs.com/wc5/getGameData.do?");
 	public static enging:MatchvsEngine = new MatchvsEngine();
 	public static MatchvsRep:MatchvsResponse = new MatchvsResponse();

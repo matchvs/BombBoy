@@ -102,8 +102,8 @@ class RombBoyMatchvsEngine {
 	 * 加入房间
 	 * @param userProfile 传递自己的微信昵称与微信头像地址
 	 */
-	public joinRoom(roomID: string, userProfile: string) {
-		var result = MatchvsData.enging.joinRoom(roomID, userProfile);
+	public joinRoom(roomID: string, userProfile: string,isReconnect:boolean) {
+		var result = MatchvsData.enging.joinRoom(roomID, userProfile,isReconnect);
 		egret.log("加入房间result:" + result);
 		return result;
 	}
@@ -166,7 +166,7 @@ class RombBoyMatchvsEngine {
 	 * 发送消息扩展接口，给gameServer
 	 */
 	public sendEventEx(action, cpProto: any) {
-		var result = MatchvsData.enging.sendEventEx(1, JSON.stringify({ "msgType": action, "data": cpProto }), 1, []);
+		var result = MatchvsData.enging.sendEventEx(1, JSON.stringify({ "type": action, "data": cpProto }), 1, []);
 		console.log("Ex发送消息 result" + result);
 		return result;
 	}

@@ -27,7 +27,7 @@ class AnimaUtil {
 			.to({ "x": tox, "y": toy, }, 1000, egret.Ease.bounceIn)
 			.to({ "x": srcx, "y": srcy, }, 1500, egret.Ease.bounceOut)
 			.play().call(function () {
-				console.log('[INFO] floating');
+				// console.log('[INFO] floating');
 			});
 	}
 }

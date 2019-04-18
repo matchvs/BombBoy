@@ -11,5 +11,5 @@ class GameData {
     static teamID: number = 0;
     static TeamMaxPlayer:number = 3;
 	static avatar:string = "";
-
+  static isShowPingWindow = false;
 }

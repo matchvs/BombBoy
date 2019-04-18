@@ -134,6 +134,10 @@ class TileMap {
 			newc && childlayer2.removeChild(newc);
 		}, this, [map.name, childlayer, x, y]);
 	}
+	public static getNode(map: TileLayer, childlayer: egret.DisplayObjectContainer, x, y) {
+		var child = childlayer.getChildByName(map.name + ":" + x + "," + y);
+		return child;
+	}
 	public static render(map: TileMap, mapLayer: egret.DisplayObjectContainer, x, y, renderMaxW, renderMaxH) {
 
 		for (var i = 0; i < map.layers.length; i++) {

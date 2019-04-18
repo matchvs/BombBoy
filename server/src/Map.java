@@ -146,7 +146,10 @@ public class Map implements MovePathLimit {
             this.playerList.add(players[i]);
         }
         for (int i = 0; i < this.playerList.size(); i++) {
-            this.playerList.get(i).setPosition(startPoint[i][0], startPoint[i][1]);
+            Player player = this.playerList.get(i);
+            if (player.x == 0 && player.y == 0&&player.state==Player.STATE_LIVE) {
+                player.setPosition(startPoint[i][0], startPoint[i][1]);
+            }
         }
     }
 
@@ -181,7 +184,7 @@ public class Map implements MovePathLimit {
         if (getNode(p2.x, p2.y) != Map.NULL) {
             return false;
         }
-        if (p2.state!=Player.STATE_LIVE){
+        if (p2.state != Player.STATE_LIVE) {
             return false;
         }
         Bomb bomb = p2.tryBuried();

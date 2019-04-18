@@ -32,7 +32,11 @@ class Game extends BaseScene implements eui.UIComponent {
 	private static pingWindow: PingWindow;
 
 
+	public loadComplete = false;
 	public isGameStart = true;
+
+	private pingTimer;
+
 	protected onCreated(): void {
 		console.log("[Lobby] [onCreated] " + this.name);
 		TileMap.createTileMap("chinese.tmx", "resource/bombboy/map/chinese/", function (map: TileMap, progress: number, total: number) {
@@ -54,6 +58,9 @@ class Game extends BaseScene implements eui.UIComponent {
 				this.mapLayer.addChildAt(this.bombLayer, ++baseIndex);
 				this.mapLayer.addChildAt(this.bombEffectLayer, ++baseIndex);
 				this.mapLayer.addChildAt(this.playerLayer, ++baseIndex);
+
+				// console.log('[INFO] map:'+data);
+				this.loadComplete = true;
 			}
 			// console.log('[INFO] [Load TileMap] [' + map.name + '] is ' + progress + "/" + total);
 		}.bind(this));
@@ -63,31 +70,40 @@ class Game extends BaseScene implements eui.UIComponent {
 		this.bombLayer.name = "bombLayer"
 		this.propLayer = new PropLayer();
 		this.propLayer.name = "propLayer";
-		Game.pingWindow = new PingWindow();
-		var s = Game.pingWindow.init(1280, 360);
-		s.y = 80;
-		Game.pingWindow.toggle();
-		this.addChild(s);
-		NetWork.receive("ping", function (data) {
-			let obj = JSON.parse(JSON.parse(data).data) ;
-			if (obj.userID === GameData.userID) {
-				var ping = new Date().getTime() - obj.time;
-				Game.pingWindow.update(ping);
-			}
-		}.bind(this));
+		if (GameData.isShowPingWindow) {
+			Game.pingWindow = new PingWindow();
+			var s = Game.pingWindow.init(1280, 360);
+			s.y = 80;
+			Game.pingWindow.toggle();
+			this.addChild(s);
+			NetWork.receive("ping", function (data) {
+				let obj = JSON.parse(JSON.parse(data).data);
+				if (obj.userID === GameData.userID) {
+					var ping = new Date().getTime() - obj.time;
+					GameData.isShowPingWindow && Game.pingWindow.update(ping);
+				}
+			}.bind(this));
+			this.pingTimer = setInterval(function () {
+				NetWork.send("ping", JSON.stringify({ "time": new Date().getTime(), "userID": GameData.userID }));
+			}, 1000)
+		}
 
-		setInterval(function () {
-			NetWork.send("ping",JSON.stringify({"time": new Date().getTime(), "userID": GameData.userID }));
-		}, 1000)
+
+
+
 		var roomUserChangedListener = function (rsp) {
-			// var userChanged = JSON.parse(utf8ByteArrayToString(rsp.payload));
-			var userChanged = JSON.parse(utf8ByteArrayToString(rsp));
-			// UI.printLog("[Rsp]room userID:" + userChanged["userID"] + " changed :" + userChanged["userAction"]);
+			var userChanged = rsp;
+			if (rsp.constructor.name == "Uint8Array") {
+				var userChanged = JSON.parse(utf8ByteArrayToString(rsp));
+			}
+			
+			console.log("[Rsp]roomUserChanged: " , userChanged );
 
 			var currentUserList = userChanged["currentUserList"];
 			if (userChanged["userAction"] == "enter") {
 
-				if ((GameData.MAX_ROOM_USER_COUNT - currentUserList.length) == 0) {
+				if ((currentUserList.length) > 0) {
+					// if ((GameData.MAX_ROOM_USER_COUNT - currentUserList.length) == 0) {
 					this.gameStart();
 				} else {
 					this.loadingText.text = " 还需等待" + (GameData.MAX_ROOM_USER_COUNT - currentUserList.length) + "名玩家进入";
@@ -132,8 +148,10 @@ class Game extends BaseScene implements eui.UIComponent {
 			// console.log("move:" + JSON.stringify(data));
 			for (var i = 0; i < data.length; i++) {
 				var player = <Player>this.playerMap[data[i].ID];
-				player.x = data[i].x;
-				player.y = data[i].y;
+				if (player) {
+					player.x = data[i].x;
+					player.y = data[i].y;
+				}
 			}
 			sync.update(data);
 		}.bind(this));
@@ -153,18 +171,19 @@ class Game extends BaseScene implements eui.UIComponent {
 		NetWork.receive("born", function (data) {
 			for (var i = 0; i < data.length; i++) {
 				var player = <Player>this.playerMap[data[i].ID];
-				console.log("player.ID:" + player.ID);
-				player.setPostion(data[i].x, data[i].y);
+				player&&player.setPostion(data[i].x, data[i].y);
+				console.log("player bron:" , player);
 			}
 		}.bind(this));
 
-		NetWork.receive("state", function (data) {
+		NetWork.receive("player", function (data) {
 			if (this.playerMap[data.ID]) {
 				var player = <Player>this.playerMap[data.ID];
 				Player.switchState(data["state"], player, this.playerLayer);
 				if (data["state"] == Player.STATE.dead) {
 					this.playerMap[data.ID] = null;
 				}
+				player.state = data["state"];
 			}
 
 		}.bind(this));
@@ -206,12 +225,64 @@ class Game extends BaseScene implements eui.UIComponent {
 			this.me.buringBomb();
 		}.bind(this));
 
+		if (GameData.isShowPingWindow) {
+			var pingWingdow = new PingWindow();
+			this.addChild(pingWingdow.init(720, 360));
+
+			NetWork.receive("ping", function (data) {
+				var current = new Date().getTime();
+				console.log('[INFO] ping.rsp:' + current);
+				var ping = current - data;
+				console.log('[INFO] ping.rsp:' + data);
+				pingWingdow.update(ping);
+			}.bind(this));
+
+			setInterval(function () {
+				NetWork.send("ping", new Date().getTime());
+			}, 1000)
+		}
+
+		NetWork.receive("map", function (data) {
+			this.joinAtMidway(data);
+		}.bind(this));
+		NetWork.receive("bombed", function (data) { }.bind(this));
+
+	}
+	private joinAtMidway(data) {
+		if (!this.loadComplete) {
+			setTimeout(function () {
+				this.joinAtMidway(data);
+				console.log("waiting for  loading  map");
+			}.bind(this), 500);
+			return;
+		}
+		for (var n = 0; n < data.length; n++) {
+			// console.log(data[n]);
+			for (var m = 0; m < data[n].length; m++) {
+				var node: any = { type: data[n][m], x: m, y: n };
+				if (node.type == 0) {
+					this.removeMapNode(node);
+				} else if (node.type > 4) {
+					this.propLayer.show(node.x, node.y, node.type);
+					this.removeMapNode(node);
+				} else if (node.type == 3) {
+					this.createAndShowBomb(node);
+					this.removeMapNode(node);
+				}
+			}
+		}
+	}
+	private removeMapNode(node) {
+		console.log('[INFO] node %d,%d', node.x, node.y);
+		var localNode = TileMap.getNode(this.destroyTileLayer, this.destroyLayer, node.x, node.y);
+		localNode && TileMap.removeNode(this.destroyTileLayer, this.destroyLayer, node.x, node.y);
 	}
 	public gameStart() {
 		this.loadingDialog.hide();
-		this.isGameStart = true;
-		// Toast.show("开始游戏");
-		Music.play("bg_mp3").setLoop();
+		Toast.show("开始游戏");
+		Delay.run(function () {
+			Music.play("bg_mp3").setLoop();
+		}, 1000);
 	}
 	public onUserEnter(ID, teamID) {
 		if (!this.playerMap[ID]) {
@@ -336,6 +407,6 @@ class Game extends BaseScene implements eui.UIComponent {
 
 
 	protected onHide(): void {
-
+		this.pingTimer && clearInterval(this.pingTimer);
 	}
 }

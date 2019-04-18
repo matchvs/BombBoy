@@ -1,8 +1,9 @@
 class Player {
-	public constructor(playerID,teamID) {
+	public constructor(playerID, teamID) {
 		this.ID = playerID;
-		this.teamID = teamID;
+		this.teamID = teamID?teamID:playerID%2;
 	}
+
 	public static STATE = { "null": -1, "live": 0, "weak": 1, "dead": 2 };
 	private animaTime: number = 125;
 	public ID: number = 0;
@@ -17,6 +18,7 @@ class Player {
 	public viewLayout: eui.Group;
 	public controller: JoyStickPlayer;
 	private myIdentity: eui.Image;
+	public state: number;
 
 	public buringBomb() {
 		NetWork.send("buring", this.ID);
@@ -36,7 +38,7 @@ class Player {
 			this.myIdentity.height = 20;
 			this.viewLayout.addChild(this.myIdentity);
 			BaseLayer.floatingAnima(this.myIdentity);
-			// NetWork.send("team", this.teamID);
+			NetWork.send("team", this.teamID);
 		}
 		playerLayer.addChild(this.viewLayout);
 
@@ -47,7 +49,7 @@ class Player {
 	private lastArrow = VirtualJoystick.Arrow.UP;
 
 
-	public creatAnimaView(dataName, textureName, animaName, frameName?):egret.MovieClip {
+	public creatAnimaView(dataName, textureName, animaName, frameName?): egret.MovieClip {
 		var data = RES.getRes(dataName);
 		var txtr = RES.getRes(textureName);
 		var mcFactory: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data, txtr);
@@ -72,11 +74,13 @@ class Player {
 	}
 
 	private static stopAnima(player: Player) {
+		console.log('[INFO] player:' + player.ID + " stop state:" + player.state);
 		player.animaView && player.animaView.gotoAndPlay(player.animaView.totalFrames - 1, 1);
 		player.animaView && player.viewLayout.removeChild(player.animaView);
 	}
 
 	public static switchState(state: number, player, playerLayout) {
+		console.log('[INFO] player:' + player.ID + " switch to State:" + state);
 		switch (state) {
 			case Player.STATE.live:
 				Player.revivePlayer(player, playerLayout);
@@ -130,15 +134,15 @@ class Player {
 	*/
 	public static revivePlayer(player: Player, viewLayout: egret.DisplayObjectContainer) {
 		Player.stopAnima(player);
-		var anima = player.creatAnimaView("revive_json", "revive_png", "revive");
-		anima.gotoAndPlay(0, -1);
-		anima.addEventListener(egret.Event.LOOP_COMPLETE, function (e: egret.Event): void {
-			console.log('[INFO] revivePlayer complete');
-			anima.stop();
+		var newAnima = player.creatAnimaView("revive_json", "revive_png", "revive");
+		newAnima.gotoAndPlay(0, -1);
+		newAnima.addEventListener(egret.Event.LOOP_COMPLETE, function (e: egret.Event): void {
+			console.log('[INFO] revivePlayer.anima complete');
+			newAnima.stop();
 			Player.switchState(Player.STATE.null, player, viewLayout);
 		}, player);
-		player.animaView = anima;
-		player.viewLayout.addChild(anima);
+		player.animaView = newAnima;
+		player.viewLayout.addChild(newAnima);
 		Music.play("save_mp3");
 	}
 	public static bornPlayer(player: Player, viewLayout: egret.DisplayObjectContainer) {
@@ -170,9 +174,9 @@ class Player {
 		player.animaView = anima;
 		player.viewLayout.addChild(anima);
 		player.animaView.addEventListener(egret.Event.LOOP_COMPLETE, function (e: egret.Event): void {
-			Player.stopAnima(player);
+			console.log('[INFO] die animation is complete');
 		}, player);
-		anima.gotoAndPlay(0, -1);
+		anima.gotoAndPlay(0, 1);
 		Music.play("die_mp3");
 	}
 

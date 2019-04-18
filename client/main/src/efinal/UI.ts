@@ -5,7 +5,6 @@ class UI {
 	public static printLog(par?: any) {
 		UI.LOGGER.info('[INFO] : ' + par);
 	}
-
 	public static setLogger(logger) {
 		UI.LOGGER = logger;
 	}

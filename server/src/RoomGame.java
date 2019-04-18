@@ -60,9 +60,27 @@ public class RoomGame implements IRoomService, Player.MoveListener, Player.State
     @Override
     public boolean onUserEnter(IGameServerRoomHandler.Room room, IGameServerRoomHandler.User user) {
         log.info("[UserEnter] " + user);
-        map.addPlayer(new Player(user.userID, 0, 0, 0));
+        Player player = map.getPlayer(user.userID);
+        if (player == null) {
+            map.addPlayer(new Player(user.userID, 0, 0, 0).bron());
+        }else{
+            log.info("user {} has in the room {}", user.userID, room.ID);
+        }
+        if (isGameStart()) {
+            joinAtMidway(user);
+        }
         rs.broadcast(new GameMsg(GameConfig.ACTION_BORN, map.playerList).toString(), this.room);
         return false;
+    }
+
+    /**
+     * 中途加入
+     *
+     * @param user
+     */
+    private void joinAtMidway(IGameServerRoomHandler.User user) {
+        log.info("join at midway,map: {}", map);
+        rs.broadcastMe(new GameMsg(GameConfig.ACTION_STATE_MAP, map.mapArray).toString(), this.room, user.userID);
     }
 
     @Override
@@ -109,12 +127,12 @@ public class RoomGame implements IRoomService, Player.MoveListener, Player.State
         try {
 
             Gshotel.HotelBroadcast boardMsg = Gshotel.HotelBroadcast.parseFrom(umspHeader.getMessage());
-//            log.info("boardMsg:"+boardMsg);
+//            log.info("boardMsg:{}",boardMsg);
             String msg = boardMsg.getCpProto().toStringUtf8();
             JSONObject jo = new JSONObject(msg);
             Player player = map.getPlayer(boardMsg.getUserID());
             if (player != null) {
-                switch (jo.optString("msgType")) {
+                switch (jo.optString("type")) {
                     case GameConfig.ACTION_INPUT:
                         int arrow = jo.optInt("data");
                         int[] xy = Input.arrow2xy(arrow);
@@ -129,6 +147,7 @@ public class RoomGame implements IRoomService, Player.MoveListener, Player.State
                     case GameConfig.ACTION_BURING:
                         if (player != null) {
                             int buringBombID = jo.optInt("data");
+
                             boolean b = map.buriedBomb(
                                     player,
                                     RoomGame.this,
@@ -148,10 +167,15 @@ public class RoomGame implements IRoomService, Player.MoveListener, Player.State
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error(e.toString());
+            log.error("onUserSendMsg.err:" + e);
         }
         return false;
 
+    }
+
+    private boolean isGameStart() {
+
+        return true;
     }
 
     private boolean isGameOver() {

@@ -95,18 +95,21 @@ class SoundBase extends egret.DisplayObjectContainer {
     }
     //播放音频
     public play() {
-        if (4 === this._status) {
-            this._loadSound();
-            return;
+        try {
+            if (4 === this._status) {
+                this._loadSound();
+                return;
+            }
+            this._status = 1;
+            if (this._soundChannel)
+                this._soundChannel.stop();
+
+            this._soundChannel = this._sound.play(this._positon, 1);
+
+            this._soundChannel.once(egret.Event.SOUND_COMPLETE, this.looped, this);
+        } catch (error) {
+            console.error(error);
         }
-        this._status = 1;
-        if (this._soundChannel)
-            this._soundChannel.stop();
-
-        this._soundChannel = this._sound.play(this._positon, 1);
-
-        this._soundChannel.once(egret.Event.SOUND_COMPLETE, this.looped, this);
-
         return this._status;
     }
     //设置循环
