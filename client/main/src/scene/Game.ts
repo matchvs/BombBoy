@@ -36,6 +36,7 @@ class Game extends BaseScene implements eui.UIComponent {
 	public isGameStart = true;
 
 	private pingTimer;
+	private reconnectDialog:LoadingDialog ;
 
 	protected onCreated(): void {
 		console.log("[Lobby] [onCreated] " + this.name);
@@ -96,8 +97,8 @@ class Game extends BaseScene implements eui.UIComponent {
 			if (rsp.constructor.name == "Uint8Array") {
 				var userChanged = JSON.parse(utf8ByteArrayToString(rsp));
 			}
-			
-			console.log("[Rsp]roomUserChanged: " , userChanged );
+
+			console.log("[Rsp]roomUserChanged: ", userChanged);
 
 			var currentUserList = userChanged["currentUserList"];
 			if (userChanged["userAction"] == "enter") {
@@ -171,8 +172,8 @@ class Game extends BaseScene implements eui.UIComponent {
 		NetWork.receive("born", function (data) {
 			for (var i = 0; i < data.length; i++) {
 				var player = <Player>this.playerMap[data[i].ID];
-				player&&player.setPostion(data[i].x, data[i].y);
-				console.log("player bron:" , player);
+				player && player.setPostion(data[i].x, data[i].y);
+				console.log("player bron:", player);
 			}
 		}.bind(this));
 
@@ -209,7 +210,8 @@ class Game extends BaseScene implements eui.UIComponent {
 			this.isGameStart = false;
 			this.notifyPlayerGameStateChanged(this.me.ID);
 			dialog.setOKListener(function () {
-				dialog.hide();
+				// dialog.hide();
+				Toast.show("Game Over");
 			});
 
 			setTimeout(function () {
@@ -244,6 +246,7 @@ class Game extends BaseScene implements eui.UIComponent {
 
 		NetWork.receive("map", function (data) {
 			this.joinAtMidway(data);
+			this.reconnectDialog.hide();
 		}.bind(this));
 		NetWork.receive("bombed", function (data) { }.bind(this));
 
@@ -273,7 +276,6 @@ class Game extends BaseScene implements eui.UIComponent {
 		}
 	}
 	private removeMapNode(node) {
-		console.log('[INFO] node %d,%d', node.x, node.y);
 		var localNode = TileMap.getNode(this.destroyTileLayer, this.destroyLayer, node.x, node.y);
 		localNode && TileMap.removeNode(this.destroyTileLayer, this.destroyLayer, node.x, node.y);
 	}
@@ -315,6 +317,9 @@ class Game extends BaseScene implements eui.UIComponent {
 				break;
 			case "pingtogle":
 				Game.pingWindow.toggle();
+				break;
+			case "skill_magic":
+				RombBoyMatchvsEngine.getInstance.close();
 				break;
 		}
 	}
@@ -405,8 +410,33 @@ class Game extends BaseScene implements eui.UIComponent {
 		// console.log('[INFO] bomb - new :' + behavior2.name);
 	}
 
-
+	protected onShow() {
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
+	}
 	protected onHide(): void {
 		this.pingTimer && clearInterval(this.pingTimer);
+		this.removeEvent();
+	}
+	private onEvent(e) {
+		var data = e.data;
+		switch (e.type) {
+			case MatchvsMessage.MATCHVS_ERROR:
+				this.reconnectDialog = new LoadingDialog(
+					this.loadingContainer, this.loadingBg
+					, this.loadingTipsImage, this.loadingTips
+					, this.loadingText, this.loadingImage);
+				this.reconnectDialog.loadingText.text = "网络已断开，是否重试？";
+				this.isGameStart = false;
+				this.notifyPlayerGameStateChanged(this.me.ID);
+				this.reconnectDialog.setOKListener(function () {
+					RombBoyMatchvsEngine.getInstance.reconnect();
+					Toast.show( "开始重连请等待");
+				});
+				break;
+		}
+	}
+	public removeEvent() {
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
+
 	}
 }

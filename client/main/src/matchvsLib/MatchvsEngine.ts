@@ -185,6 +185,9 @@ class RombBoyMatchvsEngine {
 		MatchvsData.enging.setTeamReconnectTimeout(30);
 		MatchvsData.enging.setReconnectTimeout(30);
 	}
+	public close() {
+		MatchvsData.enging.close();
+	}
 }
 
 class onGetProgress {
