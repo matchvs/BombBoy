@@ -15,7 +15,7 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 
 
 
-	protected onShow(par) {
+	public onShow(par) {
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
@@ -51,7 +51,7 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 	}
 
 
-	protected onCreated(): void {
+	public onCreated(): void {
 		console.log("[TeamReady] [onCreated] " + this.name);
 		this.btnJoinTeam.enabled = false;
 		this.edtextTeamID.addEventListener(egret.FocusEvent.FOCUS_OUT, function (e: egret.TouchEvent) {
@@ -141,7 +141,7 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 	}
 
 
-	protected onHide(): void {
+	public onHide(): void {
 		this.removeEvent();
 	}
 

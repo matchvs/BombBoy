@@ -31,7 +31,7 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 	}
 
 
-	protected onShow(par) {
+	public onShow(par) {
 		console.log("[TeamHome] onShow:" + par);
 		this.par = par;
 		if (par != undefined) {
@@ -203,7 +203,7 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 				this.matchSuccessGroup.visible = false;
 				SceneManager.back();
 				break;
-			case MatchvsMessage.MATCHVS_ERROR:
+			case MatchvsMessage.MATCHVS_DISCONNECTRESPONSE:
 				Delay.run(this.tryReconnect.bind(this),10000);
 				Toast.show("连接已断开" + data.errCode + "10S后尝试重连...");
 				break;
@@ -354,7 +354,7 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 	}
 
 
-	protected onHide(): void {
+	public onHide(): void {
 		this.removeEvent();
 	}
 

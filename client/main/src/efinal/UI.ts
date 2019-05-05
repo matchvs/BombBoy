@@ -5,6 +5,7 @@ class UI {
 	public static printLog(par?: any) {
 		UI.LOGGER.info('[INFO] : ' + par);
 	}
+
 	public static setLogger(logger) {
 		UI.LOGGER = logger;
 	}
@@ -23,6 +24,6 @@ class UI {
 			}
 		}
 		root.addChild(logger);
-		// UI.setLogger(logger);
+		UI.setLogger(logger);
 	}
 }

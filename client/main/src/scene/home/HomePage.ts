@@ -1,7 +1,6 @@
 class HomePage extends BaseScene implements eui.UIComponent {
 
 	private loadGame: any;
-	private isInit: boolean = false;
 	private nodeDataList;
 	private nodeName: eui.Label;
 	private nodeDelay: eui.Label;
@@ -13,10 +12,13 @@ class HomePage extends BaseScene implements eui.UIComponent {
 
 	public constructor() {
 		super();
+
 	}
 
-	protected onShow(par) {
+	public onShow(par) {
 		// LocalStore_Clear();
+		RombBoyMatchvsEngine.getInstance.loginOut();
+		RombBoyMatchvsEngine.getInstance.unInit();
 		this.initEvent();
 		this.matchvsInit();
 	}
@@ -61,6 +63,7 @@ class HomePage extends BaseScene implements eui.UIComponent {
 		if (MatchvsData.isPremise) {
 			RombBoyMatchvsEngine.getInstance.premiseInit();
 		} else {
+			Toast.show("正在获取服务器信息");
 			RombBoyMatchvsEngine.getInstance.init(MatchvsData.pChannel, MatchvsData.pPlatform, MatchvsData.gameID, MatchvsData.netDelay);
 		}
 	}
@@ -79,18 +82,13 @@ class HomePage extends BaseScene implements eui.UIComponent {
 		super.onClick(name, v);
 		switch (name) {
 			case "btn_load_game":
-				if (this.isInit) {
-					if (MatchvsData.isPremise) {
-						var id = new Date().getMilliseconds();
-						RombBoyMatchvsEngine.getInstance.login(id, "121321321321321321321321");
-						GameData.userID = id;
-						GameData.avatar = "http://pic.vszone.cn/upload/avatar/1464079972.png";
-					} else {
-						RombBoyMatchvsEngine.getInstance.registerUser();
-					}
+				if (MatchvsData.isPremise) {
+					var id = new Date().getMilliseconds();
+					RombBoyMatchvsEngine.getInstance.login(id, "121321321321321321321321");
+					GameData.userID = id;
+					GameData.avatar = "http://pic.vszone.cn/upload/avatar/1464079972.png";
 				} else {
-					this.matchvsInit();
-					Toast.show("初始化失败，请重试");
+					RombBoyMatchvsEngine.getInstance.registerUser();
 				}
 				break;
 			case "btn_selet_node":
@@ -107,10 +105,9 @@ class HomePage extends BaseScene implements eui.UIComponent {
 		switch (e.type) {
 			case MatchvsMessage.MATCHVS_INIT:
 				if (e.data === 200) {
-					this.isInit = true;
 					this.matchvsGetNodeList();
 				} else {
-					this.isInit = false;
+					Toast.show("获取节点信息失败");
 				}
 
 				break;
@@ -122,7 +119,7 @@ class HomePage extends BaseScene implements eui.UIComponent {
 				if (e.data.status == 200) {
 					if (e.data.roomID != "0") {
 						SceneManager.showScene(Game, e.data);//重连去游戏
-						RombBoyMatchvsEngine.getInstance.joinRoom(e.data.roomID,"reconnect",true);
+						RombBoyMatchvsEngine.getInstance.joinRoom(e.data.roomID, "reconnect", true);
 						// SceneManager.showScene(Lobby, e.data);//重连取组队
 						// console.error("当前不支持游戏断线重连,调整为重连至小队,等待游戏结束");
 						console.log("reconnect to game ");
@@ -149,7 +146,7 @@ class HomePage extends BaseScene implements eui.UIComponent {
 		}
 	}
 
-	protected onHide() {
+	public onHide() {
 		this.removeEvent();
 	}
 

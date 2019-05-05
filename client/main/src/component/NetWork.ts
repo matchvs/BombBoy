@@ -48,7 +48,6 @@ class NetWork {
 		return NetWork.roomUserList;
 	}
 	public static connect(roomUserChangedListener: Function) {
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_GAME_SERVER_NOTIFY, NetWork.gameServerNotify, this);
 
 		//房间成员变化监听
 		NetWork.listener[MatchvsMessage.MATCHVS_LEVAE_ROOM_NOTIFY] = function (data) {
@@ -72,6 +71,7 @@ class NetWork {
 			roomUserChangedListener({ userAction: "enter", currentUserList: NetWork.appendUser(event.data) });
 		};
 
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_GAME_SERVER_NOTIFY, NetWork.gameServerNotify, this);
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_LEVAE_ROOM_NOTIFY, NetWork.listener[MatchvsMessage.MATCHVS_LEVAE_ROOM_NOTIFY], this);
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_LEVAE_ROOM, NetWork.listener[MatchvsMessage.MATCHVS_LEVAE_ROOM_NOTIFY], this);
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_NETWORKSTATE, NetWork.listener[MatchvsMessage.MATCHVS_LEVAE_ROOM_NOTIFY], this);

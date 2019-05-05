@@ -1,115 +1,119 @@
+/**
+ * 以栈(LIFO - Last in, First out)的形式对ViewTree进行管理,默认带动画效果
+ */
 class SceneManager {
     public static currentScene: egret.DisplayObjectContainer;
     public static root: egret.DisplayObjectContainer;
-    public static isAnimation: boolean = false;
-    public static sceneStack: egret.DisplayObjectContainer[] = [];
+    public static animaLayer: egret.DisplayObjectContainer;
+    public static isAnimation: boolean = true;
+    public static AnimationTime: number = 300;
+
+    // ShaderUtils.shader(this.lobbyLayout, ShaderUtils.CustomFilter.customFilter3);
+
     public static init(root: egret.DisplayObjectContainer) {
         this.root = root;
+        this.animaLayer = new egret.DisplayObjectContainer();
+        root.parent.addChild(this.animaLayer);
     }
-    public static showScene(scene: any, par?): egret.DisplayObject {
+    /**
+     * @deprecated
+     */
+    public static showScene(scene: any, par?) {
+        SceneManager.go(scene, par);
+    }
+    /**
+     * 新建一个场景并显示,同时隐藏旧的场景
+     */
+    public static go(scene: any, par?): egret.DisplayObject {
         if (!this.root) { console.error("SceneManager not be init()"); return; }
         if (!scene) { console.error("scene is null"); return; }
-        //find a exist scene by classname
-        // var index = -1;
-        // for (var i = 0; i < this.root.numChildren; i++) {
-        //     var child = this.root.getChildAt(i);
-        //     if (child.constructor == scene) {
-        //         index = i;
-        //         scene = child;
-        //     }
-        // }
-
-        // if (index >= 0) {
-        //     console.log("[SceneManager] take scene to front from back:" + scene.constructor.name + "@" + scene.hashCode);
-
-        //     if (!SceneManager.isAnimation) {
-        //         var top: any = this.root.getChildAt(this.root.numChildren - 1);
-        //         top.onHide && top.onHide();
-        //         scene.onShow && scene.onShow(par);
-        //         this.root.swapChildren(scene, top);
-        //     } else {
-        //         scene.x = 480;
-        //         egret.Tween.removeAllTweens();
-        //         egret.Tween.get(scene, { loop: false }).to({ x: 0, y: 0 }, 300, egret.Ease.circInOut);
-        //         var top: any = this.root.getChildAt(this.root.numChildren - 1);
-        //         //hide top
-        //         top.onHide && top.onHide();
-        //         //show currentScene
-        //         scene.onShow && scene.onShow(par);
-
-        //         egret.Tween.get(top, { loop: false }).to({ x: 480, y: 0 }, 300, egret.Ease.sineOut);
-        //         scene.x = 480;
-        //         egret.Tween.get(scene, { loop: false }).to({ x: 0, y: 0 }, 300, egret.Ease.backIn).call(function () {
-        //             top.x = 0;
-        //             this.root.swapChildren(scene, top);
-        //         }.bind(this));
-        //     }
-
-
-        // } else {
         //hide top
         if (this.root.numChildren > 0) {
-            var top: any = this.root.getChildAt(this.root.numChildren - 1);
+            var top: BaseScene = <BaseScene>this.root.getChildAt(this.root.numChildren - 1);
             top.onHide && top.onHide();
+
+            if (SceneManager.isAnimation) {
+                var x = top.x;
+                egret.Tween.get(top, { loop: false }).to({ x: this.root.width * -1, y: 0 }, SceneManager.AnimationTime, egret.Ease.quadOut).call(function () {
+                    top.x = x;
+                    top.visible = false;
+                }.bind(this));
+            } else {
+                top.visible = false;
+            }
         }
 
         //new  a scene
-        scene = new scene(par);
+        scene = new scene();
         scene.name = scene.constructor.name
-        scene.onShow && scene.onShow(par);
-        //show currentScene
-        this.root.addChild(scene);
+        scene.addEventListener(egret.Event.COMPLETE, function () {
+            scene.onCreated();
+            scene.onShow && scene.onShow(par);
+        }, this);
 
+        this.root.addChild(scene);
         if (SceneManager.isAnimation) {
-            scene.x = 480;
-            egret.Tween.get(scene, { loop: false }).to({ x: 0, y: 0 }, 300, egret.Ease.circInOut);
+            scene.x = this.root.width;
+            egret.Tween.get(scene, { loop: false }).to({ x: 0, y: 0 }, SceneManager.AnimationTime, egret.Ease.circIn);
         }
-        // }
-        console.log("[SceneManager] show  scene:" + scene.constructor.name + "@" + scene.hashCode);
+        console.debug("[SceneManager] show  scene:" , scene.constructor.name , "@" , scene.hashCode);
     }
 
 
 
-
-
-
-    public static back(): boolean {
-        if (this.root.numChildren > 0) {
-            var perScene: any = this.root.getChildAt(this.root.numChildren - 1);
-            if (perScene) {
-                perScene.onHide && perScene.onHide();
-                if (!SceneManager.isAnimation) {
-                    if (this.root.numChildren > 1) {
-                        var top: any = this.root.getChildAt(this.root.numChildren - 2);
-                        console.log("[SceneManager]  Back,  from scene:" + perScene.constructor.name + "@" + perScene.hashCode+" to "+top.constructor.name+"@"+top.hashCode);
-                        top.onShow && top.onShow();
-
-                        
-                    }
-                    this.root.removeChild(perScene);
-                } else {
-                    perScene.x = 0;
-                    egret.Tween.get(perScene, { loop: false }).to({ x: 800, y: 0 }, 600, egret.Ease.quadIn).call(function () {
-                        perScene.x = 0;
-                        this.root.removeChild(perScene);
-                    }.bind(this));
-                    //show top
-                    if (this.root.numChildren > 1) {
-                        var top: any = this.root.getChildAt(this.root.numChildren - 2);
-                        top.onShow && top.onShow();
-                        top.x = -480;
-                        egret.Tween.get(top, { loop: false }).to({ x: 0, y: 0 }, 400, egret.Ease.backIn);
-                    }
-                }
-                
-                return true;
+    /**
+     * 回退到某个页面
+     */
+    public static backToThePast(scece: any) {
+        while (this.root.numChildren > 0) {
+            var s: any = this.root.getChildAt(this.root.numChildren - 1);
+            console.debug('[INFO] backToThePast s.constructor.name:', s.constructor.name);
+            // console.debug('[INFO] scece.constructor.name', scece.name);
+            if (s.constructor.name != scece.name) {
+                SceneManager.back();
             } else {
-                console.warn('[WARN] preScene is undefine');
-                return false;
+                break;
             }
-        } else {
+        }
+
+    }
+    /**
+     * 回到上一个场景
+     */
+    public static back(): boolean {
+
+        if (!this.root || this.root.numChildren <= 0) {
+            console.warn('[WARN] preScene is undefine');
+            return false;
+        }
+        var perScene: BaseScene = <BaseScene>this.root.getChildAt(this.root.numChildren - 1);
+        if (!perScene) {
             console.warn("[SceneManager] Do`t Back!");
             return false;
         }
+
+        perScene.onHide && perScene.onHide();
+        perScene.onDestory && perScene.onDestory();
+
+        if (this.root.numChildren > 1) {
+            var currentScene: BaseScene = <BaseScene>this.root.getChildAt(this.root.numChildren - 2);
+            console.debug("[SceneManager]  Back,  from scene:", perScene.constructor["name"], "@", perScene.hashCode, " to ", currentScene.constructor["name"], "@", currentScene.hashCode);
+            currentScene.visible = true;
+            currentScene.onShow && currentScene.onShow();
+        }
+
+        this.root.removeChild(perScene);
+
+
+        if (SceneManager.isAnimation) {
+            this.animaLayer.addChild(perScene);
+            egret.Tween.get(perScene, { loop: false }).to({ x: this.root.width * -1, y: 0 }, SceneManager.AnimationTime, egret.Ease.quadOut).call(function () {
+                perScene.x = 0;
+                this.animaLayer.removeChild(perScene);
+            }.bind(this));
+
+        }
+
+        return true;
     }
 }

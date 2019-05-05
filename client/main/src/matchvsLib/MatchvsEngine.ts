@@ -76,6 +76,11 @@ class RombBoyMatchvsEngine {
 		egret.log("登出：", result);
 		return result;
 	}
+	public unInit(): number {
+		var result = MatchvsData.enging.uninit();
+		egret.log("登出：", result);
+		return result;
+	}
 
 	/**
 	 * 创建房间

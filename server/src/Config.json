@@ -1,1 +1,18 @@
-{"gameID": 214480,"localHost": "0.0.0.0","localPort":30817,"isRemote": false,"remoteHost": "", "remotePort": 0,"svcName":"","podName":""}
+{
+  "gameID": 214480,
+  "localHost": "0.0.0.0",
+  "localPort": 30817,
+  "isPAAS": false,
+  "remoteHost": "",
+  "remotePort": 0,
+  "svcName": "",
+  "podName": "",
+  "roomServerHost":"",
+  "roomServerPort":0,
+  "roomPodName":"",
+  "roomSvcName":"",
+  "roomServerHost":"",
+  "roomServerPort":0,
+  "roomPodName":"",
+  "roomSvcName":""
+}

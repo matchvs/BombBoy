@@ -3,7 +3,7 @@ class Matching extends BaseScene implements eui.UIComponent {
 	private room: eui.Group;
 	private sourceArr: any[] = [];
 
-	protected onCreated(): void {
+	public onCreated(): void {
 		// ListViewUtil.initListView(this.room, this.roomUserList, this.sourceArr, RoomUserListItem);
 		// var refreshRoomUserList = function (userList: User[]) {
 		// 	ArrayUtil.clear(this.sourceArr);

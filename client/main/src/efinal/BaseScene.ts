@@ -1,37 +1,10 @@
 class BaseScene extends eui.Component implements eui.UIComponent {
     private root: any = this;
+    private receiverMap: Object = {};
     public constructor() {
         super();
         this.root = this;
-        /**
-         * egret.Event.COMPLETE 调用时机源码
-         *             if (skin) {
-                var skinParts = skin.skinParts;
-                var length_8 = skinParts.length;
-                for (var i = 0; i < length_8; i++) {
-                    var partName = skinParts[i];
-                    var instance = skin[partName];
-                    if (instance) {
-                        this.setSkinPart(partName, instance);
-                    }
-                }
-                var children = skin.$elementsContent;
-                if (children) {
-                    for (var i = children.length - 1; i >= 0; i--) {
-                        this.addChildAt(children[i], 0);
-                    }
-                }
-                skin.hostComponent = this;
-            }
-            this.invalidateSize();
-            this.invalidateDisplayList();
-            this.dispatchEventWith(egret.Event.COMPLETE);
-         */
-        this.addEventListener(egret.Event.COMPLETE, this.onCreated, this);
-        // this.removeEventListener(eui.UIEvent.CREATION_COMPLETE, this.onCreated, this);
-        // this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.onDestory, this);
-
-
+        // console.log('[BaseScene] constructor');
         this.width = App.W;
         this.height = App.H;
     }
@@ -52,46 +25,44 @@ class BaseScene extends eui.Component implements eui.UIComponent {
             }, this);
         }
     }
-    protected setOnClick(view, listener: Function) {
-        view.addEventListener(egret.TouchEvent.TOUCH_TAP,listener, view);
-    }
     protected childrenCreated(): void {
         super.childrenCreated();
-        console.log("[BaseScene] childrenCreated");
+        console.debug("[BaseScene] childrenCreated");
     }
-    protected onShow(par) {
-        console.log("[BaseScene] onShow:" + par);
+    public onShow(par?: any) {
+        console.debug("[BaseScene] [onShow]: ", this.name, ",par:", par);
     }
-    protected onCreated(): void {
-        console.log("[BaseScene] [onCreated] " + this.name);
-    }
-
-    public onClick(name: string, v: egret.DisplayObject) {
-        switch (name) {
-            case "back":
-                this.finish();
-                break;
-            default:
-                console.log("[BaseScene] No Handler for  click " + name);
-                break;
+    public onHide() {
+        console.debug("[BaseScene] [onHide]", this.name);
+        for(var key in this.receiverMap){
+            this.unReceive(key);
         }
     }
-    protected onDestory(): void {
-        console.log("[BaseScene] [onDestory] " + this.name);
+
+    public onCreated(): void {
+        console.debug("[BaseScene] [onCreated] ", this.name);
     }
 
-    protected onHide() {
-        console.log("[BaseScene] onHide");
 
+    public onDestory(): void {
+        console.debug("[BaseScene] [onDestory] ", this.name);
     }
 
     public finish() {
-        console.log('[INFO] [BaseScene] finish');
+        console.debug('[BaseScene] [finish] ', this.name);
         SceneManager.back();
     }
 
-
-
+    /**
+     * 注册一个自动释放(depend @super.onHide())的消息接受者
+     */
+    protected receive(key: string, callback: Function) {
+        Handler.getInstance().receive(key, callback);
+        this.receiverMap[key] = callback;
+    }
+    protected unReceive(key: string, callback?: Function) {
+        Handler.getInstance().unReceive(key, callback);
+    }
     public findChild(name: string): egret.DisplayObject {
         var view = this.findChildFrom(this.root, name);
         if (!view) {
@@ -124,5 +95,15 @@ class BaseScene extends eui.Component implements eui.UIComponent {
 
         }
         return null;
+    }
+    public onClick(name: string, v: egret.DisplayObject) {
+        switch (name) {
+            case "back":
+                this.finish();
+                break;
+            default:
+                console.log("[BaseScene] No Handler for  click " + name);
+                break;
+        }
     }
 }

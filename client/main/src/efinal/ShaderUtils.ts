@@ -21,12 +21,17 @@ class ShaderUtils {
      * parms shaderFitler @see ShaderUtils.CustomFilter.customFilter3
      */
     public static shader(v: egret.DisplayObject, shaderFitler?): void {
-        let filter = shaderFitler || ShaderUtils.CustomFilter.customFilter3;
+        let filter = shaderFitler || ShaderUtils.newFilterLightWalk(null);
         v.filters = [filter.filter];
-        v.addEventListener(egret.Event.ENTER_FRAME, () => {
+        v["autoUpdate"] = () => {
             filter.update(filter.filter);
             console.log('[INFO] update');
-        }, this);
+        };
+        v.addEventListener(egret.Event.ENTER_FRAME, v["autoUpdate"], v);
+    }
+    public static clearShader(v: egret.DisplayObject, ) {
+        v.filters = null;
+        v.removeEventListener(egret.Event.ENTER_FRAME, v["autoUpdate"], v);
     }
 
     public static Shaders = {
@@ -72,11 +77,14 @@ class ShaderUtils {
             "uniform sampler2D uSampler;",
 
             "void main() {",
-            "vec3 p = (vec3(vTextureCoord.xy,.0) - 0.5) * abs(sin(time/10.0)) * 50.0;",
+            "vec3 p = (vec3(vTextureCoord.xy,.0) - 0.5) * abs(sin(time/10.0)) * 10.0;",
             "float d = sin(length(p)+time), a = sin(mod(atan(p.y, p.x) + time + sin(d+time), 3.1416/3.)*3.), v = a + d, m = sin(length(p)*4.0-a+time);",
-            "float _r = -v*sin(m*sin(-d)+time*.1);",
-            "float _g = v*m*sin(tan(sin(-a))*sin(-a*3.)*3.+time*.5);",
-            "float _b = mod(v,m);",
+            // "float _r = -v*sin(m*sin(-d)+time*.1);",
+            // "float _g = v*m*sin(tan(sin(-a))*sin(-a*3.)*3.+time*.5);",
+            // "float _b = mod(v,m);",
+            "float _r = mod(v,m);",
+            "float _g = .1;",
+            "float _b = .1;",
             "float _a = 1.0;",
             "if(_r < 0.1 && _g < 0.1 && _b < 0.1) {",
             "_a = 0.0;",
@@ -143,11 +151,11 @@ class ShaderUtils {
             "}"
         ].join("\n"),
     }
-
-    // { width: size / App.W, height: size / App.H })
-    public static CustomFilter = {
-
-        customFilter1: {
+    /**
+     *         //light walk through the surface
+     */
+    public static newFilterLightWalk(completeListener: Function) {
+        return {
             filter: new egret.CustomFilter(
                 ShaderUtils.Shaders.vertexSrc,
                 ShaderUtils.Shaders.fragmentSrc1,
@@ -155,15 +163,21 @@ class ShaderUtils {
                     customUniform: 0
                 }
             ),
+            completeListener: function () { console.log("animetion is complete"); },
             update: function (filter) {
                 filter.uniforms.customUniform += 0.1;
                 if (filter.uniforms.customUniform > Math.PI * 2) {
                     filter.uniforms.customUniform = 0.0;
+                    completeListener() || this.completeListener();
                 }
             }
-        },
-
-        customFilter2: {
+        };
+    }
+    /**
+     *   // like the flower collapse
+     */
+    public static newFilterFlowerCollapse(completeListener?: Function) {
+        return {
             filter: new egret.CustomFilter(
                 ShaderUtils.Shaders.vertexSrc,
                 ShaderUtils.Shaders.fragmentSrc2,
@@ -171,14 +185,36 @@ class ShaderUtils {
                     time: 0
                 }
             ),
+            completeListener: function () { console.log("animetion is complete"); },
+            isRevese: false,
             update: function (filter) {
-                filter.uniforms.time += 0.008;
-                if (filter.uniforms.time > 1) {
-                    filter.uniforms.time = 0.0;
+                if (!this.isRevese) {
+                    if (filter.uniforms.time < 1) {
+                        filter.uniforms.time += 0.008;
+                    } else {
+                        this.isRevese = true;
+                        filter.uniforms.time = 1;
+                    }
+                } else {
+                    if (filter.uniforms.time > 0) {
+                        (completeListener && completeListener()) || this.completeListener();
+                        filter.uniforms.time -= 0.008;
+                    } else {
+                        this.isRevese = false;
+                        filter.uniforms.time = 0.0;
+                    }
                 }
+
+                // filter.uniforms.time += 0.008;
+                // if (filter.uniforms.time > 1) {
+                //     filter.uniforms.time = 0.0;
+                //     completeListener()||this.completeListener();
+                // }
             }
-        },
-        customFilter3: {
+        };
+    }
+    public static newFilterWaterWave(completeListener: Function) {
+        return {
             filter: new egret.CustomFilter(
                 ShaderUtils.Shaders.vertexSrc,
                 ShaderUtils.Shaders.fragmentSrc3,
@@ -188,15 +224,21 @@ class ShaderUtils {
                     time: 0
                 }
             ),
+            completeListener: function () { console.log("animetion is complete"); },
             update: function (filter) {
                 filter.uniforms.time += 0.01;
                 if (filter.uniforms.time > 1) {
                     filter.uniforms.time = 0.0;
+                    completeListener() || this.completeListener();
                 }
             }
-        },
-
-        customFilter4: {
+        };
+    }
+    /**
+     * blind window 
+     */
+    public static newFilterBlindWindow(completeListener: Function) {
+        return {
             filter: new egret.CustomFilter(
                 ShaderUtils.Shaders.vertexSrc,
                 ShaderUtils.Shaders.fragmentSrc4,
@@ -205,12 +247,15 @@ class ShaderUtils {
                     offset: 0
                 }
             ),
+            completeListener: function () { console.log("animetion is complete"); },
             update: function (filter) {
-                filter.uniforms.offset += 0.01;
+                filter.uniforms.offset += 0.05;
                 if (filter.uniforms.offset > 1) {
                     filter.uniforms.offset = 0.0;
+                    completeListener() || this.completeListener();
                 }
             }
-        }
+        };
     }
 }
+

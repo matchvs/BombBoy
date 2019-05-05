@@ -19,6 +19,7 @@ class RomeBoyMatchvsRep extends egret.EventDispatcher {
         MatchvsData.MatchvsRep.teamNetworkStateNotify = this.teamNetworkStateNotify.bind(this);
         //todo 添加全局的一个异常监听
         MatchvsData.MatchvsRep.errorResponse = this.errorResponse.bind(this);
+        MatchvsData.MatchvsRep.disConnectResponse = this.errorResponse.bind(this);
         MatchvsData.MatchvsRep.getRoomDetailResponse = this.getRoomDetailResponse.bind(this);
         MatchvsData.MatchvsRep.sendEventResponse = this.sendEventResponse.bind(this);
         MatchvsData.MatchvsRep.sendEventNotify = this.sendEventNotify.bind(this);
@@ -162,16 +163,15 @@ class RomeBoyMatchvsRep extends egret.EventDispatcher {
      */
     public errorResponse = function (errCode: number, errMsg: string) {
         console.log("errCode：" + errCode + " errMsg:" + errMsg);
-        if (errCode == 1001) {
-            if (errMsg != "" && errMsg.indexOf("hotel") >= 0) {
-                errCode = 1002; //这里自定义把hotel断开改为 1002
-            }
-        }
         let data = {
             code: errCode,
             msg: errMsg
         }
-        this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_ERROR, false, false, data));
+        if (errCode>=1000){
+            this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_DISCONNECTRESPONSE, false, false, data));
+        } else {
+            this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_ERROR, false, false, data));
+        }
     }
 
     /**
@@ -205,7 +205,7 @@ class RomeBoyMatchvsRep extends egret.EventDispatcher {
         this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_NETWORKSTATE, false, false, event));
     }
     private teamNetworkStateNotify(netnotify: MsNetworkStateNotify) {
-        console.log("teamNetworkStateNotify"+netnotify)
+        console.log("teamNetworkStateNotify" + netnotify)
         egret.log("MATCHVS_TEAM_NETWORKSTATE", event);
         this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, false, false, netnotify));
     }
@@ -245,7 +245,7 @@ class RomeBoyMatchvsRep extends egret.EventDispatcher {
     private joinTeamResponse(rsp) {
         var player = { userID: GameData.userID, avatar: GameData.avatar };
         for (var i = 0; i < rsp.userList; i++) {
-            rsp.userList[i].avatar = rsp.userList[i].userProfile; 
+            rsp.userList[i].avatar = rsp.userList[i].userProfile;
         }
         this.teamUserInfoListChangeNotify(rsp.userList, "joinTeam", player, rsp.team.owner, rsp.team.teamID, rsp.status);
         console.log("[RSP]joinTeamResponse:" + JSON.stringify(rsp));
@@ -272,7 +272,7 @@ class RomeBoyMatchvsRep extends egret.EventDispatcher {
      */
     private leaveTeamNotify(rsp) {
         var player = { userID: rsp.userID };
-        console.log("leaveTeamNotify:"+JSON.stringify(rsp));
+        console.log("leaveTeamNotify:" + JSON.stringify(rsp));
         this.teamUserInfoListChangeNotify([], "leaveTeam", player, rsp.owner);
     }
 
@@ -294,16 +294,16 @@ class RomeBoyMatchvsRep extends egret.EventDispatcher {
                 this.leaderID = ownerID;
                 break;
             case "joinTeamNotify":
-                for (var t = 0 ; t < MatchvsData.TeamPlayerArray.length; t++) {
+                for (var t = 0; t < MatchvsData.TeamPlayerArray.length; t++) {
                     if (MatchvsData.TeamPlayerArray[t].userID === "") {
-                          MatchvsData.TeamPlayerArray.splice(t, 1);
-                          t--;
+                        MatchvsData.TeamPlayerArray.splice(t, 1);
+                        t--;
                     }
                 }
                 MatchvsData.TeamPlayerArray.push(player);
                 break;
             case "leaveTeam":
-                this.leaderID = ownerID === 0 ? this.leaderID: ownerID;
+                this.leaderID = ownerID === 0 ? this.leaderID : ownerID;
                 if (player.userID === GameData.userID) {
                     MatchvsData.TeamPlayerArray.length = 0;
                 } else {
@@ -318,8 +318,8 @@ class RomeBoyMatchvsRep extends egret.EventDispatcher {
         }
         MatchvsData.TeamPlayerArray.sort(SortUtils.sortNumber)
         for (var a = 0; a < MatchvsData.TeamPlayerArray.length; a++) {
-            if ( this.leaderID === MatchvsData.TeamPlayerArray[a].userID) {
-                if (a !== 0 ) {
+            if (this.leaderID === MatchvsData.TeamPlayerArray[a].userID) {
+                if (a !== 0) {
                     SortUtils.swapArray(MatchvsData.TeamPlayerArray, a, 0);
                     break;
                 }
@@ -351,7 +351,7 @@ class RomeBoyMatchvsRep extends egret.EventDispatcher {
      * 匹配成功通知。
      */
     private teamMatchResultNotify(notify) {
-        console.log("teamMatchResultNotify:"+JSON.stringify(notify));
+        console.log("teamMatchResultNotify:" + JSON.stringify(notify));
         this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_TEAM_MATCH_RESULT_NOTIFY, false, false, notify));
     }
 
@@ -365,15 +365,15 @@ class RomeBoyMatchvsRep extends egret.EventDispatcher {
      */
     private gameServerNotify(eventInfo) {
         // console.log("gameServerNotify:"+JSON.stringify(eventInfo));
-        this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_GAME_SERVER_NOTIFY,false,false,eventInfo));
+        this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_GAME_SERVER_NOTIFY, false, false, eventInfo));
     }
     private setReconnectTimeoutResponse(eventInfo) {
-        console.log("setReconnectTimeoutResponse:"+JSON.stringify(eventInfo));
-        this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_GAME_SERVER_NOTIFY,false,false,eventInfo));
+        console.log("setReconnectTimeoutResponse:" + JSON.stringify(eventInfo));
+        this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_GAME_SERVER_NOTIFY, false, false, eventInfo));
     }
     private setTeamReconnectTimeoutResponse(eventInfo) {
-        console.log("setTeamReconnectTimeoutResponse:"+JSON.stringify(eventInfo));
-        this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_GAME_SERVER_NOTIFY,false,false,eventInfo));
+        console.log("setTeamReconnectTimeoutResponse:" + JSON.stringify(eventInfo));
+        this.dispatchEvent(new egret.Event(MatchvsMessage.MATCHVS_GAME_SERVER_NOTIFY, false, false, eventInfo));
     }
 
 

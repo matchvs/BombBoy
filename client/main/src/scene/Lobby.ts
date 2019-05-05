@@ -11,7 +11,7 @@ class Lobby extends BaseScene implements eui.UIComponent {
 		console.log('[INFO] Lobby');
 
 	}
-	protected onShow(par) {
+	public onShow(par) {
 		console.log("[Lobby] onShow:" + par);
 		this.loginPar = par;
 	}
@@ -31,7 +31,7 @@ class Lobby extends BaseScene implements eui.UIComponent {
 		}
 	}
 
-	protected onCreated(): void {
+	public onCreated(): void {
 		console.log("[Lobby] [onCreated] " + this.name);
 		let ImageX = 0,ImageY =0,ImageWidth = 72,ImageHeight = 72;
 		ImageLoader.showAsyncByCrossUrl(this.avatarView,GameData.avatar,ImageX,ImageY,ImageWidth,ImageHeight);

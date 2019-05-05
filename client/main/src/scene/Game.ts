@@ -36,9 +36,9 @@ class Game extends BaseScene implements eui.UIComponent {
 	public isGameStart = true;
 
 	private pingTimer;
-	private reconnectDialog:LoadingDialog ;
+	private reconnectDialog: LoadingDialog;
 
-	protected onCreated(): void {
+	public onCreated(): void {
 		console.log("[Lobby] [onCreated] " + this.name);
 		TileMap.createTileMap("chinese.tmx", "resource/bombboy/map/chinese/", function (map: TileMap, progress: number, total: number) {
 			if (progress == total) {
@@ -218,8 +218,7 @@ class Game extends BaseScene implements eui.UIComponent {
 				Music.play("bg_mp3").stop();
 				RombBoyMatchvsEngine.getInstance.leaveTeam();
 				RombBoyMatchvsEngine.getInstance.leaveRoom("");
-				SceneManager.back();
-				SceneManager.back();
+				SceneManager.backToThePast(HomePage);
 			}, 3000);
 		}.bind(this));
 
@@ -281,7 +280,7 @@ class Game extends BaseScene implements eui.UIComponent {
 	}
 	public gameStart() {
 		this.loadingDialog.hide();
-		Toast.show("开始游戏");
+
 		Delay.run(function () {
 			Music.play("bg_mp3").setLoop();
 		}, 1000);
@@ -410,17 +409,17 @@ class Game extends BaseScene implements eui.UIComponent {
 		// console.log('[INFO] bomb - new :' + behavior2.name);
 	}
 
-	protected onShow() {
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
+	public onShow() {
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_DISCONNECTRESPONSE, this.onEvent, this);
 	}
-	protected onHide(): void {
+	public onHide(): void {
 		this.pingTimer && clearInterval(this.pingTimer);
 		this.removeEvent();
 	}
 	private onEvent(e) {
 		var data = e.data;
 		switch (e.type) {
-			case MatchvsMessage.MATCHVS_ERROR:
+			case MatchvsMessage.MATCHVS_DISCONNECTRESPONSE:
 				this.reconnectDialog = new LoadingDialog(
 					this.loadingContainer, this.loadingBg
 					, this.loadingTipsImage, this.loadingTips
@@ -430,7 +429,7 @@ class Game extends BaseScene implements eui.UIComponent {
 				this.notifyPlayerGameStateChanged(this.me.ID);
 				this.reconnectDialog.setOKListener(function () {
 					RombBoyMatchvsEngine.getInstance.reconnect();
-					Toast.show( "开始重连请等待");
+					Toast.show("开始重连请等待");
 				});
 				break;
 		}
