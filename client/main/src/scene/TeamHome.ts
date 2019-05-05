@@ -24,25 +24,12 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 	private time = undefined;
 	private par = undefined;
 
-
+	private tryReconnectTimer;
 
 	public constructor() {
 		super();
 	}
 
-
-	public onShow(par) {
-		console.log("[TeamHome] onShow:" + par);
-		this.par = par;
-		if (par != undefined) {
-			this.playerList = par.data;
-			if (par.teamID != "") {
-				this.teamID = par.teamID;
-			}
-			this.ownerID = par.ownerID;
-		}
-		this.initEvent();
-	}
 
 	protected partAdded(partName: string, instance: any): void {
 		super.partAdded(partName, instance);
@@ -95,26 +82,24 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 				break;
 		}
 	}
-
+	private showLeaveTeamDialog(isVisible) {
+		this.leaveTeamGroup.visible = isVisible;
+	}
 	public onClick(name: string, v: egret.DisplayObject) {
 		switch (name) {
 			case "back":
-				if (!this.leaveTeamGroup.visible) {
-					this.leaveTeamGroup.visible = true;
-				}
+				this.showLeaveTeamDialog(true);
+				break;
+			case "cancel_leave_team":
+				this.showLeaveTeamDialog(false);
+				break;
+			case "btn_leave_team":
+				RombBoyMatchvsEngine.getInstance.leaveTeam();
 				break;
 			case "start_match":
 				if (this.isStraMatchOnClick) {
 					this.starMatch();
 				}
-				break;
-			case "cancel_leave_team":
-				if (this.leaveTeamGroup.visible) {
-					this.leaveTeamGroup.visible = false;
-				}
-				break;
-			case "btn_leave_team":
-				RombBoyMatchvsEngine.getInstance.leaveTeam();
 				break;
 			case "btn_abort_match":
 				this.abortMatch();
@@ -128,15 +113,6 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 
 
 
-	private initEvent() {
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_STAR, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_RESULT_NOTIFY, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_LEVAE_ROOM, this.onEvent, this);
-
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
-	}
 
 	protected childrenCreated(): void {
 		super.childrenCreated();
@@ -171,11 +147,47 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 	}
 
 
+	public onShow(par) {
+		console.log("[TeamHome] onShow:" + par);
+		this.par = par;
+		if (par != undefined) {
+			this.playerList = par.data;
+			if (par.teamID != "") {
+				this.teamID = par.teamID;
+			}
+			this.ownerID = par.ownerID;
+		}
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_STAR, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_RESULT_NOTIFY, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_LEVAE_ROOM, this.onEvent, this);
+
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_DISCONNECTRESPONSE, this.onEvent, this);
+
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_RECONNECT_RSP, this.onEvent, this);
+
+	}
+	public onHide(): void {
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_STAR, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_RESULT_NOTIFY, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_LEVAE_ROOM, this.onEvent, this);
+
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
+
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_DISCONNECTRESPONSE, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_RECONNECT_RSP, this.onEvent, this);
+		this.tryReconnectTimer && Delay.clear(this.tryReconnectTimer);
+	}
+
 	public onEvent(e: egret.Event): void {
 		var data = e.data;
 		switch (e.type) {
 			case MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY:
-				console.log("team user changed : "+data);
+				console.log("team user changed : " + data);
 				if (data.action === "leaveTeam" && data.player.userID === GameData.userID) {
 					SceneManager.back();
 				} else {
@@ -204,28 +216,40 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 				SceneManager.back();
 				break;
 			case MatchvsMessage.MATCHVS_DISCONNECTRESPONSE:
-				Delay.run(this.tryReconnect.bind(this),10000);
-				Toast.show("连接已断开" + data.errCode + "10S后尝试重连...");
+				this.tryReconnect();
+				break;
+			case MatchvsMessage.MATCHVS_RECONNECT_RSP:
+				if (data.status === 200) {
+					Toast.show("重连成功");
+				} else {
+					Toast.show("重连失败,正在返回");
+					SceneManager.back();
+				}
 				break;
 			case MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE:
 				switch (data.state) {
 					case 1:
-						Toast.show(data.userID + "掉线了，请等待他");
+						Toast.show(data.userID + "掉线了，请等待他重连");
 						break;
 					case 2:
 						Toast.show(data.userID + "小队重连成功");
 						break;
 					case 3:
 						Toast.show(data.userID + "重连失败");
-						this.removeTeamUser(data );
+						this.removeTeamUser(data);
 						break;
 				}
 				break;
 		}
 
 	}
-	private tryReconnect(){
-		RombBoyMatchvsEngine.getInstance.reconnect();
+	private tryReconnect() {
+		Toast.show("连接已断开" + "5S后尝试重连...");
+		this.tryReconnectTimer && Delay.clear(this.tryReconnectTimer);
+		this.tryReconnectTimer = Delay.run(function () {
+			RombBoyMatchvsEngine.getInstance.reconnect();
+		}, 5000);
+
 	};
 	private removeTeamUser(data) {
 		this.ownerID == data.owner;
@@ -241,7 +265,7 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 	 * 开始匹配
 	 */
 	private starMatch() {
-		if(this.par!=null&&this.par.roomID!=null&&this.par.roomID!="0"){
+		if (this.par != null && this.par.roomID != null && this.par.roomID != "0") {
 			Toast.show("已经在房间中");
 			return;
 		}
@@ -354,23 +378,6 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 	}
 
 
-	public onHide(): void {
-		this.removeEvent();
-	}
-
-    /**
-     * 移除监听
-     */
-	public removeEvent() {
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_STAR, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_RESULT_NOTIFY, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_LEVAE_ROOM, this.onEvent, this);
-
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
-
-	}
 
 
 }

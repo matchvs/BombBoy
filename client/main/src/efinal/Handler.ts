@@ -58,7 +58,7 @@ class Handler {
 		for (var i = 0; i < this.listenerMap[key].length; i++) {
 			if (this.listenerMap[key][i]) {
 				console.debug(`dispatchEvent %s success`, key)
-				this.listenerMap[key][i]({ key: key, data: data });
+				this.listenerMap[key][i]({ type: key, data: data });
 				isNeedCache = false;
 			}
 		}

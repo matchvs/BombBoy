@@ -414,7 +414,7 @@ class Game extends BaseScene implements eui.UIComponent {
 	}
 	public onHide(): void {
 		this.pingTimer && clearInterval(this.pingTimer);
-		this.removeEvent();
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_DISCONNECTRESPONSE, this.onEvent, this);
 	}
 	private onEvent(e) {
 		var data = e.data;
@@ -425,7 +425,7 @@ class Game extends BaseScene implements eui.UIComponent {
 					, this.loadingTipsImage, this.loadingTips
 					, this.loadingText, this.loadingImage);
 				this.reconnectDialog.loadingText.text = "网络已断开，是否重试？";
-				this.isGameStart = false;
+				Toast.show("网络已断开");
 				this.notifyPlayerGameStateChanged(this.me.ID);
 				this.reconnectDialog.setOKListener(function () {
 					RombBoyMatchvsEngine.getInstance.reconnect();
@@ -433,9 +433,5 @@ class Game extends BaseScene implements eui.UIComponent {
 				});
 				break;
 		}
-	}
-	public removeEvent() {
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
-
 	}
 }

@@ -38,7 +38,6 @@
 		"resource/eui_skins/ToggleSwitchSkin.exml",
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml",
-		"resource/scene/DrawBoard.exml",
 		"resource/scene/Game.exml",
 		"resource/scene/Home.exml",
 		"resource/scene/Lobby.exml",

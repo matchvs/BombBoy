@@ -15,13 +15,6 @@ class HomePage extends BaseScene implements eui.UIComponent {
 
 	}
 
-	public onShow(par) {
-		// LocalStore_Clear();
-		RombBoyMatchvsEngine.getInstance.loginOut();
-		RombBoyMatchvsEngine.getInstance.unInit();
-		this.initEvent();
-		this.matchvsInit();
-	}
 
 
 	protected partAdded(partName: string, instance: any): void {
@@ -46,17 +39,6 @@ class HomePage extends BaseScene implements eui.UIComponent {
 	}
 
 
-	/**
-	 * 初始化监听
-	 */
-	private initEvent(): void {
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_INIT, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_REGISTERUSER, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_LOGIN, this.onEvent, this);
-		// new NodeListIRSkin.addEventListener(MatchvsMessage.NODE_ITEM_ONCLICK,this.onEvent,this);
-		// var node = new NodeListIRSkin();
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.NODE_ITEM_ONCLICK, this.onEvent, this)
-	}
 
 
 	private matchvsInit(): void {
@@ -147,17 +129,22 @@ class HomePage extends BaseScene implements eui.UIComponent {
 	}
 
 	public onHide() {
-		this.removeEvent();
-	}
-
-
-	/**
-	 * 移除监听
-	 */
-	private removeEvent() {
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_INIT, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_REGISTERUSER, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_LOGIN, this.onEvent, this);
+	}
+
+	public onShow(par) {
+		// LocalStore_Clear();
+		RombBoyMatchvsEngine.getInstance.loginOut();
+		RombBoyMatchvsEngine.getInstance.unInit();
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_INIT, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_REGISTERUSER, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_LOGIN, this.onEvent, this);
+		// new NodeListIRSkin.addEventListener(MatchvsMessage.NODE_ITEM_ONCLICK,this.onEvent,this);
+		// var node = new NodeListIRSkin();
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.NODE_ITEM_ONCLICK, this.onEvent, this)
+		this.matchvsInit();
 	}
 
 

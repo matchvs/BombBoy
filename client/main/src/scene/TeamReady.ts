@@ -15,12 +15,7 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 
 
 
-	public onShow(par) {
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
-		console.log("[TeamReady] onShow:" + par);
-	}
+
 
 
 	protected partAdded(partName: string, instance: any): void {
@@ -94,15 +89,31 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 		}
 	}
 
+	public onShow(par) {
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
+		console.log("[TeamReady] onShow:" + par);
+	}
+
+
+	public onHide(): void {
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
+		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
+	}
+
 	public onEvent(e: egret.Event): void {
 		var data = e.data;
+		this.teamInexistenceTip.visible = false;
 		switch (e.type) {
 			case MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY:
-				console.log("MATCHVS_TEAM_USER_INFO_NOTIFY:"+data);
+				console.log("MATCHVS_TEAM_USER_INFO_NOTIFY:" + data);
 				switch (data.status) {
 					case TeamReady.TEAM_MATCH_STATE.succeed:
 						if (data.action === "joinTeam" || data.action === "createTeam") {
 							SceneManager.showScene(TeamHome, data);
+							Toast.show("加入小队成功");
 						}
 						break;
 					case TeamReady.TEAM_MATCH_STATE.RoomIsNull:
@@ -128,21 +139,6 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 		if (isFocus) {
 			this.edtextTeamID.setFocus();
 		}
-	}
-
-
-    /**
-     * 移除监听
-     */
-	public removeEvent() {
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
-	}
-
-
-	public onHide(): void {
-		this.removeEvent();
 	}
 
 

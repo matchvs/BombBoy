@@ -35,6 +35,8 @@ class MatchvsMessage {
 
 	public static NODE_ITEM_ONCLICK = "NODE_ITEM_ONCLICK";
 
+	public static MATCHVS_RECONNECT_RSP = "MATCHVS_RECONNECT_RSP";
+
 	public constructor() {
 	}
 }
