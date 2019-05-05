@@ -219,7 +219,6 @@ class RomeBoyMatchvsRep {
     }
     private teamNetworkStateNotify(netnotify: MsNetworkStateNotify) {
         console.log("teamNetworkStateNotify" + netnotify)
-        egret.log("MATCHVS_TEAM_NETWORKSTATE", event);
         this.dispatchEvent(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, netnotify);
     }
 
