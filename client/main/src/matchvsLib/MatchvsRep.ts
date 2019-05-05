@@ -48,13 +48,13 @@ class RomeBoyMatchvsRep {
         return this._instance;
     }
     public removeEventListener(key: string, cb: any, that?) {
-        Handler.getInstance().unReceive(key, (cb && cb.that) ? cb.that : cb);
+        Handler.getInstance().unReceive(key, cb);
     }
     public addEventListener(key: string, cb: any, that?) {
         if (that) {
-            cb.that = cb.bind(that);
+            cb.that = that;
         }
-        Handler.getInstance().receive(key, cb.that ? cb.that : cb);
+        Handler.getInstance().receive(key, cb);
     }
 
 	/**

@@ -6,7 +6,13 @@ class Handler {
 	public static getInstance(): Handler {
 		return Handler.instance;
 	}
-
+	private callback(cb, data) {
+		if (cb && cb.that) {
+			cb.call(cb.that, data);
+		} else {
+			cb && cb(data);
+		}
+	}
 	public receive(key: string, callback: Function) {
 		console.debug(`[Handler] reg receiver %s `, key)
 		if (!this.listenerMap[key]) {
@@ -19,7 +25,7 @@ class Handler {
 				// console.debug("found cache : %s , len: %d", key, this.eventCacheQueue.length);
 				for (var i = 0; i < this.listenerMap[key].length; i++) {
 					var cb = this.listenerMap[key][i];
-					cb && cb(this.eventCacheQueue[j]);
+					this.callback(cb, this.eventCacheQueue[j]);
 				}
 				this.eventCacheQueue.splice(j, 1);
 				// console.debug("destroy cache : %s , len: %d", key, this.eventCacheQueue.length);
@@ -58,7 +64,7 @@ class Handler {
 		for (var i = 0; i < this.listenerMap[key].length; i++) {
 			if (this.listenerMap[key][i]) {
 				console.debug(`dispatchEvent %s success`, key)
-				this.listenerMap[key][i]({ type: key, data: data });
+				this.callback(this.listenerMap[key][i], { type: key, data: data });
 				isNeedCache = false;
 			}
 		}
