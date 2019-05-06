@@ -1,7 +1,9 @@
 class Player {
 	public constructor(playerID, teamID) {
 		this.ID = playerID;
-		this.teamID = teamID?teamID:playerID%2;
+		console.log('[INFO] Player.ID:%s ,teamID:%s',playerID,teamID);
+		// this.teamID = teamID?teamID:playerID%2;
+		this.teamID = playerID%2;
 	}
 
 	public static STATE = { "null": -1, "live": 0, "weak": 1, "dead": 2 };

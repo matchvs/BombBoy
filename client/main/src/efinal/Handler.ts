@@ -51,7 +51,7 @@ class Handler {
 
 	}
 	private pushCache(key: any, data?: any) {
-		console.debug("push cache: %s->%s", key, data);
+		// console.debug("push cache: %s->%s", key, data);
 		this.eventCacheQueue.push({ key: key, data: data });
 	}
 
@@ -63,7 +63,7 @@ class Handler {
 		var isNeedCache = true;
 		for (var i = 0; i < this.listenerMap[key].length; i++) {
 			if (this.listenerMap[key][i]) {
-				console.debug(`dispatchEvent %s success`, key)
+				// console.debug(`dispatchEvent %s success`, key)
 				this.callback(this.listenerMap[key][i], { type: key, data: data });
 				isNeedCache = false;
 			}

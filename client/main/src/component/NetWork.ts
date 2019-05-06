@@ -14,11 +14,15 @@ class NetWork {
 
 	public static onMsg(data) {
 		// console.log('[INFO] ' + data);
+		if (!data) {
+			console.warn('onMsg.data is null ');
+			return;
+		}
 		try {
 			var json = JSON.parse(data);
 			NetWork.receiveMap[json["type"]] && NetWork.receiveMap[json["type"]](json["data"]);
 		} catch (error) {
-			console.log("par msg err:", error, " \r\n msg: ", data );
+			console.warn("par msg err: %s %s %s", error, " msg: ", data);
 		}
 	}
 

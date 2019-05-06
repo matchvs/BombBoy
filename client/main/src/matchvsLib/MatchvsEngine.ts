@@ -172,7 +172,7 @@ class RombBoyMatchvsEngine {
 	 */
 	public sendEventEx(action, cpProto: any) {
 		var result = MatchvsData.enging.sendEventEx(1, JSON.stringify({ "type": action, "data": cpProto }), 1, []);
-		console.log("Ex发送消息 result" + result);
+		// console.log("Ex发送消息 result" + result);
 		return result;
 	}
 
