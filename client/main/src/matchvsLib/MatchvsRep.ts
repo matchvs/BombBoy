@@ -180,7 +180,7 @@ class RomeBoyMatchvsRep {
             code: errCode,
             msg: errMsg
         }
-        if (errCode > 1001) {
+        if (errCode > 1000) {
             this.dispatchEvent(MatchvsMessage.MATCHVS_DISCONNECTRESPONSE, data);
         } else {
             this.dispatchEvent(MatchvsMessage.MATCHVS_ERROR, data);
