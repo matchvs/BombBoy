@@ -218,7 +218,7 @@ class RomeBoyMatchvsRep {
         this.dispatchEvent(MatchvsMessage.MATCHVS_NETWORKSTATE, event);
     }
     private teamNetworkStateNotify(netnotify: MsNetworkStateNotify) {
-        console.log("teamNetworkStateNotify" + netnotify)
+        console.log("teamNetworkStateNotify", JSON.stringify(netnotify))
         this.dispatchEvent(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, netnotify);
     }
 

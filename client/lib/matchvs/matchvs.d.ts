@@ -1405,6 +1405,7 @@ declare class MatchvsEngine {
      * 加入指定房间，通过rooID 加入到指定的房间
      * @param {string} roomID  要加入的房间ID
      * @param {string} userProfile 开发者自定义数据，可以比如：用户头像，分数等
+     * @param {boolean} isReconnect 是否是断线重连加入，默认false
      * @returns {number}
      */
     joinRoom(roomID:string,userProfile:string,isReconnect?:boolean):number

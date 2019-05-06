@@ -320,6 +320,11 @@ class Game extends BaseScene implements eui.UIComponent {
 			case "skill_magic":
 				RombBoyMatchvsEngine.getInstance.close();
 				break;
+			case "back":
+				RombBoyMatchvsEngine.getInstance.leaveRoom("");
+				SceneManager.back();
+				break;
+
 		}
 	}
 

@@ -122,10 +122,10 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 
 	public initView() {
 		this.teamIDLable.text = this.teamID;
-		this.isLeader = this.ownerID === GameData.userID ? true : false
+		this.isLeader = (this.ownerID == GameData.userID)
 		for (var i = 0; i < GameData.TeamMaxPlayer; i++) {
 			if (this.playerList[i] !== undefined) {
-				this.playerList[i].isLeader = i === 0 ? true : false;
+				this.playerList[i].isLeader = (i == 0);
 				this.playerList[i].avatar = this.playerList[i].avatar === undefined ? this.playerList[i].userProfile : this.playerList[i].avatar;
 				// this.playerList[i].avatarTex = ImageLoader.Texture(this.playerList[i].avatar);
 			} else {
@@ -136,18 +136,16 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 		}
 		this.userListView.dataProvider = new eui.ArrayCollection(this.playerList);
 		this.userListView.itemRenderer = userListIRSkin;
-		if (!this.isLeader) {
-			this.btnStartMatch.source = "resource/assets/TeamHome/wait_start_game.png";
-			this.isStraMatchOnClick = false;
-		} else {
-			this.btnStartMatch.source = "resource/assets/TeamHome/btn_start_match.png";
-			this.isStraMatchOnClick = true;
-		}
+
+		console.log('[INFO] is leader:',this.isLeader);
+		this.btnStartMatch.source = this.isLeader ? "resource/assets/TeamHome/btn_start_match.png" : "resource/assets/TeamHome/wait_start_game.png";
+		this.isStraMatchOnClick = this.isLeader;
 
 	}
 
 
 	public onShow(par) {
+		super.onShow();
 		console.log("[TeamHome] onShow:" + par);
 		this.par = par;
 		if (par != undefined) {
@@ -170,6 +168,7 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 
 	}
 	public onHide(): void {
+		super.onHide();
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_STAR, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_MATCH_RESULT_NOTIFY, this.onEvent, this);
@@ -236,6 +235,7 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 						break;
 					case 3:
 						Toast.show(data.userID + "重连失败");
+
 						this.removeTeamUser(data);
 						break;
 				}
@@ -252,7 +252,7 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 
 	};
 	private removeTeamUser(data) {
-		this.ownerID == data.owner;
+		this.ownerID = data.owner;
 		for (var i = 0; i < this.playerList.length; i++) {
 			if (this.playerList[i].userID == data.userID) {
 				this.playerList.splice(i, 1);

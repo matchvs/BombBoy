@@ -26,6 +26,9 @@
 		<e:Label id="loadingText" text="正在等待其他玩家加入..." fontFamily="Microsoft YaHei" horizontalCenter="1" verticalCenter="81" textColor="0xcec6c6" x="480" y="426" scaleX="1" scaleY="1"/>
 		<e:Image id="loadingImage" anchorOffsetX="54" anchorOffsetY="46" horizontalCenter="0" verticalCenter="0" x="640" y="360" scaleX="1" scaleY="1" source="face51_png"/>
 	</e:Group>
-	<e:Button id="pingtogle" label="ping" x="20" y="28"/>
+	<e:Button id="pingtogle" label="ping" x="1164" y="11"/>
+	<e:Image id="back" width="64" height="64" x="16" y="16" source="btn_back_png"/>
+
+
 
 </e:Skin>

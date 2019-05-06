@@ -9,6 +9,7 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 	private teamInexistenceTip: eui.Image;
 	public static TEAM_MATCH_STATE = { "AreMatching": 424, "RoomIsNull": 419, "succeed": 200, "dead": 2 };
 
+
 	public constructor() {
 		super();
 	}
@@ -54,6 +55,7 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 				this.isinputTeamIDFocus(false);
 			}
 		}, this);
+
 	}
 
 	public onClick(name: string, v: egret.DisplayObject) {
@@ -83,23 +85,33 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 				this.isinputTeamIDFocus(true);
 				break;
 			case "btn_join_team":
-				var joinTeamInfo = { teamID: this.edtextTeamID.text, password: "1", userProfile: GameData.avatar };
-				RombBoyMatchvsEngine.getInstance.joinTeam(joinTeamInfo);
+				this.joinTeam(this.edtextTeamID.text);
 				break;
 		}
 	}
-
+	private joinTeam(teamID: string) {
+		var joinTeamInfo = { teamID: teamID, password: "1", userProfile: GameData.avatar };
+		RombBoyMatchvsEngine.getInstance.joinTeam(joinTeamInfo);
+	}
 	public onShow(par) {
+		super.onShow(par);
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.addEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
-		console.log("[TeamReady] onShow:" + par);
+		console.log("[TeamReady] onShow:%s", JSON.stringify(par));
+		if (par != null && par.teamID) {
+			Toast.show("正在加入小队，请稍等");
+			setTimeout(function () {
+				this.joinTeam(this.intentData.teamID);
+			}.bind(this), 1000);
+		} else {
+			console.log('[INFO] this.intentData have not teamID');
+		}
 	}
 
 
 	public onHide(): void {
+		super.onHide();
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
-		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_NETWORKSTATE, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
 	}
 

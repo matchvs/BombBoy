@@ -8,6 +8,7 @@ class BaseScene extends eui.Component implements eui.UIComponent {
         this.width = App.W;
         this.height = App.H;
     }
+    public intentData = null;
     public menuAnimation: egret.tween.TweenGroup;
     // private hashMap = {};
     protected partAdded(partName: string, instance: any): void {
@@ -30,26 +31,27 @@ class BaseScene extends eui.Component implements eui.UIComponent {
         console.debug("[BaseScene] childrenCreated");
     }
     public onShow(par?: any) {
-        console.debug("[BaseScene] [onShow]: ", this.name, ",par:", par);
+        console.debug("[BaseScene] [onShow]: %s par:%s", this.name, par);
+        this.intentData = par;
     }
     public onHide() {
-        console.debug("[BaseScene] [onHide]", this.name);
+        console.debug("[BaseScene] [onHide] %s ", this.name);
         for(var key in this.receiverMap){
             this.unReceive(key);
         }
     }
 
     public onCreated(): void {
-        console.debug("[BaseScene] [onCreated] ", this.name);
+        console.debug("[BaseScene] [onCreated] %s", this.name);
     }
 
 
     public onDestory(): void {
-        console.debug("[BaseScene] [onDestory] ", this.name);
+        console.debug("[BaseScene] [onDestory] %s", this.name);
     }
 
     public finish() {
-        console.debug('[BaseScene] [finish] ', this.name);
+        console.debug('[BaseScene] [finish] %s', this.name);
         SceneManager.back();
     }
 

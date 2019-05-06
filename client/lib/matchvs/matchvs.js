@@ -1,8 +1,8 @@
 
 /**************************************************************************************************
  * 								Matchvs SDK														  *
- *                              SDK_RELMatchvs_V3.7.9.5.1                                                       *
- * 								2019-04-18											        	  *
+ *                              SDK_RELMatchvs_V3.7.9.6                                                       *
+ * 								2019-04-25											        	  *
  * 								https://www.matchvs.com/home									  *
  **************************************************************************************************/
  
@@ -11,7 +11,7 @@ var MVS = (function (_obj) {
 
     var _this ;
     var MVS = {
-        version:"SDK_RELMatchvs_V3.7.9.5.1",
+        version:"SDK_RELMatchvs_V3.7.9.6",
         Game:{
             id:0,
             appkey:""
@@ -129,13 +129,22 @@ function getNowFormatDate() {
         + date.getMilliseconds() + "]";
 }
 
-MatchvsLog.openLog = function () {
-    console.log("---- open log ----");
+MatchvsLog.openLog = function (isDebug) {
+    console.log("---- open log ----",isDebug?"(isDebug=true)":"(isDebug=false)");
+    isDebug&&(MVS.DEBUG = true);
     if (typeof (wx) === "undefined") {
-        MatchvsLog.logI = console.log.bind(console
+        MatchvsLog.logI = console.info.bind(console
             , "[INFO][Matchvs] ");
         MatchvsLog.logE = console.error.bind(console
             , "[ERROR][Matchvs] ");
+        if (MVS.DEBUG) {
+            MatchvsLog.logD = console.log.bind(console
+                , "[DEBUG][Matchvs] ");
+        } else {
+            MatchvsLog.logD = function () {
+            };
+        }
+
     } else {
         MatchvsLog.logI = function () {
             var loc = "";
@@ -143,10 +152,26 @@ MatchvsLog.openLog = function () {
                 throw new Error();
             } catch (e) {
                 var line = e.stack.split(/\n/)[1];
-                loc= line.slice(line.lastIndexOf("/")+1,line.lastIndexOf(")"));
+                loc = line.slice(line.lastIndexOf("/") + 1, line.lastIndexOf(")"));
             }
-            console.log("[INFO][Matchvs] " + getNowFormatDate() + " " + this.toArray(arguments) + " " + loc);
+            console.info("[INFO][Matchvs] " + getNowFormatDate() + " " + this.toArray(arguments) + " " + loc);
         };
+        if (MVS.DEBUG) {
+            MatchvsLog.logD = function () {
+                var loc = "";
+                try {
+                    throw new Error();
+                } catch (e) {
+                    var line = e.stack.split(/\n/)[1];
+                    loc = line.slice(line.lastIndexOf("/") + 1, line.lastIndexOf(")"));
+                }
+                console.log("[DEBUG][Matchvs] " + getNowFormatDate() + " " + this.toArray(arguments) + " " + loc);
+            };
+        } else {
+            MatchvsLog.logD = function () {
+            };
+        }
+
 
         MatchvsLog.logE = function () {
             var loc = "";
@@ -154,7 +179,7 @@ MatchvsLog.openLog = function () {
                 throw new Error();
             } catch (e) {
                 var line = e.stack.split(/\n/)[1];
-                loc= line.slice(line.lastIndexOf("/")+1,line.lastIndexOf(")"));
+                loc = line.slice(line.lastIndexOf("/") + 1, line.lastIndexOf(")"));
             }
             console.error("[ERROR][Matchvs] " + getNowFormatDate() + " " + this.toArray(arguments) + " " + loc);
         };
@@ -166,6 +191,8 @@ MatchvsLog.closeLog = function () {
     MatchvsLog.logI = function () {
     };
     MatchvsLog.logE = function () {
+    };
+    MatchvsLog.logD = function () {
     };
 };
 
@@ -40782,7 +40809,7 @@ function MsReopenRoomNotify(roomID, userID, cpProto) {
             }
             socketOpen = false;
             mCallBack.onDisConnect && mCallBack.onDisConnect(mHost, e);
-            MatchvsLog.logI("[egret.WebSocket] [onClose] case:" + JSON.stringify(e));
+            MatchvsLog.logI("[egret.WebSocket] [onClose] case:" + e);
         };
 
         var onMessage = function () {
@@ -40798,7 +40825,7 @@ function MsReopenRoomNotify(roomID, userID, cpProto) {
 
         var onError = function (event) {
             mCallBack.onDisConnect && mCallBack.onDisConnect(mHost, event={code:"1006"});
-            MatchvsLog.logI("[egret.WebSocket] [onError] case:" + JSON.stringify(event));
+            MatchvsLog.logI("[egret.WebSocket] [onError] case:" + event);
         };
 
         function connect() {
@@ -40878,7 +40905,7 @@ function MsReopenRoomNotify(roomID, userID, cpProto) {
                 e.code = 1001;
             }
             mCallBack.onDisConnect && mCallBack.onDisConnect(mHost,e);
-            MatchvsLog.logI("[wx.WebSocket] [onClose] case:"+JSON.stringify(e));
+            MatchvsLog.logI("[wx.WebSocket] [onClose] case:"+e);
         });
 
         this.socket.onMessage(function (res) {
@@ -40888,7 +40915,7 @@ function MsReopenRoomNotify(roomID, userID, cpProto) {
 
         this.socket.onError(function(event) {
             mCallBack.onDisConnect && mCallBack.onDisConnect(mHost,event);
-            MatchvsLog.logI("[wx.WebSocket] [onError] case:" + JSON.stringify(event));
+            MatchvsLog.logI("[wx.WebSocket] [onError] case:" + event);
         });
     }
 
@@ -40949,7 +40976,7 @@ function MsReopenRoomNotify(roomID, userID, cpProto) {
                 e.code = 1000;
             }
             mCallBack.onDisConnect && mCallBack.onDisConnect(mHost,e);
-            MatchvsLog.logI("[BK.WebSocket] [onError][Matchvs] case:" + JSON.stringify(err));
+            MatchvsLog.logI("[BK.WebSocket] [onError][Matchvs] case:" + err);
         };
 
         socket.onMessage = function (res, data) {
@@ -41158,8 +41185,9 @@ function MatchvsHeader() {
             + " this.userID " + this.userID;
     };
 }
+
 function copyInObject(clone, beclone) {
-    for(var k in beclone){
+    for (var k in beclone) {
         clone[k] = beclone[k];
     }
 }
@@ -41171,9 +41199,9 @@ function copyInObject(clone, beclone) {
 
     var pt_stream = proto.stream;
 
-    copyInObject(PtoCmd,pt_stream.CmdId);
-    copyInObject(PtoCmd,pt_stream.SDKHotelCmdID);
-    copyInObject(PtoCmd,pt_stream.SDKWatchCmdID);
+    copyInObject(PtoCmd, pt_stream.CmdId);
+    copyInObject(PtoCmd, pt_stream.SDKHotelCmdID);
+    copyInObject(PtoCmd, pt_stream.SDKWatchCmdID);
 
     _obj.PtoCmd = PtoCmd;
 
@@ -41262,7 +41290,6 @@ function copyInObject(clone, beclone) {
     ptDesc[PtoCmd.NOTICETEAMNETWORKSTATE] = pt_stream.TeamNetworkStateNotify;
 
 
-
     /**
      * Encoder && Decoder
      * @constructor
@@ -41279,7 +41306,7 @@ function copyInObject(clone, beclone) {
          * @returns {DataView}
          */
         this.fillHeader = function (dataArray, cmd) {
-            if (!cmd){
+            if (!cmd) {
                 throw "cmd is undefined";
             }
             MVS.mtaReport && MVS.mtaReport.Report(cmd);
@@ -41335,7 +41362,7 @@ function copyInObject(clone, beclone) {
             packet.header = header;
             packet.buf = dataView;
             if (protoMap) {
-                // MatchvsLog.logI("[INFO]  "+header.cmd);
+                MatchvsLog.logD("[INFO]  " + header.cmd);
                 packet.payload = protoMap.deserializeBinary && protoMap.deserializeBinary(msg.buffer.slice(FIXED_HEAD_SIZE, msg.buffer.byteLength));
             } else {
                 MatchvsLog.logI("[WARN]unknown msg,Head:" + header);
@@ -41442,7 +41469,7 @@ function copyInObject(clone, beclone) {
             roomInfo.setMaxplayer(roomJoin.maxPlayer);
             roomInfo.setCanwatch(roomJoin.canWatch);
             roomInfo.setMode(roomJoin.mode);
-            roomInfo.setVisibility(roomJoin.visibility?roomJoin.visibility:1);
+            roomInfo.setVisibility(roomJoin.visibility ? roomJoin.visibility : 1);
             message.setRoominfo(roomInfo);
 
             var bytes = message.serializeBinary();
@@ -41568,7 +41595,7 @@ function copyInObject(clone, beclone) {
             roomFilter.setCanwatch(filter.canWatch);
             roomFilter.setRoomproperty(stringToUtf8ByteArray(filter.roomProperty));
             roomFilter.setState(filter.state);
-            roomFilter.setGetsystemroom(filter.getSystemRoom||0);
+            roomFilter.setGetsystemroom(filter.getSystemRoom || 0);
 
             pkg.setGameid(gameID);
             pkg.setRoomfilter(roomFilter);
@@ -41723,8 +41750,6 @@ function copyInObject(clone, beclone) {
         };
 
 
-
-
         /**
          * 剔除用户
          * @param userid {number} 发起踢人操作者
@@ -41754,7 +41779,7 @@ function copyInObject(clone, beclone) {
          */
         this.setFrameSync = function (info) {
             var reqEx = new pt_stream.SetFrameSyncRate();
-            MVS.DEBUG && console.log("SetFrameSyncRate :" + JSON.stringify(info));
+            MatchvsLog.logD("SetFrameSyncRate :" + JSON.stringify(info));
             reqEx.setGameid(info.gameID);
             reqEx.setRoomid(info.roomID);
             reqEx.setPriority(info.priority);
@@ -41937,7 +41962,7 @@ function copyInObject(clone, beclone) {
          * @param {number} player.userID
          */
         this.CreateTeam = function (gameID, team, player) {
-            MVS.DEBUG && console.log("CreateTeam gameID:", gameID, " teamInfo:", team);
+            MatchvsLog.logD("CreateTeam gameID:", gameID, " teamInfo:", team);
             var teamInfo = new pt_stream.TeamInfo();
             teamInfo.setCapacity(team.capacity);
             teamInfo.setTeamid(team.teamID);
@@ -41959,19 +41984,19 @@ function copyInObject(clone, beclone) {
         };
 
         this.SetTeamProperty = function (team) {
-            MVS.DEBUG && console.log("setTeamProperty teamInfo:", team);
+            MatchvsLog.logD("setTeamProperty teamInfo:", team);
             var req = new pt_stream.SetTeamPropertyReq();
             req.setGameid(team.gameID);
             req.setTeamid(team.teamID);
             req.setUserid(team.userID);
             req.setTeamproperty(stringToUtf8ByteArray(team.teamProperty));
             var bytes = req.serializeBinary();
-            return this.fillHeader(bytes,  MVS.PtoCmd.SETTEAMPROPERTYREQ);
+            return this.fillHeader(bytes, MVS.PtoCmd.SETTEAMPROPERTYREQ);
         };
 
 
         this.setTeamUserProfile = function (team) {
-            MVS.DEBUG && console.log("setTeamProperty teamInfo:", team);
+            MatchvsLog.logD("setTeamProperty teamInfo:", team);
             var req = new pt_stream.SetTeamUserProfileReq();
             req.setGameid(team.gameID);
             req.setTeamid(team.teamID);
@@ -42015,7 +42040,7 @@ function copyInObject(clone, beclone) {
          * @constructor
          */
         this.LeaveTeam = function (args) {
-            MVS.DEBUG && console.log("LeaveTeam args:", args);
+            MatchvsLog.logD("LeaveTeam args:", args);
             var req = new pt_stream.LeaveTeamReq();
 
             req.setGameid(Number(args.gameID));
@@ -42042,7 +42067,7 @@ function copyInObject(clone, beclone) {
          * @constructor
          */
         this.TeamMatch = function (args) {
-            MVS.DEBUG && console.log("TeamMatch args:", args);
+            MatchvsLog.logD("TeamMatch args:", args);
             var cond = new pt_stream.TeamMatchCond();
             cond.setFull(args.cond.full);
             cond.setTeammembernum(args.cond.teamMemberNum);
@@ -42101,7 +42126,7 @@ function copyInObject(clone, beclone) {
             req.setRoomid(info.roomID);
             req.setGameid(info.gameID);
             var bytes = req.serializeBinary();
-            return this.fillHeader(bytes,MVS.PtoCmd.GETCACHEDATACMDID);
+            return this.fillHeader(bytes, MVS.PtoCmd.GETCACHEDATACMDID);
         };
 
         /**
@@ -42287,7 +42312,7 @@ var NetWorkCallBackImp = function (engine) {
             return;
         }
         engine.mCntRoomType = MVS.TgRoomType.NRoom;
-        engine.mRsp.onDisConnect && engine.mRsp.onDisConnect(host);
+        engine.mRsp&&engine.mRsp.onDisConnect && engine.mRsp.onDisConnect(host);
         if (host.endsWith(MVS.Host.HOST_GATWAY_ADDR)) {
             engine.mState.SetInit();
             MatchvsLog.logI("gateway disconnect");
@@ -42584,6 +42609,7 @@ var NetWorkCallBackImp = function (engine) {
         this.doSubHandle = function (event, engine) {
             var uid = event.payload.getUser().getUserid();
             engine.joinRoomNotifyInfo[uid] = new MsRoomUserInfo(uid, utf8ByteArrayToString(event.payload.getUser().getUserprofile()));
+            MatchvsLog.logI(" JoinRoomNotifyWork :"+ uid);
         };
     };
 
@@ -42713,7 +42739,7 @@ var NetWorkCallBackImp = function (engine) {
         this.doSubHandle = function (event, engine) {
             //房间的心跳返回
             engine.mRsp.hotelHeartBeatRsp && engine.mRsp.hotelHeartBeatRsp(event.payload.getStatus());
-            MatchvsLog.logI("hotelHeartBeatRsp");
+            MatchvsLog.logD("hotelHeartBeatRsp");
         };
     };
 
@@ -42761,15 +42787,15 @@ var NetWorkCallBackImp = function (engine) {
             var gsExist = event.payload.getGsexist();
             // //如果心跳存在视为已登录状态
             // engine.mEngineState |= MVS.ENGE_STATE.HAVE_LOGIN;
-            engine.mRsp.heartBeatResponse && engine.mRsp.heartBeatResponse(new MsHeartBeatResponse(gameid, gsExist));
-            MatchvsLog.logI("gatewayHeartBeatResponse");
+            engine.mRsp&&engine.mRsp.heartBeatResponse && engine.mRsp.heartBeatResponse(new MsHeartBeatResponse(gameid, gsExist));
+            MatchvsLog.logD("gatewayHeartBeatResponse");
         };
     };
 
     function LogoutRspWork() {
         this.doSubHandle = function (event, engine) {
             engine.mGTWNetwork.close();
-            engine.mRsp.logoutResponse && engine.mRsp.logoutResponse(event.payload.getStatus());
+            engine.mRsp&&engine.mRsp.logoutResponse && engine.mRsp.logoutResponse(event.payload.getStatus());
         };
     };
 
@@ -42777,8 +42803,8 @@ var NetWorkCallBackImp = function (engine) {
         this.doSubHandle = function (event, engine) {
             var status = event.payload.getStatus();
             if (status !== 200) {
-                engine.mRsp.getRoomListResponse && engine.mRsp.getRoomListResponse(event.payload.getStatus(), null);
-                ErrorRspWork(engine.mRsp.errorResponse, event.payload.getStatus(), "get room list error ");
+                engine.mRsp&&engine.mRsp.getRoomListResponse && engine.mRsp.getRoomListResponse(event.payload.getStatus(), null);
+                ErrorRspWork(engine.mRsp&&engine.mRsp.errorResponse, event.payload.getStatus(), "get room list error ");
             }
             var roominfolist = event.payload.getRoominfoList();
             var roomList = [];
@@ -42790,14 +42816,14 @@ var NetWorkCallBackImp = function (engine) {
                     roominfolist[i].getCanwatch(),
                     utf8ByteArrayToString(roominfolist[i].getRoomproperty()));
             }
-            engine.mRsp.getRoomListResponse && engine.mRsp.getRoomListResponse(status, roomList);
+            engine.mRsp&&engine.mRsp.getRoomListResponse && engine.mRsp.getRoomListResponse(status, roomList);
         };
 
     };
 
     function DisConnectRspWork() {
         this.doSubHandle = function (event, engine) {
-            engine.mRsp.disConnectResponse && engine.mRsp.disConnectResponse(event.payload.getStatus());
+            engine.mRsp&&engine.mRsp.disConnectResponse && engine.mRsp.disConnectResponse(event.payload.getStatus());
         };
     };
 
@@ -42807,7 +42833,7 @@ var NetWorkCallBackImp = function (engine) {
             if (status != 200) {
                 ErrorRspWork(engine.mRsp.errorResponse, event.payload.getStatus(), "kick player error ");
             }
-            engine.mRsp.kickPlayerResponse && engine.mRsp.kickPlayerResponse(new MsKickPlayerRsp(
+            engine.mRsp&&engine.mRsp.kickPlayerResponse && engine.mRsp.kickPlayerResponse(new MsKickPlayerRsp(
                 event.payload.getStatus(),
                 event.payload.getOwner(),
                 event.payload.getUserid()));
@@ -42821,7 +42847,7 @@ var NetWorkCallBackImp = function (engine) {
                 engine.mState.SetLogin();
                 engine.mHotelNetWork.close();
             }
-            engine.mRsp.kickPlayerNotify && engine.mRsp.kickPlayerNotify(
+            engine.mRsp&&engine.mRsp.kickPlayerNotify && engine.mRsp.kickPlayerNotify(
                 new MsKickPlayerNotify(event.payload.getUserid(),
                     event.payload.getSrcuserid(),
                     utf8ByteArrayToString(event.payload.getCpproto()),
@@ -42833,7 +42859,7 @@ var NetWorkCallBackImp = function (engine) {
     function SetFrameSyncRspWork() {
         this.doSubHandle = function (event, engine) {
             MatchvsLog.logI("SetFrameSyncRateAck:" + event.payload);
-            engine.mRsp.setFrameSyncResponse && engine.mRsp.setFrameSyncResponse(
+            engine.mRsp&&engine.mRsp.setFrameSyncResponse && engine.mRsp.setFrameSyncResponse(
                 new MsSetChannelFrameSyncRsp(event.payload.getStatus()));
         };
     };
@@ -42847,13 +42873,13 @@ var NetWorkCallBackImp = function (engine) {
                 event.payload.getEnablegs(),
                 event.payload.getCacheframems()
             );
-            engine.mRsp.setFrameSyncNotify && engine.mRsp.setFrameSyncNotify(notify);
+            engine.mRsp&&engine.mRsp.setFrameSyncNotify && engine.mRsp.setFrameSyncNotify(notify);
         };
     };
 
     function SendFrameEventRspWork() {
         this.doSubHandle = function (event, engine) {
-            engine.mRsp.sendFrameEventResponse && engine.mRsp.sendFrameEventResponse(
+            engine.mRsp&&engine.mRsp.sendFrameEventResponse && engine.mRsp.sendFrameEventResponse(
                 new MsSendFrameEventRsp(event.payload.getStatus())
             );
         };
@@ -42876,13 +42902,13 @@ var NetWorkCallBackImp = function (engine) {
                 frameData.push(event.frameCache.pop());
             }
             var msFrameData = new MsFrameData(event.payload.getLastidx(), frameData, frameData.length);
-            engine.mRsp.frameUpdate && engine.mRsp.frameUpdate(msFrameData);
+            engine.mRsp&&engine.mRsp.frameUpdate && engine.mRsp.frameUpdate(msFrameData);
         };
     };
 
     function NetworkStateNotifyWork() {
         this.doSubHandle = function (event, engine) {
-            engine.mRsp.networkStateNotify && engine.mRsp.networkStateNotify(new MsNetworkStateNotify(
+            engine.mRsp&&engine.mRsp.networkStateNotify && engine.mRsp.networkStateNotify(new MsNetworkStateNotify(
                 event.payload.getRoomid(),
                 event.payload.getUserid(),
                 event.payload.getState(),
@@ -42920,7 +42946,7 @@ var NetWorkCallBackImp = function (engine) {
                 event.payload.getTotal(),
                 roomAttrs
             );
-            engine.mRsp.getRoomListExResponse && engine.mRsp.getRoomListExResponse(roomListExInfo);
+            engine.mRsp&&engine.mRsp.getRoomListExResponse && engine.mRsp.getRoomListExResponse(roomListExInfo);
         };
     };
 
@@ -43004,7 +43030,7 @@ var NetWorkCallBackImp = function (engine) {
             if (event.payload.getStatus() !== 200) {
                 ErrorRspWork(engine.mRsp.errorResponse, event.payload.getStatus(), "set room property fail");
             }
-            engine.mRsp.setRoomPropertyResponse && engine.mRsp.setRoomPropertyResponse(new MsSetRoomPropertyRspInfo(
+            engine.mRsp&&engine.mRsp.setRoomPropertyResponse && engine.mRsp.setRoomPropertyResponse(new MsSetRoomPropertyRspInfo(
                 event.payload.getStatus(),
                 event.payload.getRoomid(),
                 event.payload.getUserid(),
@@ -43015,7 +43041,7 @@ var NetWorkCallBackImp = function (engine) {
 
     function SetRoomPropertyNotifyWork() {
         this.doSubHandle = function (event, engine) {
-            engine.mRsp.setRoomPropertyNotify && engine.mRsp.setRoomPropertyNotify(new MsRoomPropertyNotifyInfo(
+            engine.mRsp&&engine.mRsp.setRoomPropertyNotify && engine.mRsp.setRoomPropertyNotify(new MsRoomPropertyNotifyInfo(
                 event.payload.getRoomid(),
                 event.payload.getUserid(),
                 utf8ByteArrayToString(event.payload.getRoomproperty())
@@ -43025,7 +43051,7 @@ var NetWorkCallBackImp = function (engine) {
 
     function JoinOpenRspWork() {
         this.doSubHandle = function (event, engine) {
-            engine.mRsp.joinOpenResponse && engine.mRsp.joinOpenResponse(new MsReopenRoomResponse(
+            engine.mRsp&&engine.mRsp.joinOpenResponse && engine.mRsp.joinOpenResponse(new MsReopenRoomResponse(
                 event.payload.getStatus(),
                 utf8ByteArrayToString(event.payload.getCpproto())
             ));
@@ -43034,7 +43060,7 @@ var NetWorkCallBackImp = function (engine) {
 
     function JoinOpenNotifyWork() {
         this.doSubHandle = function (event, engine) {
-            engine.mRsp.joinOpenNotify && engine.mRsp.joinOpenNotify(new MsReopenRoomNotify(
+            engine.mRsp&&engine.mRsp.joinOpenNotify && engine.mRsp.joinOpenNotify(new MsReopenRoomNotify(
                 event.payload.getRoomid(),
                 event.payload.getUserid(),
                 utf8ByteArrayToString(event.payload.getCpproto())
@@ -43050,11 +43076,11 @@ var NetWorkCallBackImp = function (engine) {
             if (status !== 200) {
                 engine.mState.DelJoinWatching();
                 ErrorRspWork(engine.mRsp.errorResponse, status, "join watch room error ");
-                engine.mRsp.joinWatchRoom && engine.mRsp.joinWatchRoom(status);
+                engine.mRsp&&engine.mRsp.joinWatchRoom && engine.mRsp.joinWatchRoom(status);
                 return;
             }
             var mBookInfo = res.getBookinfo();
-            MVS.DEBUG && console.log("JoinWatchRoomRspWork bookInfo", mBookInfo);
+            MatchvsLog.logD("JoinWatchRoomRspWork bookInfo", mBookInfo);
             MVS.Host.HOST_WATCH_ADDR = MVS.MsUtil.getLiveUrl(mBookInfo, MVS.Game.id, res.getRoomid(), res.getSetid());
             engine.enterLiveRoom(res.getBookinfo(), res.getRoomid());
         };
@@ -43066,12 +43092,12 @@ var NetWorkCallBackImp = function (engine) {
                 engine.mWatchNetwrok.close();
             }
             var rsp = event.payload;
-            MVS.DEBUG && console.log(MVS.LgFormat("LeaveWatchRoomRspWork"), rsp);
+           MatchvsLog.logD(MVS.LgFormat("LeaveWatchRoomRspWork"), rsp);
             if (rsp.getStatus() !== 200) {
                 ErrorRspWork(engine.mRsp.errorResponse(rsp.getStatus(), " leave watch room error "));
             }
             engine.mWatchRoomID = "0";
-            engine.mRsp.leaveWatchRoomResponse && engine.mRsp.leaveWatchRoomResponse(rsp.getStatus());
+            engine.mRsp&&engine.mRsp.leaveWatchRoomResponse && engine.mRsp.leaveWatchRoomResponse(rsp.getStatus());
         };
     };
 
@@ -43079,7 +43105,7 @@ var NetWorkCallBackImp = function (engine) {
         this.doSubHandle = function (event, engine) {
             var rsp = event.payload;
             if (rsp.getStatus() !== 200) {
-                engine.mRsp.getRoomListExResponse && engine.mRsp.getRoomListExResponse(new MsGetRoomListExRsp(rsp.getStatus(), 0, []));
+                engine.mRsp&&engine.mRsp.getRoomListExResponse && engine.mRsp.getRoomListExResponse(new MsGetRoomListExRsp(rsp.getStatus(), 0, []));
                 ErrorRspWork(engine.mRsp.errorResponse, rsp.getStatus(), "get watch room list error ");
                 return;
             }
@@ -43109,7 +43135,7 @@ var NetWorkCallBackImp = function (engine) {
                 rsp.getTotal(),
                 roomAttrs
             );
-            engine.mRsp.getWatchRoomsResponse && engine.mRsp.getWatchRoomsResponse(roomListExInfo);
+            engine.mRsp&&engine.mRsp.getWatchRoomsResponse && engine.mRsp.getWatchRoomsResponse(roomListExInfo);
         };
     };
 
@@ -43119,7 +43145,7 @@ var NetWorkCallBackImp = function (engine) {
             var res = event.payload;
             var liveRsp = {};
             if (res.getStatus() !== 200) {
-                ErrorRspWork(engine.mRsp.errorResponse, res.getStatus(), "enter live room error");
+                ErrorRspWork(engine.mRsp&&engine.mRsp.errorResponse, res.getStatus(), "enter live room error");
                 liveRsp = new MVS.MsJoinWatchRoomRsp(res.getStatus(), 0, "", {});
             } else {
                 engine.mState.SetInWatch();
@@ -43136,7 +43162,7 @@ var NetWorkCallBackImp = function (engine) {
                 liveRsp = new MVS.MsJoinWatchRoomRsp(res.getStatus(), res.getRoomstatus(), res.getReserved(), liveInfo);
             }
 
-            engine.mRsp.joinWatchRoomResponse && engine.mRsp.joinWatchRoomResponse(liveRsp);
+            engine.mRsp&&engine.mRsp.joinWatchRoomResponse && engine.mRsp.joinWatchRoomResponse(liveRsp);
         };
     };
 
@@ -43144,14 +43170,14 @@ var NetWorkCallBackImp = function (engine) {
         this.doSubHandle = function (event, engine) {
             var res = event.payload;
             var notify = new MsRoomUserInfo(res.getUserid(), utf8ByteArrayToString(res.getUserprofile()));
-            MVS.DEBUG && console.log(MVS.LgFormat("EnterLiveRoomNotifyWork"), res);
-            engine.mRsp.joinWatchRoomNotify && engine.mRsp.joinWatchRoomNotify(notify);
+           MatchvsLog.logD(MVS.LgFormat("EnterLiveRoomNotifyWork"), res);
+            engine.mRsp&&engine.mRsp.joinWatchRoomNotify && engine.mRsp.joinWatchRoomNotify(notify);
         };
     };
 
     function WatchHeartBeatRspWork() {
         this.doSubHandle = function (event, engine) {
-            engine.mRsp.watchHeartBeat && engine.mRsp.watchHeartBeat(event.payload.getStatus());
+            engine.mRsp&&engine.mRsp.watchHeartBeat && engine.mRsp.watchHeartBeat(event.payload.getStatus());
         };
     };
 
@@ -43161,21 +43187,21 @@ var NetWorkCallBackImp = function (engine) {
             if (rsp.getStatus() !== 200) {
                 ErrorRspWork(engine.mRsp.errorResponse, rsp.getStatus(), " watch send message error ");
             }
-            engine.mRsp.liveBroadcastResponse && engine.mRsp.liveBroadcastResponse(rsp.getStatus());
+            engine.mRsp&&engine.mRsp.liveBroadcastResponse && engine.mRsp.liveBroadcastResponse(rsp.getStatus());
         };
     };
 
     function LiveBroadcastNotifyWork() {
         this.doSubHandle = function (event, engine) {
             var rsp = event.payload;
-            engine.mRsp.liveBroadcastNotify && engine.mRsp.liveBroadcastNotify(new MsSendEventNotify(rsp.getSrcuid(), utf8ByteArrayToString(rsp.getCpproto())));
+            engine.mRsp&&engine.mRsp.liveBroadcastNotify && engine.mRsp.liveBroadcastNotify(new MsSendEventNotify(rsp.getSrcuid(), utf8ByteArrayToString(rsp.getCpproto())));
         };
     };
 
     function SetLiveOffsetRspWork() {
         this.doSubHandle = function (event, engine) {
             var rsp = event.payload;
-            engine.mRsp.setLiveOffsetResponse && engine.mRsp.setLiveOffsetResponse(rsp.getStatus());
+            engine.mRsp&&engine.mRsp.setLiveOffsetResponse && engine.mRsp.setLiveOffsetResponse(rsp.getStatus());
         };
     };
 
@@ -43183,16 +43209,16 @@ var NetWorkCallBackImp = function (engine) {
         this.doSubHandle = function (event, engine) {
             var rsp = event.payload;
             var notify = new MVS.MsExitLiveRoomNotify(rsp.getUserid(), utf8ByteArrayToString(rsp.getUserprofile()));
-            MVS.DEBUG && console.log(MVS.LgFormat("ExitLiveRoomNotifyWork"), notify);
-            engine.mRsp.leaveWatchRoomNotify && engine.mRsp.leaveWatchRoomNotify(notify);
+           MatchvsLog.logD(MVS.LgFormat("ExitLiveRoomNotifyWork"), notify);
+            engine.mRsp&&engine.mRsp.leaveWatchRoomNotify && engine.mRsp.leaveWatchRoomNotify(notify);
         };
     };
 
     function LiveOverNotifyWork() {
         this.doSubHandle = function (event, engine) {
             var rsp = event.payload;
-            MVS.DEBUG && console.log(MVS.LgFormat("LiveOverNotifyWork"), rsp);
-            engine.mRsp.liveOverNotify && engine.mRsp.liveOverNotify(new MVS.MsLiveOverNotify(rsp.getGameid(), rsp.getRoomid()));
+           MatchvsLog.logD(MVS.LgFormat("LiveOverNotifyWork"), rsp);
+            engine.mRsp&&engine.mRsp.liveOverNotify && engine.mRsp.liveOverNotify(new MVS.MsLiveOverNotify(rsp.getGameid(), rsp.getRoomid()));
         };
     };
 
@@ -43213,7 +43239,7 @@ var NetWorkCallBackImp = function (engine) {
                 frameData.push(event.frameCache.pop());
             }
             var msFrameData = new MsFrameData(event.payload.getLastidx(), frameData, frameData.length);
-            engine.mRsp.liveFrameUpdate && engine.mRsp.liveFrameUpdate(msFrameData);
+            engine.mRsp&&engine.mRsp.liveFrameUpdate && engine.mRsp.liveFrameUpdate(msFrameData);
         };
     };
 
@@ -43247,7 +43273,7 @@ var NetWorkCallBackImp = function (engine) {
                     engine.enterLiveRoom(rsp.getBookinfo(), rsp.getRoomid());
                 }
             }
-            engine.mRsp.changeRoleResponse(new MVS.MsChangeRoleRsp(rsp.getStatus(), rsp.getTargetroomtype()));
+            engine.mRsp&&engine.mRsp.changeRoleResponse(new MVS.MsChangeRoleRsp(rsp.getStatus(), rsp.getTargetroomtype()));
 
         };
     };
@@ -43258,7 +43284,7 @@ var NetWorkCallBackImp = function (engine) {
             if (status !== 200) {
                 ErrorRspWork(engine.mRsp.errorResponse, status, " set reconnect timeout value response error");
             }
-            engine.mRsp.setReconnectTimeoutResponse && engine.mRsp.setReconnectTimeoutResponse(status);
+            engine.mRsp&&engine.mRsp.setReconnectTimeoutResponse && engine.mRsp.setReconnectTimeoutResponse(status);
         };
     };
 
@@ -43277,7 +43303,7 @@ var NetWorkCallBackImp = function (engine) {
                 teamID: event.payload.getTeamid(),
                 owner: event.payload.getOwner()
             };
-            engine.mRsp.createTeamResponse && engine.mRsp.createTeamResponse(rsp);
+            engine.mRsp&&engine.mRsp.createTeamResponse && engine.mRsp.createTeamResponse(rsp);
         };
     };
 
@@ -43312,7 +43338,7 @@ var NetWorkCallBackImp = function (engine) {
                     owner: teaminfo.getOwner() || 0
                 };
             }
-            engine.mRsp.joinTeamResponse && engine.mRsp.joinTeamResponse(rsp);
+            engine.mRsp&&engine.mRsp.joinTeamResponse && engine.mRsp.joinTeamResponse(rsp);
         };
     };
 
@@ -43325,7 +43351,7 @@ var NetWorkCallBackImp = function (engine) {
                     userProfile: utf8ByteArrayToString(u.getUserprofile())
                 }
             };
-            engine.mRsp.joinTeamNotify && engine.mRsp.joinTeamNotify(notify);
+            engine.mRsp&&engine.mRsp.joinTeamNotify && engine.mRsp.joinTeamNotify(notify);
         };
     };
 
@@ -43340,7 +43366,7 @@ var NetWorkCallBackImp = function (engine) {
                 teamID: event.payload.getTeamid() || "0",
                 userID: event.payload.getUserid() || 0
             };
-            engine.mRsp.leaveTeamResponse && engine.mRsp.leaveTeamResponse(rsp);
+            engine.mRsp&&engine.mRsp.leaveTeamResponse && engine.mRsp.leaveTeamResponse(rsp);
         };
     }
 
@@ -43351,7 +43377,7 @@ var NetWorkCallBackImp = function (engine) {
                 userID: event.payload.getUserid() || 0,
                 owner: event.payload.getOwner() || 0
             };
-            engine.mRsp.leaveTeamNotify && engine.mRsp.leaveTeamNotify(notify);
+            engine.mRsp&&engine.mRsp.leaveTeamNotify && engine.mRsp.leaveTeamNotify(notify);
         };
     };
 
@@ -43364,7 +43390,7 @@ var NetWorkCallBackImp = function (engine) {
             var rsp = {
                 status: status
             };
-            engine.mRsp.teamMatchResponse && engine.mRsp.teamMatchResponse(rsp);
+            engine.mRsp&&engine.mRsp.teamMatchResponse && engine.mRsp.teamMatchResponse(rsp);
         };
     };
 
@@ -43413,7 +43439,7 @@ var NetWorkCallBackImp = function (engine) {
                     brigades: list,
                     roomInfo: {}
                 };
-                MVS.DEBUG && console.log(MVS.LgFormat("TeamMatchResultNotifyWork"), engine.teamNotifyInfo);
+               MatchvsLog.logD(MVS.LgFormat("TeamMatchResultNotifyWork"), engine.teamNotifyInfo);
                 MVS.Host.HOST_HOTEL_ADDR = MVS.MsUtil.getHotelUrl(mBookInfo);
                 engine.mState.SetTeamMatching();
                 engine.roomCheckIn(event.payload.getBookinfo(), event.payload.getRoominfo());
@@ -43429,7 +43455,7 @@ var NetWorkCallBackImp = function (engine) {
                 teamID: event.payload.getTeamid(),
                 userID: event.payload.getUserid()
             };
-            engine.mRsp.teamMatchStartNotify && engine.mRsp.teamMatchStartNotify(notify);
+            engine.mRsp&&engine.mRsp.teamMatchStartNotify && engine.mRsp.teamMatchStartNotify(notify);
         };
     };
 
@@ -43444,7 +43470,7 @@ var NetWorkCallBackImp = function (engine) {
                 frameCount: event.payload.getFramecount() || 0,
                 msgCount: event.payload.getMsgcount() || 0
             };
-            engine.mRsp.getOffLineDataResponse && engine.mRsp.getOffLineDataResponse(notify);
+            engine.mRsp&&engine.mRsp.getOffLineDataResponse && engine.mRsp.getOffLineDataResponse(notify);
         };
     }
 
@@ -43455,7 +43481,7 @@ var NetWorkCallBackImp = function (engine) {
                 ErrorRspWork(engine.mRsp.errorResponse, status, "cancel team match failed");
             }
             engine.mState.DelTeamMatching();
-            engine.mRsp.cancelTeamMatchResponse && engine.mRsp.cancelTeamMatchResponse({status: status});
+            engine.mRsp&&engine.mRsp.cancelTeamMatchResponse && engine.mRsp.cancelTeamMatchResponse({status: status});
         };
     }
 
@@ -43468,7 +43494,7 @@ var NetWorkCallBackImp = function (engine) {
                 userID: data.getUserid(),
                 cpProto: utf8ByteArrayToString(data.getCpproto())
             };
-            engine.mRsp.cancelTeamMatchNotify && engine.mRsp.cancelTeamMatchNotify(notify);
+            engine.mRsp&&engine.mRsp.cancelTeamMatchNotify && engine.mRsp.cancelTeamMatchNotify(notify);
         };
     }
 
@@ -43483,7 +43509,7 @@ var NetWorkCallBackImp = function (engine) {
                 status: status,
                 dstUserIDs: event.payload.getDstuseridsList() || []
             };
-            engine.mRsp.sendTeamEventResponse && engine.mRsp.sendTeamEventResponse(rsp);
+            engine.mRsp&&engine.mRsp.sendTeamEventResponse && engine.mRsp.sendTeamEventResponse(rsp);
         };
     }
 
@@ -43495,7 +43521,7 @@ var NetWorkCallBackImp = function (engine) {
                 userID: data.getUserid(),
                 cpProto: utf8ByteArrayToString(data.getCpproto())
             };
-            engine.mRsp.sendTeamEventNotify && engine.mRsp.sendTeamEventNotify(notify);
+            engine.mRsp&&engine.mRsp.sendTeamEventNotify && engine.mRsp.sendTeamEventNotify(notify);
         };
     }
 
@@ -43511,7 +43537,7 @@ var NetWorkCallBackImp = function (engine) {
                 owner: event.payload.getOwner(),
                 teamID: event.payload.getTeamid()
             };
-            engine.mRsp.kickTeamMemberResponse && engine.mRsp.kickTeamMemberResponse(rsp);
+            engine.mRsp&&engine.mRsp.kickTeamMemberResponse && engine.mRsp.kickTeamMemberResponse(rsp);
         };
     }
 
@@ -43530,7 +43556,7 @@ var NetWorkCallBackImp = function (engine) {
                 members: data.getMembersList(),
                 cpProto: utf8ByteArrayToString(data.getCpproto())
             };
-            engine.mRsp.kickTeamMemberNotify && engine.mRsp.kickTeamMemberNotify(notify);
+            engine.mRsp&&engine.mRsp.kickTeamMemberNotify && engine.mRsp.kickTeamMemberNotify(notify);
         };
     }
 
@@ -43543,28 +43569,28 @@ function MatchvsResponse() {
      * @param userInfo {MsRegistRsp}
      */
     this.registerUserResponse = function (userInfo) {
-
+        MatchvsLog.logI(("[INFO] not found imp registerUserResponse"));
     };
     /**
      *
      * @param loginRsp {MsLoginRsp}
      */
     this.loginResponse = function (loginRsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp loginResponse"));
     };
     /**
      * MsLogoutRsp
      * @param status {number}
      */
     this.logoutResponse = function (status) {
-
+        MatchvsLog.logI(("[INFO] not found imp logoutResponse"));
     };
     /**
      *
      * @param rsp {MsCreateRoomRsp}
      */
     this.createRoomResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp createRoomResponse"));
     };
 
     /**
@@ -43573,7 +43599,7 @@ function MatchvsResponse() {
      * @param roomInfos {Array<MsRoomInfoEx>}
      */
     this.getRoomListResponse = function (status, roomInfos) {
-
+        MatchvsLog.logI(("[INFO] not found imp getRoomListResponse"));
     };
     /**
      *
@@ -43582,7 +43608,7 @@ function MatchvsResponse() {
      * @param roomInfo {MsRoomInfo}
      */
     this.joinRoomResponse = function (status, roomUserInfoList, roomInfo) {
-
+        MatchvsLog.logI(("[INFO] not found imp joinRoomResponse"));
     };
     /**
      * message NoticeJoin
@@ -43597,7 +43623,7 @@ function MatchvsResponse() {
      * @param roomUserInfo {MsRoomUserInfo}
      */
     this.joinRoomNotify = function (roomUserInfo) {
-
+        MatchvsLog.logI(("[INFO] not found imp joinRoomNotify"));
     };
 
     /**
@@ -43605,7 +43631,7 @@ function MatchvsResponse() {
      * @param {MsJoinOverRsp} rsp
      */
     this.joinOverResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp joinOverResponse"));
     };
 
     /**
@@ -43613,7 +43639,7 @@ function MatchvsResponse() {
      * @param notifyInfo {MsJoinOverNotifyInfo}
      */
     this.joinOverNotify = function (notifyInfo) {
-
+        MatchvsLog.logI(("[INFO] not found imp joinOverNotify"));
     };
 
     /**
@@ -43627,49 +43653,49 @@ function MatchvsResponse() {
      * @param rsp {LeaveRoomRsp}
      */
     this.leaveRoomResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp leaveRoomResponse"));
     };
     /**
      *
      * @param leaveRoomInfo {MsLeaveRoomNotify}
      */
     this.leaveRoomNotify = function (leaveRoomInfo) {
-
+        MatchvsLog.logI(("[INFO] not found imp leaveRoomNotify"));
     };
     /**
      * MsKickPlayerRsp
      * @param rsp {MsKickPlayerRsp}
      */
     this.kickPlayerResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp kickPlayerResponse"));
     };
     /**
      *
      * @param notify {MsKickPlayerNotify}
      */
     this.kickPlayerNotify = function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp kickPlayerNotify"));
     };
     /**
      *
      * @param rsp {MsSendEventRsp}
      */
     this.sendEventResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp sendEventResponse"));
     };
     /**
      *
      * @param tRsp {MsSendEventNotify}
      */
     this.sendEventNotify = function (tRsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp sendEventNotify"));
     };
     /**
      *
      * @param tRsp {MsGameServerNotifyInfo}
      */
     this.gameServerNotify = function (tRsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp gameServerNotify"));
     };
     /**
      *
@@ -43677,31 +43703,24 @@ function MatchvsResponse() {
      * @param errMsg {string}
      */
     this.errorResponse = function (errCode, errMsg) {
-
+        MatchvsLog.logI(("[INFO] not found imp errorResponse"));
     };
     /**
      * status==200 is success.other is fail;
      * @param status {int}
      */
     this.initResponse = function (status) {
-
+        MatchvsLog.logI(("[INFO] not found imp initResponse"));
     };
-    /**
-     *
-     * @param int
-     */
-    // this.networkDelay = function (delay) {
-    //
-    // };
     /**
      *
      * @param notify{MsNetworkStateNotify}
      */
     this.networkStateNotify = function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp networkStateNotify"));
     };
     this.teamNetworkStateNotify = function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp teamNetworkStateNotify"));
     };
     /**
      *
@@ -43709,7 +43728,7 @@ function MatchvsResponse() {
      * @param groups {Array<string>}
      */
     this.subscribeEventGroupResponse = function (status, groups) {
-
+        MatchvsLog.logI(("[INFO] not found imp subscribeEventGroupResponse"));
     };
 
     /**
@@ -43718,7 +43737,7 @@ function MatchvsResponse() {
      * @param dstNum {number}
      */
     this.sendEventGroupResponse = function (status, dstNum) {
-
+        MatchvsLog.logI(("[INFO] not found imp sendEventGroupResponse"));
     };
     /**
      *
@@ -43727,14 +43746,14 @@ function MatchvsResponse() {
      * @param cpProto {string}
      */
     this.sendEventGroupNotify = function (srcUserID, groups, cpProto) {
-
+        MatchvsLog.logI(("[INFO] not found imp sendEventGroupNotify"));
     };
     /**
      *
      * @param rsp {MsSetChannelFrameSyncRsp}
      */
     this.setFrameSyncResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp setFrameSyncResponse"));
     };
 
     /**
@@ -43742,28 +43761,28 @@ function MatchvsResponse() {
      * @param notify { MVS.MsSetFrameSyncNotify }
      */
     this.setFrameSyncNotify = function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp setFrameSyncNotify"));
     };
     /**
      *
      * @param rsp {MsSendFrameEventRsp}
      */
     this.sendFrameEventResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp sendFrameEventResponse"));
     };
     /**
      *
      * @param data {MsFrameData}
      */
     this.frameUpdate = function (data) {
-
+        MatchvsLog.logI(("[INFO] not found imp joinRoomResponse"));
     };
     /**
      *
      * @param data {number}
      */
     this.hotelHeartBeatRsp = function (data) {
-
+        MatchvsLog.logI(("[INFO] not found imp hotelHeartBeatRsp"));
     };
 
     /**
@@ -43771,7 +43790,7 @@ function MatchvsResponse() {
      * @param rsp {MsGatewaySpeedResponse}
      */
     this.gatewaySpeedResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp gatewaySpeedResponse"));
     };
 
     /**
@@ -43779,7 +43798,7 @@ function MatchvsResponse() {
      * @param rsp
      */
     this.heartBeatResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp heartBeatResponse"));
     };
 
     /**
@@ -43787,7 +43806,7 @@ function MatchvsResponse() {
      * @param rep
      */
     this.disConnectResponse = function (rep) {
-
+        MatchvsLog.logI(("[INFO] not found imp disConnectResponse"));
     };
 
     /**
@@ -43795,6 +43814,7 @@ function MatchvsResponse() {
      * @param rsp {MsGetRoomDetailRsp}
      */
     this.getRoomDetailResponse = function (rsp) {
+        MatchvsLog.logI(("[INFO] not found imp getRoomDetailResponse"));
     };
 
     /**
@@ -43802,7 +43822,7 @@ function MatchvsResponse() {
      * @param rsp {MsGetRoomListExRsp}
      */
     this.getRoomListExResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp getRoomListExResponse"));
     };
 
     /**
@@ -43810,7 +43830,7 @@ function MatchvsResponse() {
      * @param rsp {MsSetRoomPropertyRspInfo}
      */
     this.setRoomPropertyResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp setRoomPropertyResponse"));
     };
 
     /**
@@ -43818,7 +43838,7 @@ function MatchvsResponse() {
      * @param notify
      */
     this.setRoomPropertyNotify = function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp setRoomPropertyNotify"));
     };
 
     /**
@@ -43828,12 +43848,15 @@ function MatchvsResponse() {
      * @param roomInfo
      */
     this.reconnectResponse = function (status, roomUserInfoList, roomInfo) {
+        MatchvsLog.logI(("[INFO] not found imp reconnectResponse"));
     };
 
     this.joinOpenNotify = function (rsp) {
+        MatchvsLog.logI(("[INFO] not found imp joinOpenNotify"));
     };
 
     this.joinOpenResponse = function (notify) {
+        MatchvsLog.logI(("[INFO] not found imp joinOpenResponse"));
     };
 
     /**
@@ -43841,6 +43864,7 @@ function MatchvsResponse() {
      * @param rsp {MVS.MsJoinWatchRoomRsp} 200 成功
      */
     this.joinWatchRoomResponse = function (rsp) {
+        MatchvsLog.logI(("[INFO] not found imp joinWatchRoomResponse"));
     };
 
     /**
@@ -43848,6 +43872,7 @@ function MatchvsResponse() {
      * @param notify {MsRoomUserInfo}
      */
     this.joinWatchRoomNotify = function (notify) {
+        MatchvsLog.logI(("[INFO] not found imp joinWatchRoomNotify"));
     };
 
     /**
@@ -43855,7 +43880,7 @@ function MatchvsResponse() {
      * @param status
      */
     this.leaveWatchRoomResponse = function (status) {
-
+        MatchvsLog.logI(("[INFO] not found imp leaveWatchRoomResponse"));
     };
 
     /**
@@ -43863,7 +43888,7 @@ function MatchvsResponse() {
      * @param user {MVS.MsExitLiveRoomNotify}
      */
     this.leaveWatchRoomNotify = function (user) {
-
+        MatchvsLog.logI(("[INFO] not found imp leaveWatchRoomNotify"));
     };
 
     /**
@@ -43871,17 +43896,20 @@ function MatchvsResponse() {
      * @param rooms {MsGetRoomListExRsp}
      */
     this.getWatchRoomsResponse = function (rooms) {
+        MatchvsLog.logI(("[INFO] not found imp getWatchRoomsResponse"));
     };
 
 
     this.watchHeartBeat = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp watchHeartBeat"));
     };
 
     this.liveBroadcastResponse = function (rsp) {
+        MatchvsLog.logI(("[INFO] not found imp liveBroadcastResponse"));
     };
 
     this.liveBroadcastNotify = function (notify) {
+        MatchvsLog.logI(("[INFO] not found imp liveBroadcastNotify"));
 
     };
 
@@ -43890,6 +43918,7 @@ function MatchvsResponse() {
      * @param status {number}
      */
     this.setLiveOffsetResponse = function (status) {
+        MatchvsLog.logI(("[INFO] not found imp setLiveOffsetResponse"));
     };
 
 
@@ -43898,7 +43927,7 @@ function MatchvsResponse() {
      * @param notify {MVS.MsLiveOverNotify}
      */
     this.liveOverNotify = function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp liveOverNotify"));
     };
 
     /**
@@ -43906,6 +43935,7 @@ function MatchvsResponse() {
      * @param data {MsFrameData}
      */
     this.liveFrameUpdate = function (data) {
+        MatchvsLog.logI(("[INFO] not found imp liveFrameUpdate"));
     };
 
     /**
@@ -43913,6 +43943,7 @@ function MatchvsResponse() {
      * @param rsp
      */
     this.changeRoleResponse = function (rsp) {
+        MatchvsLog.logI(("[INFO] not found imp changeRoleResponse"));
     };
 
     /**
@@ -43921,8 +43952,10 @@ function MatchvsResponse() {
      * @constructor
      */
     this.setReconnectTimeoutResponse = function (status) {
+        MatchvsLog.logI(("[INFO] not found imp setReconnectTimeoutResponse"));
     };
     this.setTeamReconnectTimeoutResponse = function (status) {
+        MatchvsLog.logI(("[INFO] not found imp setTeamReconnectTimeoutResponse"));
     };
 
     /**
@@ -43932,7 +43965,7 @@ function MatchvsResponse() {
      * @param {number} rsp.owner
      */
     this.createTeamResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp createTeamResponse"));
     };
 
     /**
@@ -43942,6 +43975,7 @@ function MatchvsResponse() {
      * @param {Array<object>} rsp.userList
      */
     this.joinTeamResponse = function (rsp) {
+        MatchvsLog.logI(("[INFO] not found imp joinTeamResponse"));
     };
 
     /**
@@ -43949,6 +43983,7 @@ function MatchvsResponse() {
      * @param {object} notify.user
      */
     this.joinTeamNotify = function (notify) {
+        MatchvsLog.logI(("[INFO] not found imp joinTeamNotify"));
     };
 
 
@@ -43959,6 +43994,7 @@ function MatchvsResponse() {
      * @param {number} rsp.userID
      */
     this.leaveTeamResponse = function (rsp) {
+        MatchvsLog.logI(("[INFO] not found imp leaveTeamResponse"));
 
     };
 
@@ -43970,7 +44006,7 @@ function MatchvsResponse() {
      * @param {String} notify.teamProperty
      */
     this.leaveTeamNotify = function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp leaveTeamNotify"));
     };
 
     /**
@@ -43980,7 +44016,7 @@ function MatchvsResponse() {
      * @param {String} rsp.teamProperty
      */
     this.setTeamPropertyResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp setTeamPropertyResponse"));
     };
 
     /**
@@ -43991,7 +44027,7 @@ function MatchvsResponse() {
      * @param {String} notify.teamUserProfile
      */
     this.setTeamUserProfileNotify = function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp setTeamUserProfileNotify"));
     };
     /**
      * @param {number} rsp.status
@@ -44000,7 +44036,7 @@ function MatchvsResponse() {
      * @param {String} rsp.teamProperty
      */
     this.setTeamUserProfileResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp setTeamUserProfileResponse"));
     };
 
     /**
@@ -44010,7 +44046,7 @@ function MatchvsResponse() {
      * @param {String} notify.teamProperty
      */
     this.setTeamPropertyNotify = function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp setTeamPropertyNotify"));
     };
 
     /**
@@ -44018,7 +44054,7 @@ function MatchvsResponse() {
      * @param {number} rsp.status
      */
     this.teamMatchResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp teamMatchResponse"));
     };
 
     /**
@@ -44028,13 +44064,16 @@ function MatchvsResponse() {
      * @param notify.roomInfo
      */
     this.teamMatchResultNotify = function (notify) {
+        MatchvsLog.logI(("[INFO] not found imp teamMatchResultNotify"));
     };
 
 
     this.teamMatchStartNotify = function (notify) {
+        MatchvsLog.logI(("[INFO] not found imp teamMatchStartNotify"));
     };
 
     this.getOffLineDataResponse = function (rsp) {
+        MatchvsLog.logI(("[INFO] not found imp getOffLineDataResponse"));
     };
 
     /**
@@ -44042,7 +44081,7 @@ function MatchvsResponse() {
      * @param {number} rsp.status
      */
     this.cancelTeamMatchResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp cancelTeamMatchResponse"));
     };
 
     /**
@@ -44052,7 +44091,7 @@ function MatchvsResponse() {
      * @param {string} notify.cpProto
      */
     this.cancelTeamMatchNotify = function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp cancelTeamMatchNotify"));
     };
 
     /**
@@ -44061,10 +44100,12 @@ function MatchvsResponse() {
      * @param {Array<number>} rsp.dstUserIDs
      */
     this.sendTeamEventResponse = function (rsp) {
+        MatchvsLog.logI(("[INFO] not found imp sendTeamEventResponse"));
 
     };
 
     this.sendTeamEventNotify = function (notify) {
+        MatchvsLog.logI(("[INFO] not found imp sendTeamEventNotify"));
 
     };
 
@@ -44073,11 +44114,11 @@ function MatchvsResponse() {
      * @param rsp
      */
     this.kickTeamMemberResponse = function (rsp) {
-
+        MatchvsLog.logI(("[INFO] not found imp kickTeamMemberResponse"));
     };
 
     this.kickTeamMemberNotify= function (notify) {
-
+        MatchvsLog.logI(("[INFO] not found imp kickTeamMemberNotify"));
     };
 
 }
@@ -44428,12 +44469,16 @@ function MatchvsResponse() {
          * @returns {number}
          */
         this.init = function (response, channel, platform, gameID, appKey, gameVersion, threshold) {
+            if (undefined === channel || channel === ""){console.error("[ERR] ill pars ,channel:"+channel);return -1}
+            if (undefined === platform || platform === ""){console.error("[ERR] ill pars ,platform:"+platform);return -1}
+            if (undefined === gameID || gameID === 0){console.error("[ERR] ill pars ,gameID:"+gameID);return -1}
+            if (undefined === appKey || appKey === ""){console.error("[ERR] ill pars ,appKey:"+appKey);return -1}
             MVS.Game.id = gameID;
             MVS.mtaReport && MVS.mtaReport.Report("init");
             this.mRsp = response;
             M_EVN.channel = channel;
             M_EVN.platform = platform;
-            M_EVN.gVersion = gameVersion;
+            M_EVN.gVersion = gameVersion||1;
             M_EVN.appkey = appKey;
             M_EVN.gameID = gameID;
             this.mState.SetIniting();
@@ -44538,6 +44583,8 @@ function MatchvsResponse() {
          * @nodeID {uint32}
          */
         this.login = function (userID, token, deviceID, nodeID) {
+            if (undefined === userID || userID === ""||userID === 0){console.error("[ERR] ill pars ,userID:"+userID);return -1}
+            if (undefined === token || token === ""){console.error("[ERR] ill pars ,token:"+token);return -1}
 
             M_User.ID = userID;
             this.mUserID = userID;
@@ -44605,8 +44652,9 @@ function MatchvsResponse() {
 
 
         this.uninit = function () {
+            this.logout("");
             this.mState.ReSet();
-            this.mRsp = null;
+            this.mRsp = new MatchvsResponse();
             MatchvsLog.logI("unInit ");
             return 0;
         };
@@ -44846,7 +44894,7 @@ function MatchvsResponse() {
         if(M_ENGINE.mState.IsLoginOuting()){return ;}
         var buf = M_ENGINE.mProtocol.heartBeat(M_EVN.gameID, roomID);
         M_ENGINE.mGTWNetwork.send(buf);
-        MatchvsLog.logI("gateway heartBeat:");
+        MatchvsLog.logD("gateway heartBeat:");
     };
 
 
@@ -44936,7 +44984,7 @@ function MatchvsResponse() {
         M_ENGINE.mState.SetInRoom();
         var buf = M_ENGINE.mProtocol.hotelHeartBeat(M_EVN.gameID, M_ENGINE.mRoomInfo.getRoomid(), M_User.ID);
         M_ENGINE.mHotelNetWork.send(buf);
-        MatchvsLog.logI("hotel heartBeat:");
+        MatchvsLog.logD("hotel heartBeat:");
     };
 
     /**
