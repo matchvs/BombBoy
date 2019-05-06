@@ -1,8 +1,8 @@
 
 /**************************************************************************************************
  * 								Matchvs SDK														  *
- *                              SDK_RELMatchvs_V3.7.9.6                                                       *
- * 								2019-04-25											        	  *
+ *                              SDK_RELMatchvs_V3.7.9.7.0                                                       *
+ * 								2019-05-06											        	  *
  * 								https://www.matchvs.com/home									  *
  **************************************************************************************************/
  
@@ -11,7 +11,7 @@ var MVS = (function (_obj) {
 
     var _this ;
     var MVS = {
-        version:"SDK_RELMatchvs_V3.7.9.6",
+        version:"SDK_RELMatchvs_V3.7.9.7.0",
         Game:{
             id:0,
             appkey:""
@@ -43782,7 +43782,7 @@ function MatchvsResponse() {
      * @param data {number}
      */
     this.hotelHeartBeatRsp = function (data) {
-        MatchvsLog.logI(("[INFO] not found imp hotelHeartBeatRsp"));
+        MatchvsLog.logD(("[INFO] not found imp hotelHeartBeatRsp"));
     };
 
     /**
@@ -43798,7 +43798,7 @@ function MatchvsResponse() {
      * @param rsp
      */
     this.heartBeatResponse = function (rsp) {
-        MatchvsLog.logI(("[INFO] not found imp heartBeatResponse"));
+        MatchvsLog.logD(("[INFO] not found imp heartBeatResponse"));
     };
 
     /**

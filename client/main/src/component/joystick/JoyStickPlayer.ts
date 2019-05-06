@@ -46,7 +46,7 @@ class JoyStickPlayer {
 				if (!this.isEnable) {
 					return;
 				}
-				console.log('[INFO] XXXXXXXXXXXXXXXXX  send  :  ' + this.arrow);
+				// console.log('[INFO] XXXXXXXXXXXXXXXXX  send  :  ' + this.arrow);
 				lastSyncArrow = this.arrow;
 				NetWork.send("input", this.arrow);
 			}.bind(this), 1000 / (MoveSync.FPS));
@@ -64,7 +64,7 @@ class JoyStickPlayer {
 	//触摸摇杆的角度改变，人物的移动速度方向也随之改变
 	private onChange(e: egret.Event) {
 		this.arrow = e.data;
-		console.log('[INFO] arrow' + this.arrow);
+		// console.log('[INFO] arrow' + this.arrow);
 	}
 
 	//停止摇杆，人物停止移动

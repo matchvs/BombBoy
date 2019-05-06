@@ -16,7 +16,7 @@ public class App extends GameServerRoomEventHandler {
         /**
          * 本地调试时在此处填写自己config.Json的绝对路径,正式发布上线注释下面代码即可。
          */
-        path[0] = "C:\\Users\\xing\\Documents\\Bomb\\server\\src\\Config.json";
+        path[0] = "D:\\User\\Documents\\BombBoy\\server\\src\\Config.json";
         try {
             Main.main(path);
         } catch (Exception e) {
