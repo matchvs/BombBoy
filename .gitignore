@@ -118,3 +118,4 @@ client/main_wxgame/resource/default.thm.json
 client/main_wxgame/resource/gameEui.json
 client/main_wxgame/resource/
 client/main_wxgame/openDataContext/
+server/bin/
