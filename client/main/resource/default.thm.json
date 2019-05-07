@@ -21,7 +21,8 @@
 		"HomePage": "resource/scene/Home.exml",
 		"TeamReady": "resource/scene/TeamReady.exml",
 		"TeamHome": "resource/scene/TeamHome.exml",
-		"NodeListIRSkin": "resource/scene/NodeInfo.exml"
+		"NodeListIRSkin": "resource/scene/NodeInfo.exml",
+		"Dialog": "resource/scene/Dialog.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
@@ -38,6 +39,7 @@
 		"resource/eui_skins/ToggleSwitchSkin.exml",
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml",
+		"resource/scene/Dialog.exml",
 		"resource/scene/Game.exml",
 		"resource/scene/Home.exml",
 		"resource/scene/Lobby.exml",

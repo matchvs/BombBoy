@@ -79,10 +79,18 @@ class HomePage extends BaseScene implements eui.UIComponent {
 				this.nodeList.dataProvider = new eui.ArrayCollection(this.nodeDataList);
 				this.nodeList.itemRenderer = NodeListIRSkin;
 				break;
-
+			case "test":
+				// this.reconnectDialog && (this.reconnectDialog.hide())
+				// this.reconnectDialog = new Dialog().show(this, "网络已断开，是否重试？", function () {
+				// 	Toast.show("开始重连,请等待");
+					
+				// }, "提示", function () {
+				// 	Toast.show("网络已断开，点击确认重连");
+				// });
+				break;
 		}
 	}
-
+	private reconnectDialog: Dialog;
 	public onEvent(e: egret.Event): void {
 		switch (e.type) {
 			case MatchvsMessage.MATCHVS_INIT:

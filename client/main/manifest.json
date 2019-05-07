@@ -53,6 +53,7 @@
 		"bin-debug/efinal/Tips.js",
 		"bin-debug/efinal/Toast.js",
 		"bin-debug/efinal/UI.js",
+		"bin-debug/efinal/ui/Dialog.js",
 		"bin-debug/efinal/util/JSUtil.js",
 		"bin-debug/efinal/util/UriUtil.js",
 		"bin-debug/ThemeAdapter.js",

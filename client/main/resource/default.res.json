@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "map_flopy2_json,map_flopy5_json,map_flopy6_json,map_flopy_json,map_flopy1_json,unit_monster02_png,unit_monster06_png,unit_monster07_png,unit_monster08_png,bazzi_png,cappi_png,face01_png,face03_png,face51_png,bombwater_png,item_json,bazzi_json,joystick1_png,joystick2_png,joystick3_png,joystick4_png,ballParticle_json,ballParticle_png,firePot_png,mapbg_jpg,map_chinese_texture_json,map_chinese_texture1_json,map_chinese_texture1_png,snow_json,snow_png,chinese_json,bombfire_png,bomb_tex_png,bomb_mc_json,bombfire_mc_json,bombfire_tex_png,bomb_mc2_json,bomb_tex2_png,bombfire_mc2_json,bombfire_tex2_png,bombwater_json,be_trapped_json,be_trapped_png,be_trapped2_json,be_trapped2_png,arrow_png,die_png,die_json,revive_png,revive_json,die2_json,die2_png,revive2_json,revive2_png,bom_down_edge_json,bom_down_edge_png,bom_left_edge_json,bom_left_edge_png,bom_right_edge_json,bom_right_edge_png,bom_up_edge_json,bom_up_edge_png,bombWay_json,bombWay_png,bombWayVertical_json,bombWayVertical_png,appear_mp3,bg_mp3,click_mp3,die_mp3,draw_mp3,explode_mp3,get_mp3,lay_mp3,save_mp3,start_mp3,win_mp3,appear2_mp3,bg2_mp3,click2_mp3,die2_mp3,draw2_mp3,explode2_mp3,get2_mp3,lay2_mp3,save2_mp3,start2_mp3,win2_mp3,btn_load_game_png,logo_png,btn_chaos_faction_png,btn_chaos_faction_unavailable_png,btn_player_team_png,bg_mask_png,bg_match_bust_background_png,bg_match_tip_png,btn_abort_png,btn_cancel_png,btn_confirm_png,btn_in_the_match_png,btn_start_match_png,btn_to_match_png,create_team_label_png,edit_team_id_tipe_png,icon_leader_png,icon_match_bust_title_png,icon_match_success_title_png,icon_vs_png,match_success_png,teamid_lable_png,team_default_avatar_jpg,tips_png,wait_start_game_png,btn_create_team_png,btn_join_png,btn_join_disable_png,btn_join_team_png,input_focus_png,input_none_focus_png,join_team_label_png,team_inexistence_png,team_label_4v4_png,bg_main_jpg,bg_other_jpg,btn_back_png,icon_loading_png,icon_loading_bg_png,btn_load_game2_png,logo2_png,btn_chaos_faction2_png,btn_chaos_faction_unavailable2_png,btn_player_team2_png,bg_mask2_png,bg_match_bust_background2_png,bg_match_tip2_png,btn_abort2_png,btn_cancel2_png,btn_confirm2_png,btn_in_the_match2_png,btn_start_match2_png,btn_to_match2_png,create_team_label2_png,edit_team_id_tipe2_png,icon_leader2_png,icon_match_bust_title2_png,icon_match_success_title2_png,icon_vs2_png,match_success2_png,teamid_lable2_png,team_default_avatar2_jpg,tips2_png,wait_start_game2_png,btn_create_team2_png,btn_join2_png,btn_join_disable2_png,btn_join_team2_png,input_focus2_png,input_none_focus2_png,join_team_label2_png,team_inexistence2_png,team_label_4v42_png,bg_main2_jpg,bg_other2_jpg,btn_back2_png,icon_loading2_png,icon_loading_bg2_png,btn_load_game3_png,logo3_png,btn_chaos_faction3_png,btn_chaos_faction_unavailable3_png,btn_player_team3_png,bg_mask3_png,bg_match_bust_background3_png,bg_match_tip3_png,btn_abort3_png,btn_cancel3_png,btn_confirm3_png,btn_in_the_match3_png,btn_start_match3_png,btn_to_match3_png,create_team_label3_png,edit_team_id_tipe3_png,icon_leader3_png,icon_match_bust_title3_png,icon_match_success_title3_png,icon_vs3_png,match_success3_png,teamid_lable3_png,team_default_avatar3_jpg,tips3_png,wait_start_game3_png,btn_create_team3_png,btn_join3_png,btn_join_disable3_png,btn_join_team3_png,input_focus3_png,input_none_focus3_png,join_team_label3_png,team_inexistence3_png,team_label_4v43_png,bg_main3_jpg,bg_other3_jpg,btn_back3_png,icon_loading3_png,icon_loading_bg3_png,network_node_select_png,network_node_png,select_node_backage_png,dash_png,btn_load_game4_png,dash2_png,logo4_png,network_node2_png,network_node_select2_png,select_node_backage2_png,btn_chaos_faction4_png,btn_chaos_faction_unavailable4_png,btn_player_team4_png,bg_mask4_png,bg_match_bust_background4_png,bg_match_tip4_png,btn_abort4_png,btn_cancel4_png,btn_confirm4_png,btn_in_the_match4_png,btn_start_match4_png,btn_to_match4_png,create_team_label4_png,edit_team_id_tipe4_png,icon_leader4_png,icon_match_bust_title4_png,icon_match_success_title4_png,icon_vs4_png,match_success4_png,teamid_lable4_png,team_default_avatar4_jpg,tips4_png,wait_start_game4_png,btn_create_team4_png,btn_join4_png,btn_join_disable4_png,btn_join_team4_png,input_focus4_png,input_none_focus4_png,join_team_label4_png,team_inexistence4_png,team_label_4v44_png,bg_main4_jpg,bg_other4_jpg,btn_back4_png,icon_loading4_png,icon_loading_bg4_png",
+			"keys": "map_flopy2_json,map_flopy5_json,map_flopy6_json,map_flopy_json,map_flopy1_json,unit_monster02_png,unit_monster06_png,unit_monster07_png,unit_monster08_png,bazzi_png,cappi_png,face01_png,face03_png,face51_png,bombwater_png,item_json,bazzi_json,joystick1_png,joystick2_png,joystick3_png,joystick4_png,ballParticle_json,ballParticle_png,firePot_png,mapbg_jpg,map_chinese_texture_json,map_chinese_texture1_json,map_chinese_texture1_png,snow_json,snow_png,chinese_json,bombfire_png,bomb_tex_png,bomb_mc_json,bombfire_mc_json,bombfire_tex_png,bomb_mc2_json,bomb_tex2_png,bombfire_mc2_json,bombfire_tex2_png,bombwater_json,be_trapped_json,be_trapped_png,be_trapped2_json,be_trapped2_png,arrow_png,die_png,die_json,revive_png,revive_json,die2_json,die2_png,revive2_json,revive2_png,bom_down_edge_json,bom_down_edge_png,bom_left_edge_json,bom_left_edge_png,bom_right_edge_json,bom_right_edge_png,bom_up_edge_json,bom_up_edge_png,bombWay_json,bombWay_png,bombWayVertical_json,bombWayVertical_png,appear_mp3,bg_mp3,click_mp3,die_mp3,draw_mp3,explode_mp3,get_mp3,lay_mp3,save_mp3,start_mp3,win_mp3,appear2_mp3,bg2_mp3,click2_mp3,die2_mp3,draw2_mp3,explode2_mp3,get2_mp3,lay2_mp3,save2_mp3,start2_mp3,win2_mp3,btn_load_game_png,logo_png,btn_chaos_faction_png,btn_chaos_faction_unavailable_png,btn_player_team_png,bg_mask_png,bg_match_bust_background_png,bg_match_tip_png,btn_abort_png,btn_cancel_png,btn_confirm_png,btn_in_the_match_png,btn_start_match_png,btn_to_match_png,create_team_label_png,edit_team_id_tipe_png,icon_leader_png,icon_match_bust_title_png,icon_match_success_title_png,icon_vs_png,match_success_png,teamid_lable_png,team_default_avatar_jpg,tips_png,wait_start_game_png,btn_create_team_png,btn_join_png,btn_join_disable_png,btn_join_team_png,input_focus_png,input_none_focus_png,join_team_label_png,team_inexistence_png,team_label_4v4_png,bg_main_jpg,bg_other_jpg,btn_back_png,icon_loading_png,icon_loading_bg_png,btn_load_game2_png,logo2_png,btn_chaos_faction2_png,btn_chaos_faction_unavailable2_png,btn_player_team2_png,bg_mask2_png,bg_match_bust_background2_png,bg_match_tip2_png,btn_abort2_png,btn_cancel2_png,btn_confirm2_png,btn_in_the_match2_png,btn_start_match2_png,btn_to_match2_png,create_team_label2_png,edit_team_id_tipe2_png,icon_leader2_png,icon_match_bust_title2_png,icon_match_success_title2_png,icon_vs2_png,match_success2_png,teamid_lable2_png,team_default_avatar2_jpg,tips2_png,wait_start_game2_png,btn_create_team2_png,btn_join2_png,btn_join_disable2_png,btn_join_team2_png,input_focus2_png,input_none_focus2_png,join_team_label2_png,team_inexistence2_png,team_label_4v42_png,bg_main2_jpg,bg_other2_jpg,btn_back2_png,icon_loading2_png,icon_loading_bg2_png,btn_load_game3_png,logo3_png,btn_chaos_faction3_png,btn_chaos_faction_unavailable3_png,btn_player_team3_png,bg_mask3_png,bg_match_bust_background3_png,bg_match_tip3_png,btn_abort3_png,btn_cancel3_png,btn_confirm3_png,btn_in_the_match3_png,btn_start_match3_png,btn_to_match3_png,create_team_label3_png,edit_team_id_tipe3_png,icon_leader3_png,icon_match_bust_title3_png,icon_match_success_title3_png,icon_vs3_png,match_success3_png,teamid_lable3_png,team_default_avatar3_jpg,tips3_png,wait_start_game3_png,btn_create_team3_png,btn_join3_png,btn_join_disable3_png,btn_join_team3_png,input_focus3_png,input_none_focus3_png,join_team_label3_png,team_inexistence3_png,team_label_4v43_png,bg_main3_jpg,bg_other3_jpg,btn_back3_png,icon_loading3_png,icon_loading_bg3_png,network_node_select_png,network_node_png,select_node_backage_png,dash_png,btn_load_game4_png,dash2_png,logo4_png,network_node2_png,network_node_select2_png,select_node_backage2_png,btn_chaos_faction4_png,btn_chaos_faction_unavailable4_png,btn_player_team4_png,bg_mask4_png,bg_match_bust_background4_png,bg_match_tip4_png,btn_abort4_png,btn_cancel4_png,btn_confirm4_png,btn_in_the_match4_png,btn_start_match4_png,btn_to_match4_png,create_team_label4_png,edit_team_id_tipe4_png,icon_leader4_png,icon_match_bust_title4_png,icon_match_success_title4_png,icon_vs4_png,match_success4_png,teamid_lable4_png,team_default_avatar4_jpg,tips4_png,wait_start_game4_png,btn_create_team4_png,btn_join4_png,btn_join_disable4_png,btn_join_team4_png,input_focus4_png,input_none_focus4_png,join_team_label4_png,team_inexistence4_png,team_label_4v44_png,bg_main4_jpg,bg_other4_jpg,btn_back4_png,icon_loading4_png,icon_loading_bg4_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png",
 			"name": "preload"
 		}
 	],
@@ -1289,6 +1289,121 @@
 			"name": "icon_loading_bg4_png",
 			"type": "image",
 			"url": "assets/icon_loading_bg.png"
+		},
+		{
+			"name": "button_down_png",
+			"type": "image",
+			"url": "Button/button_down.png"
+		},
+		{
+			"name": "button_up_png",
+			"type": "image",
+			"url": "Button/button_up.png"
+		},
+		{
+			"name": "checkbox_select_disabled_png",
+			"type": "image",
+			"url": "CheckBox/checkbox_select_disabled.png"
+		},
+		{
+			"name": "checkbox_select_down_png",
+			"type": "image",
+			"url": "CheckBox/checkbox_select_down.png"
+		},
+		{
+			"name": "checkbox_select_up_png",
+			"type": "image",
+			"url": "CheckBox/checkbox_select_up.png"
+		},
+		{
+			"name": "checkbox_unselect_png",
+			"type": "image",
+			"url": "CheckBox/checkbox_unselect.png"
+		},
+		{
+			"name": "selected_png",
+			"type": "image",
+			"url": "ItemRenderer/selected.png"
+		},
+		{
+			"name": "border_png",
+			"type": "image",
+			"url": "Panel/border.png"
+		},
+		{
+			"name": "header_png",
+			"type": "image",
+			"url": "Panel/header.png"
+		},
+		{
+			"name": "thumb_pb_png",
+			"type": "image",
+			"url": "ProgressBar/thumb_pb.png"
+		},
+		{
+			"name": "track_pb_png",
+			"type": "image",
+			"url": "ProgressBar/track_pb.png"
+		},
+		{
+			"name": "radiobutton_select_disabled_png",
+			"type": "image",
+			"url": "RadioButton/radiobutton_select_disabled.png"
+		},
+		{
+			"name": "radiobutton_select_down_png",
+			"type": "image",
+			"url": "RadioButton/radiobutton_select_down.png"
+		},
+		{
+			"name": "radiobutton_select_up_png",
+			"type": "image",
+			"url": "RadioButton/radiobutton_select_up.png"
+		},
+		{
+			"name": "radiobutton_unselect_png",
+			"type": "image",
+			"url": "RadioButton/radiobutton_unselect.png"
+		},
+		{
+			"name": "roundthumb_png",
+			"type": "image",
+			"url": "ScrollBar/roundthumb.png"
+		},
+		{
+			"name": "track_sb_png",
+			"type": "image",
+			"url": "ScrollBar/track_sb.png"
+		},
+		{
+			"name": "thumb_png",
+			"type": "image",
+			"url": "Slider/thumb.png"
+		},
+		{
+			"name": "track_png",
+			"type": "image",
+			"url": "Slider/track.png"
+		},
+		{
+			"name": "tracklight_png",
+			"type": "image",
+			"url": "Slider/tracklight.png"
+		},
+		{
+			"name": "handle_png",
+			"type": "image",
+			"url": "ToggleSwitch/handle.png"
+		},
+		{
+			"name": "off_png",
+			"type": "image",
+			"url": "ToggleSwitch/off.png"
+		},
+		{
+			"name": "on_png",
+			"type": "image",
+			"url": "ToggleSwitch/on.png"
 		}
 	]
 }

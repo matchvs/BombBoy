@@ -35,8 +35,8 @@ class Game extends BaseScene implements eui.UIComponent {
 	public loadComplete = false;
 	public isGameStart = true;
 
+	private reconnectDialog: Dialog;
 	private pingTimer;
-	private reconnectDialog: LoadingDialog;
 
 	public onCreated(): void {
 		console.log("[Lobby] [onCreated] " + this.name);
@@ -202,24 +202,14 @@ class Game extends BaseScene implements eui.UIComponent {
 		}.bind(this));
 
 		NetWork.receive("over", function (data) {
-			var dialog = new LoadingDialog(
-				this.loadingContainer, this.loadingBg
-				, this.loadingTipsImage, this.loadingTips
-				, this.loadingText, this.loadingImage);
-			dialog.loadingText.text = "游戏结束";
+
 			this.isGameStart = false;
 			this.notifyPlayerGameStateChanged(this.me.ID);
-			dialog.setOKListener(function () {
-				// dialog.hide();
-				Toast.show("Game Over");
-			});
-
-			setTimeout(function () {
-				Music.play("bg_mp3").stop();
-				RombBoyMatchvsEngine.getInstance.leaveTeam();
-				RombBoyMatchvsEngine.getInstance.leaveRoom("");
-				SceneManager.backToThePast(HomePage);
-			}, 3000);
+			var dialog = new Dialog().show(this, "游戏结束", function () {
+				this.exit();
+			}.bind(this), "提示", function () {
+				this.exit();
+			}.bind(this));
 		}.bind(this));
 
 		KeyBoard.addTapListener(KeyBoard.KeyCode.SPACE, function () {
@@ -245,10 +235,17 @@ class Game extends BaseScene implements eui.UIComponent {
 
 		NetWork.receive("map", function (data) {
 			this.joinAtMidway(data);
-			this.reconnectDialog.hide();
+			this.reconnectDialog.hide(this);
 		}.bind(this));
 		NetWork.receive("bombed", function (data) { }.bind(this));
 
+	}
+	private exit() {
+		Music.play("bg_mp3").stop();
+		RombBoyMatchvsEngine.getInstance.leaveTeam();
+		RombBoyMatchvsEngine.getInstance.leaveRoom("");
+		// SceneManager.backToThePast(HomePage);;
+		SceneManager.back();
 	}
 	private joinAtMidway(data) {
 		if (!this.loadComplete) {
@@ -425,16 +422,12 @@ class Game extends BaseScene implements eui.UIComponent {
 		var data = e.data;
 		switch (e.type) {
 			case MatchvsMessage.MATCHVS_DISCONNECTRESPONSE:
-				this.reconnectDialog = new LoadingDialog(
-					this.loadingContainer, this.loadingBg
-					, this.loadingTipsImage, this.loadingTips
-					, this.loadingText, this.loadingImage);
-				this.reconnectDialog.loadingText.text = "网络已断开，是否重试？";
-				Toast.show("网络已断开");
-				this.notifyPlayerGameStateChanged(this.me.ID);
-				this.reconnectDialog.setOKListener(function () {
+				this.reconnectDialog && (this.reconnectDialog.hide())
+				this.reconnectDialog = new Dialog().show(this, "网络已断开，是否重试？", function () {
+					Toast.show("开始重连,请等待");
 					RombBoyMatchvsEngine.getInstance.reconnect();
-					Toast.show("开始重连请等待");
+				}, "提示", function () {
+					Toast.show("网络已断开，点击确认重连");
 				});
 				break;
 		}

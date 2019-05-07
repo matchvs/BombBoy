@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="DialogSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16a91bc303d" ></w:Config>
+	<e:Rect width="100%" height="100%" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" strokeAlpha="0" fillAlpha="0.45"/>
+	<e:Rect width="579.09" height="316.97" anchorOffsetX="0" anchorOffsetY="0" fillColor="0x000000" strokeColor="0x5e5353" ellipseWidth="32" ellipseHeight="32" blendMode="normal" horizontalCenter="0" verticalCenter="0"/>
+	<e:Button id="OK" label="确定" x="780.67" y="424.16"/>
+	<e:Button id="Cancle" label="取消" x="401" y="424.16"/>
+	<e:Label id="title" text="提示" x="604" y="236.48" size="28" fontFamily="Microsoft YaHei"/>
+	<e:Label id="message" text="sfdasdfasdfasdf" verticalAlign="middle" textAlign="center" horizontalCenter="0" verticalCenter="0" bold="true" fontFamily="Microsoft YaHei"/>
+	<e:Image id="img" width="20" height="20" y="614" horizontalCenter="0"/>
+</e:Skin>
