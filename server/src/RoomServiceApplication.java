@@ -36,7 +36,11 @@ public class RoomServiceApplication implements IRoomService {
 
     @Override
     public boolean onUserExit(IGameServerRoomHandler.Room oldRoom, IGameServerRoomHandler.User user) {
-        log.info("[UserExit] " + user +" from roomID:"+oldRoom.ID);
+        if (oldRoom == null || user == null) {
+            log.warn("oldRoom or user is null");
+            return false;
+        }
+        log.info("[UserExit] {}" ,user ," from room:{}"+oldRoom);
         RoomGame game = roomMap.get(oldRoom.ID);
         if (game != null) game.onUserExit(oldRoom, user);
         return false;

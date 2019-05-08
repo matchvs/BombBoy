@@ -1,14 +1,9 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <appender name="INFO" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>[%d{HH:mm:ss.SSS}] [%-5.5level] [%-8.8thread] [%-20.20logger]    %msg %n</pattern>
+            <pattern>[%d{HH:mm:ss.SSS}] [%-5.5level] [%-8.8thread] [%-20.20logger] %msg %n</pattern>
         </encoder>
 
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
     </appender>
     <appender name="ERROR" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -27,20 +22,24 @@
 
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME}info.txt</file>
+        <file>${LOG_HOME}log.txt</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>${LOG_HOME}info-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}log-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
             <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
             <maxFileSize>100MB</maxFileSize>
             <maxHistory>60</maxHistory>
             <totalSizeCap>20GB</totalSizeCap>
         </rollingPolicy>
         <encoder>
-            <pattern>-----------   ▼▼▼▼▼▼  ----------- %n[%d{HH:mm:ss.SSS}] [%-8.8thread] [%-5.5level] [%c] Case By: %msg %n%caller{3}-----------   ▲▲▲▲▲▲  -----------%n</pattern>
+            <pattern>----------- ▼▼▼▼▼▼ ----------- %n[%d{HH:mm:ss.SSS}] [%-8.8thread] [%-5.5level] [%c] Case By: %msg
+                %n%caller{3}----------- ▲▲▲▲▲▲ -----------%n
+            </pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 

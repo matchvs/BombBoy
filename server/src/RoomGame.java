@@ -16,8 +16,8 @@ public class RoomGame implements IRoomService, Player.MoveListener, Player.State
     private final IGameServerRoomHandler.Room room;
     private RoomService rs;
     private Map map = new Map();
-    private volatile boolean running = true;
     private Runnable loopID;
+    private GameState gameState = GameState.Ready;
 
     public RoomGame(RoomService rs, IGameServerRoomHandler.Room room) {
         this.rs = rs;
@@ -60,10 +60,15 @@ public class RoomGame implements IRoomService, Player.MoveListener, Player.State
     @Override
     public boolean onUserEnter(IGameServerRoomHandler.Room room, IGameServerRoomHandler.User user) {
         log.info("[UserEnter] " + user);
+        if (this.gameState == GameState.Over) {
+            log.info("user enter,but game is over");
+            rs.broadcastMe(new GameMsg(GameConfig.ACTION_OVER, map.getPlayers()).toString(), room, user.userID);
+            return false;
+        }
         Player player = map.getPlayer(user.userID);
         if (player == null) {
             map.addPlayer(new Player(user.userID, 0, 0, 0).bron());
-        }else{
+        } else {
             log.info("user {} has in the room {}", user.userID, room.ID);
         }
         if (isGameStart()) {
@@ -197,6 +202,7 @@ public class RoomGame implements IRoomService, Player.MoveListener, Player.State
                 }
             }
         }
+        this.gameState = GameState.Over;
         return true;
     }
 
