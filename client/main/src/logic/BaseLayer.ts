@@ -53,8 +53,8 @@ class BaseLayer extends egret.DisplayObjectContainer {
     }
     public removeChildWithAnima(x, y) {
         var child = this.getChildByName(this.genName(x, y));
-        child && egret.Tween.get(child).to({ "alpha": 0.5, "scaleX": 1.1, "scaleY": 1.1 }, 300).play().call(function () {
-            child && this.removeChild(child);
-        }, this);
+        // child && egret.Tween.get(child).to({ "alpha": 0.5, "scaleX": 1.1, "scaleY": 1.1 }, 300).play().call(function () {
+        child && this.removeChild(child);
+        // }, this);
     }
 }
