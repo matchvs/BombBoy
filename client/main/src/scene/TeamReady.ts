@@ -64,6 +64,7 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 				if (this.joinTeamView.visible) {
 					this.teamHomeView.visible = true;
 					this.joinTeamView.visible = false;
+					this.teamInexistenceTip.visible = false;
 				} else {
 					SceneManager.back();
 				}
@@ -113,6 +114,7 @@ class TeamReady extends BaseScene implements eui.UIComponent {
 		super.onHide();
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, this.onEvent, this);
 		RomeBoyMatchvsRep.getInstance.removeEventListener(MatchvsMessage.MATCHVS_ERROR, this.onEvent, this);
+		this.teamInexistenceTip.visible = false;
 	}
 
 	public onEvent(e: egret.Event): void {

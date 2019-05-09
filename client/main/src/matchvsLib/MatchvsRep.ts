@@ -289,21 +289,24 @@ class RomeBoyMatchvsRep {
     }
 
 
-    private leaderID;
 
     /**
      * 小队内玩家变化通知
      */
     private teamUserInfoListChangeNotify(data, action, player, ownerID, teamID?, status?) {
+        console.log('[TeamUser Changed] data:'+data);
+        console.log('[TeamUser Changed] action:'+action);
+        console.log('[TeamUser Changed] player:'+player);
+        console.log('[TeamUser Changed] ownerID:'+ownerID);
+        console.log('[TeamUser Changed] teamID:'+teamID);
+        console.log('[TeamUser Changed] status:'+status);
         switch (action) {
             case "createTeam":
                 MatchvsData.TeamPlayerArray = data;
                 MatchvsData.TeamPlayerArray.push(player);
-                this.leaderID = ownerID;
                 break;
             case "joinTeam":
                 MatchvsData.TeamPlayerArray = data;
-                this.leaderID = ownerID;
                 break;
             case "joinTeamNotify":
                 for (var t = 0; t < MatchvsData.TeamPlayerArray.length; t++) {
@@ -315,7 +318,6 @@ class RomeBoyMatchvsRep {
                 MatchvsData.TeamPlayerArray.push(player);
                 break;
             case "leaveTeam":
-                this.leaderID = ownerID === 0 ? this.leaderID : ownerID;
                 if (player.userID === GameData.userID) {
                     MatchvsData.TeamPlayerArray.length = 0;
                 } else {
@@ -330,14 +332,14 @@ class RomeBoyMatchvsRep {
         }
         MatchvsData.TeamPlayerArray.sort(SortUtils.sortNumber)
         for (var a = 0; a < MatchvsData.TeamPlayerArray.length; a++) {
-            if (this.leaderID === MatchvsData.TeamPlayerArray[a].userID) {
+            if (ownerID === MatchvsData.TeamPlayerArray[a].userID) {
                 if (a !== 0) {
                     SortUtils.swapArray(MatchvsData.TeamPlayerArray, a, 0);
                     break;
                 }
             }
         }
-        var rsp = { data: MatchvsData.TeamPlayerArray, action: action, player: player, ownerID: this.leaderID, teamID: teamID, status: status };
+        var rsp = { data: MatchvsData.TeamPlayerArray, action: action, player: player, ownerID: ownerID, teamID: teamID, status: status };
         this.dispatchEvent(MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY, rsp);
     }
 

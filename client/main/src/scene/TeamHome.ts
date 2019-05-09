@@ -2,6 +2,7 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 
 	private playerList: any = [];
 	private ownerID: number = 0;
+	private isLeader: boolean = false;
 	private teamID: String = "";
 	private leaderView;
 	private userView_one;
@@ -19,7 +20,6 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 	private isStraMatchOnClick: boolean = true;
 	private back: eui.Button;
 	private createTeamTip: eui.Image;
-	private isLeader: boolean = false;
 	private userListView: eui.List;
 	private time = undefined;
 	private par = undefined;
@@ -122,6 +122,7 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 
 	public initView() {
 		this.teamIDLable.text = this.teamID;
+		console.log('[INFO]  this.ownerID:',this.ownerID);
 		this.isLeader = (this.ownerID == GameData.userID)
 		for (var i = 0; i < GameData.TeamMaxPlayer; i++) {
 			if (this.playerList[i] !== undefined) {
@@ -186,12 +187,12 @@ class TeamHome extends BaseScene implements eui.UIComponent {
 		var data = e.data;
 		switch (e.type) {
 			case MatchvsMessage.MATCHVS_TEAM_USER_INFO_NOTIFY:
-				console.log("team user changed : " + data);
+				console.log("team user changed : %o" ,data);
 				if (data.action === "leaveTeam" && data.player.userID === GameData.userID) {
 					SceneManager.back();
 				} else {
 					this.playerList = data.data;
-					if (data.ownerID !== 0) {
+					if (data.ownerID != 0) {
 						this.ownerID = data.ownerID;
 					}
 					this.initView();

@@ -14,9 +14,9 @@
 	],
 	"game": [
 		"bin-debug/efinal/BaseScene.js",
-		"bin-debug/efinal/ListViewImageItem.js",
 		"bin-debug/efinal/MathUtils.js",
 		"bin-debug/logic/BaseLayer.js",
+		"bin-debug/efinal/ListViewImageItem.js",
 		"bin-debug/efinal/ShaderUtils.js",
 		"bin-debug/component/MoveSync.js",
 		"bin-debug/component/NetWork.js",
