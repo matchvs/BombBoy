@@ -1,7 +1,7 @@
 class App {
-	public static W: number = 1270;
+	public static W: number = 1280;
 	public static H: number = 720;
-	public static IS_DEGUG: boolean = true;
+	public static IS_DEGUG: boolean = false;
 	public constructor() {
 	}
 
