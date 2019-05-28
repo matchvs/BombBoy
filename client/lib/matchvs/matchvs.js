@@ -1,8 +1,8 @@
 
 /**************************************************************************************************
  * 								Matchvs SDK														  *
- *                              SDK_RELMatchvs_V3.7.9.7.0                                                       *
- * 								2019-05-06											        	  *
+ *                              SDK_RELMatchvs_V3.7.9.8                                                       *
+ * 								2019-05-27											        	  *
  * 								https://www.matchvs.com/home									  *
  **************************************************************************************************/
  
@@ -11,7 +11,7 @@ var MVS = (function (_obj) {
 
     var _this ;
     var MVS = {
-        version:"SDK_RELMatchvs_V3.7.9.7.0",
+        version:"SDK_RELMatchvs_V3.7.9.8",
         Game:{
             id:0,
             appkey:""
@@ -40858,7 +40858,7 @@ function MsReopenRoomNotify(roomID, userID, cpProto) {
                 "engine": "WeiXinGame"
             }
         });
-
+        var toClose = false;
         this.socketOpen = false;
         var socketMsgQueue = [];
         var mCallBack = callback;
@@ -40867,6 +40867,7 @@ function MsReopenRoomNotify(roomID, userID, cpProto) {
 
         this.close = function () {
             if (this.socket) {
+                toClose = true;
                 this.socket.close({
                     code:1000,
                     reason:"normal"
@@ -40900,12 +40901,20 @@ function MsReopenRoomNotify(roomID, userID, cpProto) {
         });
 
         this.socket.onClose(function (e) {
+            try{
+                MatchvsLog.logI("[wx.WebSocket] [onClose] case:"+(e?JSON.stringify(e):e));
+            }catch(e){
+                MatchvsLog.logE("stringify e err:"+e);
+            }
             that.socketOpen = false;
-            if(e.reason && e.reason === "interrupted"){
+            if(e&&e.reason && e.reason == "interrupted"){
                 e.code = 1001;
             }
+            if(toClose==false){
+                e.code = 1001;
+                MatchvsLog.logI("Not BeClosed by User ");
+            }
             mCallBack.onDisConnect && mCallBack.onDisConnect(mHost,e);
-            MatchvsLog.logI("[wx.WebSocket] [onClose] case:"+e);
         });
 
         this.socket.onMessage(function (res) {
@@ -40914,8 +40923,8 @@ function MsReopenRoomNotify(roomID, userID, cpProto) {
         });
 
         this.socket.onError(function(event) {
-            mCallBack.onDisConnect && mCallBack.onDisConnect(mHost,event);
             MatchvsLog.logI("[wx.WebSocket] [onError] case:" + event);
+            mCallBack.onDisConnect && mCallBack.onDisConnect(mHost,event);
         });
     }
 
@@ -41479,7 +41488,7 @@ function copyInObject(clone, beclone) {
 
         /**
          * 加入指定房间roomID
-         * @param roomJoin
+         * @param {MsRoomJoin} roomJoin
          * @returns {DataView}
          */
         this.joinRoomSpecial = function (roomJoin) {
@@ -41499,6 +41508,7 @@ function copyInObject(clone, beclone) {
             roomInfo.setMode(roomJoin.mode);
             roomInfo.setVisibility(0);
             roomInfo.setRoomid(roomJoin.roomID);
+            roomInfo.setRoomproperty(stringToUtf8ByteArray(roomJoin.roomProperty||""));
             message.setRoominfo(roomInfo);
 
             var bytes = message.serializeBinary();
@@ -41538,7 +41548,7 @@ function copyInObject(clone, beclone) {
             roomInfo.setCanwatch(roomJoin.canWatch);
             roomInfo.setMode(roomJoin.mode);
             roomInfo.setVisibility(roomJoin.visibility);
-            roomInfo.setRoomproperty(stringToUtf8ByteArray(roomJoin.roomProperty));
+            roomInfo.setRoomproperty(stringToUtf8ByteArray(roomJoin.roomProperty||""));
             roomInfo.setRoomid(roomJoin.roomID);
             message.setRoominfo(roomInfo);
 
@@ -44659,18 +44669,18 @@ function MatchvsResponse() {
             return 0;
         };
 
-        /**
-         * getRoomList
-         * @param filter {MsRoomFilter}
-         */
-        this.getRoomList = function (filter) {
-            var ret = this.mState.InRoomCheck();
-            if (ret !== 0) return ret;
-            var buf = this.mProtocol.getRoomList(M_EVN.gameID, filter);
-            if (buf.byteLength > 1024) return -21;
-            this.mGTWNetwork.send(buf);
-            return 0;
-        };
+        // /**
+        //  * getRoomList
+        //  * @param filter {MsRoomFilter}
+        //  */
+        // this.getRoomList = function (filter) {
+        //     var ret = this.mState.InRoomCheck();
+        //     if (ret !== 0) return ret;
+        //     var buf = this.mProtocol.getRoomList(M_EVN.gameID, filter);
+        //     if (buf.byteLength > 1024) return -21;
+        //     this.mGTWNetwork.send(buf);
+        //     return 0;
+        // };
 
         /**
          * create a connect with room and check the room is exist.
@@ -44722,7 +44732,8 @@ function MatchvsResponse() {
             if (typeof userProfile !== "string") return -1;
             if (matchinfo.maxPlayer > MVS.Config.MAXPLAYER_LIMIT || matchinfo.maxPlayer < MVS.Config.MINPLAYER_LIMIT) return -20;
             var roomJoin = new MsRoomJoin(MsEnum.JoinRoomType.joinRoomWithProperty, M_User.ID,
-                1, M_EVN.gameID, matchinfo.maxPlayer, matchinfo.mode, matchinfo.canWatch, userProfile, matchinfo.tags, matchinfo.visibility,matchinfo.roomProperty);
+                1, M_EVN.gameID, matchinfo.maxPlayer, matchinfo.mode, matchinfo.canWatch, userProfile, matchinfo.tags,
+                matchinfo.visibility,matchinfo.roomProperty);
             var buf = this.mProtocol.joinRoomWithProperties(roomJoin, watchSet);
             this.mState.SetJoinRooming();
             this.mGTWNetwork.send(buf);

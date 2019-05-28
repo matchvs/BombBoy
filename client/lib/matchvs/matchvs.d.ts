@@ -438,10 +438,12 @@ declare class MsRegistRsp{
  * 登录回调参数类型
  * @param status    接口请求状态 200-成功， 其他异常
  * @param roomID    房间ID，通常为0，如果有具体的房间ID，就可以调用reconnect接口重新连接到房间
+ * @param roomID    组队ID，通常为0，如果有具体的组队ID，就可以调用reconnect接口重新连接到组队
  */
 declare class MsLoginRsp{
     public status:number;
     public roomID:string;
+    public teamID:string;
     constructor(status,roomID)
 }
 
@@ -1351,12 +1353,12 @@ declare class MatchvsEngine {
      */
     uninit():number
 
-    /**
-     * 获取房间列表信息, 推荐使用 getRoomListEx接口，此接口获取的信息较少
-     * @param {MsRoomFilter} filter
-     * @returns {number}
-     */
-    getRoomList(filter:MsRoomFilter):number
+    ///**
+    // * 获取房间列表信息, 推荐使用 getRoomListEx接口，此接口获取的信息较少
+    // * @param {MsRoomFilter} filter
+    // * @returns {number}
+    // */
+    //getRoomList(filter:MsRoomFilter):number
 
     /**
      * 获取房间列表扩展接口，该接口只能获取 createRoom 接口且 visibility=1 创建的房间，而且筛选值也只能使用与
